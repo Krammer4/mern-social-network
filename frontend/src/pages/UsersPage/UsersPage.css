@@ -91,10 +91,19 @@ html {
   margin-left: auto;
   margin-right: auto;
 }
+.users-sort-mainTitle {
+  font-family: "Mulish";
+  font-size: 22px;
+}
 .users-sort-button {
   padding: 6px 12px;
-  background-color: #ececec;
+  background-color: #f0eff3;
   margin-left: 20px;
   cursor: pointer;
   border-radius: 10px;
+  font-family: "Mulish";
+  transition: 0.5s ease all 0s;
+}
+.users-sort-button:hover {
+  background-color: #e6e4ec;
 }
