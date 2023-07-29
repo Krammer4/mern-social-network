@@ -1,0 +1,117 @@
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* --------------------ОБНУЛЕНИЕ----------------------------------------- */
+html {
+  width: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+}
+._container {
+  max-width: 1600px;
+  margin: 0px auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.header {
+  background-color: #e7e5f0;
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+}
+.header-left-part {
+  display: flex;
+}
+.header-content {
+  padding: 12px 0px;
+}
+.header-group {
+  display: flex;
+}
+.header-link {
+  display: block;
+  font-family: "Mulish";
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.header-link:hover {
+  color: #5c529a;
+}
+.header-link:not(:last-child) {
+  margin-right: 30px;
+}
+.header-link.exit {
+  color: rgb(145, 54, 54);
+}

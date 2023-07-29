@@ -1,0 +1,63 @@
+.commentcard {
+  max-width: 800px;
+  /* background-color: #ebebeb; */
+  background-color: #f0eff3;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  margin-top: 10px;
+
+  /* -webkit-box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.21);
+  -moz-box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.21);
+  box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.21); */
+}
+.commentcard-content {
+  padding: 12px 20px;
+}
+.commentcard-author-info {
+  display: flex;
+  justify-content: space-between;
+}
+.commentcard-authpr-group {
+  display: flex;
+  align-items: center;
+}
+.commentcard-author-avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 12px;
+  border-radius: 100%;
+}
+.commentcard-author-name {
+  font-family: "Mulish";
+  font-size: 18px;
+}
+.commentcard-date {
+  font-family: "Mulish";
+  font-size: 14px;
+}
+.commentcard-author-email {
+  opacity: 0.5;
+  font-family: "Mulish";
+}
+
+.commentcard-postContent {
+  font-family: "Mulish";
+  font-size: 24px;
+  margin-top: 10px;
+}
+.commentcard-redirectToThisPost {
+  display: block;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.commentcard-deleteComment {
+  text-align: right;
+  color: #ff6251;
+  font-family: "Mulish";
+  font-size: 14px;
+  cursor: pointer;
+}

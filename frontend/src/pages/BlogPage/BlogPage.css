@@ -1,0 +1,137 @@
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* --------------------ОБНУЛЕНИЕ----------------------------------------- */
+html {
+  width: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+}
+._container {
+  max-width: 1600px;
+  margin: 0px auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.blog {
+}
+.blog-noBlogs {
+  font-size: 32px;
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 20px;
+}
+.blog-mainTitle {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+.blog-update {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  max-width: max-content;
+  color: #dbecf2;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+.blog-allPosts-block {
+  margin-bottom: 60px;
+}
+.blog-post-skeleton {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  max-width: max-content;
+}
+.blog-noPosts {
+  font-family: "Mulish";
+  font-size: 26px;
+  text-align: center;
+  opacity: 0.3;
+  font-weight: 700;
+}
+.blog-noPosts-redirect {
+  color: #5c529a;
+  font-weight: 800;
+  opacity: 1;
+}

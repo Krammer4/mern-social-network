@@ -1,0 +1,78 @@
+.postcard {
+  max-width: 800px;
+  /* background-color: #ebebeb; */
+  background-color: #f0eff3;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  margin-top: 20px;
+
+  -webkit-box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.21);
+  -moz-box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.21);
+  box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.21);
+}
+.postcard-content {
+  padding: 12px 20px;
+}
+.postcard-author-info {
+  display: flex;
+  justify-content: space-between;
+}
+.postcard-authpr-group {
+  display: flex;
+  align-items: center;
+}
+.postcard-author-avatar {
+  width: 50px;
+  height: 50px;
+  margin-right: 12px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+.postcard-author-name {
+  font-family: "Mulish";
+  font-size: 18px;
+}
+.postcard-date {
+  font-family: "Mulish";
+  font-size: 14px;
+}
+.postcard-author-email {
+  opacity: 0.5;
+  font-family: "Mulish";
+}
+.postcard-postTitle {
+  font-family: "Mulish";
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.postcard-postContent {
+  font-family: "Mulish";
+  font-size: 24px;
+}
+.postcard-redirectToThisPost {
+  display: block;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.postcard-postImage {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 20px;
+  min-width: 150px;
+  margin-bottom: 20px;
+}
+.postcard-deletePost {
+  color: #ff6251;
+  font-family: "Mulish";
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 0;
+  max-width: max-content;
+}
