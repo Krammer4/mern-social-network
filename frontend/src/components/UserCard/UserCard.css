@@ -20,11 +20,14 @@
 .user-card-name {
   font-family: "Mulish";
   font-size: 22px;
+  line-height: 24px;
 }
 .user-card-username {
   font-family: "Mulish";
   font-size: 18px;
   padding-top: 10px;
+  line-height: 20px;
+  font-weight: 600;
 }
 .user-card-avatar {
   width: 80px;
