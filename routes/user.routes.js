@@ -1,88 +1,21 @@
 const { Router } = require("express");
 const upload = require("../middleware/avatarMiddleware");
 const User = require("../Models/User");
+const UsersController = require("../Controllers/UsersController");
 const router = Router();
 
-router.post("/update-avatar", upload.single("avatar"), async (req, res) => {
-  const avatarPath = req.file ? req.file.path.replace(/\\/g, "/") : null;
-  console.log("AVATAR: ", avatarPath);
-  try {
-    const { userId } = req.body;
+router.post(
+  "/update-avatar",
+  upload.single("avatar"),
+  UsersController.updateAvatar
+);
 
-    const user = await User.findById(userId);
-    console.log("USER WITH AVATAR: ", user);
-    user.avatar = avatarPath;
-    await user.save();
-    res.json({ message: "Ваш аватар успешно изменен!" });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Не удалось обновить аватар... Пожалуйста, попробуйте еще раз",
-    });
-  }
-});
+router.get("/users", UsersController.getAll);
 
-router.get("/users", async (req, res) => {
-  try {
-    const allUsers = await User.find();
+router.get("/users/alphabet", UsersController.alphabetSort);
 
-    if (!allUsers) {
-      return res.status(500).json({ message: "Error while finding all users" });
-    }
+router.get("/users/alphabetReversed", UsersController.alphabetReversed);
 
-    res.json(allUsers);
-  } catch (error) {
-    res.status(500).json({ message: "Error while finding all users" });
-  }
-});
-
-router.get("/users/alphabet", async (req, res) => {
-  try {
-    const users = await User.find();
-
-    if (!users) {
-      return res.status(500).json({ message: "Error while finding all users" });
-    }
-
-    const allUsersSorted = users.sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    });
-
-    res.json(allUsersSorted);
-  } catch (error) {
-    res.status(500).json({ message: "Error while finding all users" });
-  }
-});
-
-router.get("/users/alphabetReversed", async (req, res) => {
-  try {
-    const users = await User.find();
-
-    if (!users) {
-      return res.status(500).json({ message: "Error while finding all users" });
-    }
-
-    const allUsersSorted = users.sort((a, b) => {
-      return b.name.localeCompare(a.name);
-    });
-
-    res.json(allUsersSorted);
-  } catch (error) {
-    res.status(500).json({ message: "Error while finding all users" });
-  }
-});
-
-router.get("/users/reversed", async (req, res) => {
-  try {
-    const users = await User.find().sort({ _id: -1 });
-
-    if (!users) {
-      return res.status(500).json({ message: "Error while finding all users" });
-    }
-
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: "Error while finding all users" });
-  }
-});
+router.get("/users/reversed", UsersController.reversed);
 
 module.exports = router;
