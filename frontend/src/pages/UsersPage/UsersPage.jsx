@@ -62,24 +62,6 @@ export const UsersPage = () => {
               {button.title}
             </p>
           ))}
-          {/* <p
-            className="users-sort-button"
-            onClick={() => fetchAllUsers("alphabet")}
-          >
-            алфавиту
-          </p>
-          <p
-            className="users-sort-button"
-            onClick={() => fetchAllUsers("alphabetReversed")}
-          >
-            алфавиту (обратный порядок)
-          </p>
-          <p
-            className="users-sort-button"
-            onClick={() => fetchAllUsers("reversed")}
-          >
-            дате регистрации (сначала новые)
-          </p> */}
         </div>
 
         {allUsers.length !== 0 ? (
@@ -90,6 +72,7 @@ export const UsersPage = () => {
                 avatar={user.avatar}
                 lastName={user.lastName}
                 username={user.username}
+                userCardId={user._id}
               />
             );
           })
