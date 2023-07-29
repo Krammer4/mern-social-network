@@ -8,6 +8,30 @@ export const UsersPage = () => {
   const { request, loading, error } = useHttp();
   const [allUsers, setAllUsers] = useState([]);
 
+  const [sortButtons, setSortButtons] = useState([
+    {
+      title: "алфавиту",
+      id: 0,
+      sortMethod: "alphabet",
+    },
+    {
+      title: "алфавиту (обратный порядок)",
+      id: 1,
+      sortMethod: "alphabetReversed",
+    },
+    {
+      title: "дате регистрации (сначала новые)",
+      id: 2,
+      sortMethod: "reversed",
+    },
+    {
+      title: "дате регистрации (сначала олды)",
+      id: 3,
+      sortMethod: "",
+    },
+  ]);
+  const [activeSortButton, setActiveSortButton] = useState(null);
+
   const fetchAllUsers = async (sortMethod) => {
     const data = await request(
       `http://localhost:5000/api/users/${sortMethod}`,
@@ -25,7 +49,20 @@ export const UsersPage = () => {
       <div className="users _container">
         <div className="users-sort-row">
           <p className="users-sort-mainTitle">Сортировать по:</p>
-          <p
+          {sortButtons.map((button) => (
+            <p
+              className={`users-sort-button ${
+                activeSortButton == button.id && "active"
+              }`}
+              onClick={() => {
+                setActiveSortButton(button.id);
+                fetchAllUsers(button.sortMethod);
+              }}
+            >
+              {button.title}
+            </p>
+          ))}
+          {/* <p
             className="users-sort-button"
             onClick={() => fetchAllUsers("alphabet")}
           >
@@ -42,7 +79,7 @@ export const UsersPage = () => {
             onClick={() => fetchAllUsers("reversed")}
           >
             дате регистрации (сначала новые)
-          </p>
+          </p> */}
         </div>
 
         {allUsers.length !== 0 ? (

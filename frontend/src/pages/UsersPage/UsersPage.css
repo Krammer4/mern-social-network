@@ -90,10 +90,13 @@ html {
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
+  max-width: 800px;
+  flex-wrap: wrap;
 }
 .users-sort-mainTitle {
   font-family: "Mulish";
   font-size: 22px;
+  margin-bottom: 10px;
 }
 .users-sort-button {
   padding: 6px 12px;
@@ -102,7 +105,13 @@ html {
   cursor: pointer;
   border-radius: 10px;
   font-family: "Mulish";
-  transition: 0.5s ease all 0s;
+  transition: 0.3s ease all 0s;
+  margin-bottom: 10px;
+}
+.users-sort-button.active {
+  background-color: #5c529a;
+  color: #ffffff;
+  font-weight: 700;
 }
 .users-sort-button:hover {
   background-color: #e6e4ec;
