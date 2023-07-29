@@ -9,8 +9,8 @@ To launch frontend:
 
   To launch backend:
 
-  -/
-  - create a new directory in the root folder -- config, then create file default.json in this folder that should look like this:
+- /
+- create a new directory in the root folder -- config, then create file default.json in this folder that should look like this:
 {
   "PORT": "5000",
   "mongourl": "mongodb+srv://username:password@cluster0.3pnrkiv.mongodb.net/",   //HERE SHOULD BE YOUR MONGODB CLUSTER LINK
@@ -22,5 +22,5 @@ To launch frontend:
 
   To launch frontend and backend together:
 
-  -/
-  -npm run dev
+-/
+-npm run dev
