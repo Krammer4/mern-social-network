@@ -16,22 +16,6 @@ export const UsersPage = () => {
     setAllUsers(data);
   };
 
-  //   const fetchAllUsersByAlphabet = async () => {
-  //     const data = await request(
-  //       "http://localhost:5000/api/users/alphabet",
-  //       "GET"
-  //     );
-  //     setAllUsers(data);
-  //   };
-
-  //   const fetchAllUsersByAlphabetReversed = async () => {
-  //     const data = await request(
-  //       "http://localhost:5000/api/users/alphabetReversed",
-  //       "GET"
-  //     );
-  //     setAllUsers(data);
-  //   };
-
   useEffect(() => {
     fetchAllUsers("");
   }, []);
@@ -40,7 +24,7 @@ export const UsersPage = () => {
     <div className="users">
       <div className="users _container">
         <div className="users-sort-row">
-          <p>Сортировать по:</p>
+          <p className="users-sort-mainTitle">Сортировать по:</p>
           <p
             className="users-sort-button"
             onClick={() => fetchAllUsers("alphabet")}
@@ -53,14 +37,24 @@ export const UsersPage = () => {
           >
             алфавиту (обратный порядок)
           </p>
-          <p className="users-sort-button" onClick={() => fetchAllUsers("")}>
-            дате регистрации (сначала олды)
+          <p
+            className="users-sort-button"
+            onClick={() => fetchAllUsers("reversed")}
+          >
+            дате регистрации (сначала новые)
           </p>
         </div>
 
         {allUsers.length !== 0 ? (
           allUsers.map((user) => {
-            return <UserCard name={user.name} />;
+            return (
+              <UserCard
+                name={user.name}
+                avatar={user.avatar}
+                lastName={user.lastName}
+                username={user.username}
+              />
+            );
           })
         ) : (
           <h1>No users</h1>

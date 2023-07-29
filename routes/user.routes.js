@@ -71,4 +71,18 @@ router.get("/users/alphabetReversed", async (req, res) => {
   }
 });
 
+router.get("/users/reversed", async (req, res) => {
+  try {
+    const users = await User.find().sort({ _id: -1 });
+
+    if (!users) {
+      return res.status(500).json({ message: "Error while finding all users" });
+    }
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error while finding all users" });
+  }
+});
+
 module.exports = router;
