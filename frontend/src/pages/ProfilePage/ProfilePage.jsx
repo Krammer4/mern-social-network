@@ -9,6 +9,9 @@ import photo from "../../img/Profile/photo.png";
 import edit from "../../img/Profile/edit.png";
 import changeAvatar from "../../img/Profile/changeAvatar.png";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage.jsx";
+import { motion } from "framer-motion";
+
+import "./ProfilePage.css";
 
 export const ProfilePage = () => {
   const { userId } = useParams();
@@ -121,6 +124,7 @@ export const ProfilePage = () => {
   const [profileUsername, setProfileUsername] = useState("");
   const [profileStatus, setProfileStatus] = useState("");
   const [profileTown, setProfileTown] = useState("");
+  const [editingMessage, setEditingMessage] = useState("");
 
   const [editForm, setEditForm] = useState({
     name: profileName,
@@ -166,7 +170,7 @@ export const ProfilePage = () => {
       fetchUserPosts();
       showSuccessMessage("Информация успешно обновлена!");
     } catch (error) {
-      console.log("Error updating profile data:", error);
+      setEditingMessage(error.message);
     }
   }, [
     request,
@@ -189,7 +193,15 @@ export const ProfilePage = () => {
 
   return (
     <div className="profile">
-      {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
+      {isSuccessMessageVisible && (
+        <motion.div
+          initial={{ opacity: 0, opacity: 0 }}
+          animate={{ opacity: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <SuccessMessage message={successMessage} />
+        </motion.div>
+      )}
       <div className="profile _container">
         <div className="profile-infoBlock">
           <div className="profile-info-row">
@@ -239,7 +251,7 @@ export const ProfilePage = () => {
               />
             )}
 
-            <div>
+            <div className="profile-info-block">
               <input
                 ref={avatarChangeRef}
                 type="file"
@@ -263,6 +275,14 @@ export const ProfilePage = () => {
               </div>
 
               <p className="profile-info-email">{userInformation.email}</p>
+
+              {userInformation.status && (
+                <p className="profile-info-status">{userInformation.status}</p>
+              )}
+
+              {userInformation.town && (
+                <p className="profile-info-town">{userInformation.town}</p>
+              )}
             </div>
           </div>
         </div>
@@ -270,67 +290,64 @@ export const ProfilePage = () => {
         {isEditing && (
           <div className="profile-editing-block">
             <h1 className="profile-editing-title">Редактировать профиль</h1>
-            {profileName ? (
-              <>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Имя"
-                  value={profileName}
-                  onChange={editFormChangeHandler}
-                  className="profileInput"
-                />
 
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Фамилия"
-                  value={profileLastName}
-                  onChange={editFormChangeHandler}
-                  className="profileInput"
-                />
+            <>
+              <input
+                type="text"
+                name="name"
+                placeholder="Имя"
+                value={profileName}
+                onChange={editFormChangeHandler}
+                className="profileInput"
+              />
 
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Имя пользователя"
-                  value={profileUsername}
-                  onChange={editFormChangeHandler}
-                  className="profileInput"
-                />
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Фамилия"
+                value={profileLastName}
+                onChange={editFormChangeHandler}
+                className="profileInput"
+              />
 
-                <textarea
-                  rows={4}
-                  type="text"
-                  name="status"
-                  placeholder="Статус"
-                  value={profileStatus}
-                  onChange={editFormChangeHandler}
-                  className="profileInput"
-                />
+              <input
+                type="text"
+                name="username"
+                placeholder="Имя пользователя"
+                value={profileUsername}
+                onChange={editFormChangeHandler}
+                className="profileInput"
+              />
 
-                <input
-                  type="text"
-                  name="town"
-                  placeholder="Город"
-                  value={profileTown}
-                  onChange={editFormChangeHandler}
-                  className="profileInput"
-                />
+              <textarea
+                rows={4}
+                type="text"
+                name="status"
+                placeholder="Статус"
+                value={profileStatus}
+                onChange={editFormChangeHandler}
+                className="profileInput"
+              />
 
-                <button
-                  className="profile-publish-button"
-                  onClick={saveProfileData}
-                >
-                  Сохранить изменения
-                </button>
-              </>
-            ) : (
-              <p>
-                Не удалось получить информацию о пользователе... Попробуйте
-                перезагрузить страницу
-              </p>
-            )}
+              <input
+                type="text"
+                name="town"
+                placeholder="Город"
+                value={profileTown}
+                onChange={editFormChangeHandler}
+                className="profileInput"
+              />
+
+              <button
+                className="profile-publish-button"
+                onClick={saveProfileData}
+              >
+                Сохранить изменения
+              </button>
+              {editingMessage && (
+                <p className="profile-edit-error">{editingMessage}</p>
+              )}
+            </>
           </div>
         )}
 

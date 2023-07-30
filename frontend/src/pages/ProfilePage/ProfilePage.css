@@ -93,7 +93,8 @@ html {
 }
 .profile-info-row {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  align-items: start;
   /* justify-content: center; */
 }
 .avatarInitialPicker {
@@ -106,6 +107,9 @@ html {
   font-family: "Mulish";
   font-size: 38px;
 }
+.profile-info-block {
+  overflow: hidden;
+}
 .profile-info-name-row {
   display: flex;
   align-items: center;
@@ -114,14 +118,31 @@ html {
   width: 20px;
   cursor: pointer;
   margin-left: 20px;
+  transition: 0.3s ease all 0s;
+}
+.profile-info-editSign:hover {
+  transform: scale(1.2);
 }
 .profile-info-username {
   font-family: "Mulish";
   font-size: 22px;
 }
+
 .profile-info-email {
   font-family: "Mulish";
   font-size: 20px;
+}
+.profile-info-status {
+  opacity: 0.5;
+  font-size: 20px;
+  max-width: 600px;
+  font-family: "Mulish";
+  word-wrap: normal;
+}
+.profile-info-town {
+  font-family: "Mulish";
+  font-size: 20px;
+  color: #5c529a;
 }
 .avatar-block {
   margin-right: 20px;
@@ -141,6 +162,7 @@ html {
   right: 0;
   display: none;
 }
+
 .profile-info-avatar {
   border-radius: 100%;
   border: 3px solid #5c529a;
@@ -178,6 +200,15 @@ html {
   font-size: 38px;
   text-align: center;
   margin-bottom: 10px;
+}
+.profile-edit-error {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  color: #ff6251;
+  padding-top: 6px;
+  font-family: "Mulish";
+  font-weight: 600;
 }
 
 .profile-publish-block {
