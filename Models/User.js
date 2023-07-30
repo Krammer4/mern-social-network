@@ -8,6 +8,8 @@ const schema = new Schema({
   password: { type: String, required: true },
   posts: [{ type: Types.ObjectId, ref: "Post" }],
   avatar: { type: String },
+  status: { type: String },
+  town: { type: String },
 });
 
 module.exports = model("User", schema);
