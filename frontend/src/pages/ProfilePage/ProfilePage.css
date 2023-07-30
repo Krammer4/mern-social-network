@@ -122,7 +122,7 @@ html {
   height: 132px;
   object-fit: cover;
 }
-.profile-info-avatar.mineProfile:hover {
+.profile-info-avatar.myProfile:hover {
   opacity: 0.5;
   cursor: pointer;
 }
