@@ -36,6 +36,15 @@
   line-height: 20px;
   font-weight: 600;
 }
+.user-card-town {
+  font-family: "Mulish";
+  font-size: 18px;
+}
+.user-card-status {
+  font-family: "Mulish";
+  font-size: 18px;
+  opacity: 0.5;
+}
 .user-card-avatar {
   width: 80px;
   height: 80px;
