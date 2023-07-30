@@ -6,6 +6,8 @@ import anonymus from "../../img/Profile/none-avatar.png";
 import { Link, useParams } from "react-router-dom";
 import { PostSkeleton } from "../../components/PostSkeleton";
 import photo from "../../img/Profile/photo.png";
+import edit from "../../img/Profile/edit.png";
+import changeAvatar from "../../img/Profile/changeAvatar.png";
 
 export const ProfilePage = () => {
   const { userId } = useParams();
@@ -16,6 +18,7 @@ export const ProfilePage = () => {
   // const [contentInputValue, setContentInputValue] = useState("");
   const filePickerRef = useRef(null);
   const avatarChangeRef = useRef(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   const filePickerClick = () => {
     filePickerRef.current.click();
@@ -119,32 +122,44 @@ export const ProfilePage = () => {
         <div className="profile-infoBlock">
           <div className="profile-info-row">
             {userInformation.avatar ? (
-              <img
+              <div
+                className="avatar-myProfile"
                 onClick={() => {
                   if (userData.userId == userId) {
-                    console.log("USER ID", userId);
-                    console.log("USER DATA . ID: ", userData.userId);
                     avatarClick();
                   }
                 }}
-                src={`http://localhost:5000/${userInformation.avatar}`}
-                className={`profile-info-avatar ${
-                  userData.userId == userId && "myProfile"
-                }`}
-              />
+              >
+                <img
+                  onClick={() => {
+                    if (userData.userId == userId) {
+                      console.log("USER ID", userId);
+                      console.log("USER DATA . ID: ", userData.userId);
+                      avatarClick();
+                    }
+                  }}
+                  src={`http://localhost:5000/${userInformation.avatar}`}
+                  className={`profile-info-avatar ${
+                    userData.userId == userId && "myProfile"
+                  }`}
+                />
+
+                <img
+                  className="profile-change-avatar-icon"
+                  src={changeAvatar}
+                />
+              </div>
             ) : (
               <img
                 onClick={() => {
                   if (userData.userId == userId) {
-                    console.log("USER ID", userId);
-                    console.log("USER DATA . ID: ", userData.userId);
                     avatarClick();
                   }
                 }}
                 src={anonymus}
                 className={`profile-info-avatar ${
                   userData.userId == userId && "myProfile"
-                }`}
+                } anonym`}
               />
             )}
 
@@ -157,15 +172,31 @@ export const ProfilePage = () => {
                 className="avatarInitialPicker"
                 accept="image/*"
               />
-              <h2 className="profile-info-name">
-                {userInformation.name} {userInformation.lastName} •{" "}
-                {userInformation.username}
-              </h2>
+              <div className="profile-info-name-row">
+                <h2 className="profile-info-name">
+                  {userInformation.name} {userInformation.lastName} •{" "}
+                  {userInformation.username}{" "}
+                </h2>
+                {userData.userId == userId && (
+                  <img
+                    className="profile-info-editSign"
+                    src={edit}
+                    onClick={() => setIsEditing((prev) => !prev)}
+                  />
+                )}
+              </div>
 
               <p className="profile-info-email">{userInformation.email}</p>
             </div>
           </div>
         </div>
+
+        {isEditing && (
+          <div className="profile-editing-block">
+            <h1 className="profile-editing-title">Редактировать профиль</h1>
+          </div>
+        )}
+
         {userId == userData.userId && (
           <div className="profile-publish-block">
             <h1 className="profile-publish-title">Опубликовать новый пост:</h1>
@@ -240,7 +271,7 @@ export const ProfilePage = () => {
               </div>
             </>
           ) : userPosts.length == 0 ? (
-            <p className="profile-noPosts">У вас пока еще нет постов...</p>
+            <p className="profile-noPosts">Здесь пока еще нет постов...</p>
           ) : (
             userPosts.map((userPost) => {
               return (

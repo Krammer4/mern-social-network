@@ -11,7 +11,7 @@ export const UserCard = ({ name, avatar, lastName, username, userCardId }) => {
   });
 
   return (
-    <Link to={`/profile/${userCardId}`}>
+    <Link className="user-card-redirect" to={`/profile/${userCardId}`}>
       <div className="user-card">
         <div className="user-card-content">
           <div className="user-card-row">
