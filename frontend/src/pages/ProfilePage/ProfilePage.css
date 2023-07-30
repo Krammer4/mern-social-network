@@ -106,6 +106,15 @@ html {
   font-family: "Mulish";
   font-size: 38px;
 }
+.profile-info-name-row {
+  display: flex;
+  align-items: center;
+}
+.profile-info-editSign {
+  width: 20px;
+  cursor: pointer;
+  margin-left: 20px;
+}
 .profile-info-username {
   font-family: "Mulish";
   font-size: 22px;
@@ -114,17 +123,55 @@ html {
   font-family: "Mulish";
   font-size: 20px;
 }
-.profile-info-avatar {
+.avatar-myProfile {
   margin-right: 20px;
+  position: relative;
   border-radius: 100%;
-  border: 2px solid #5c529a;
+}
+.profile-change-avatar-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  margin: auto;
+  bottom: 0;
+  right: 0;
+  display: none;
+}
+.profile-info-avatar {
+  border-radius: 100%;
+  border: 3px solid #5c529a;
   width: 132px;
   height: 132px;
   object-fit: cover;
+  position: relative;
 }
-.profile-info-avatar.myProfile:hover {
+
+.avatar-myProfile:hover {
   opacity: 0.5;
   cursor: pointer;
+}
+
+.avatar-myProfile:hover .profile-change-avatar-icon {
+  display: block;
+}
+
+.profile-info-avatar.anonym {
+  border: none;
+}
+
+.profile-editing-block {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  max-width: 800px;
+  margin-top: 60px;
+}
+.profile-editing-title {
+  font-family: "Mulish";
+  font-size: 38px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .profile-publish-block {
