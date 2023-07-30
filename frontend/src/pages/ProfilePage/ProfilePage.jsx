@@ -53,7 +53,7 @@ export const ProfilePage = () => {
       const data = await request(
         "http://localhost:5000/api/posts",
         "POST",
-        formData,
+        formData
         // { "Content-Type": "multipart/form-data" }
       );
 
@@ -120,15 +120,31 @@ export const ProfilePage = () => {
           <div className="profile-info-row">
             {userInformation.avatar ? (
               <img
-                onClick={avatarClick}
+                onClick={() => {
+                  if (userData.userId == userId) {
+                    console.log("USER ID", userId);
+                    console.log("USER DATA . ID: ", userData.userId);
+                    avatarClick();
+                  }
+                }}
                 src={`http://localhost:5000/${userInformation.avatar}`}
-                className="profile-info-avatar"
+                className={`profile-info-avatar ${
+                  userData.userId == userId && "myProfile"
+                }`}
               />
             ) : (
               <img
-                onClick={avatarClick}
+                onClick={() => {
+                  if (userData.userId == userId) {
+                    console.log("USER ID", userId);
+                    console.log("USER DATA . ID: ", userData.userId);
+                    avatarClick();
+                  }
+                }}
                 src={anonymus}
-                className="profile-info-avatar"
+                className={`profile-info-avatar ${
+                  userData.userId == userId && "myProfile"
+                }`}
               />
             )}
 
