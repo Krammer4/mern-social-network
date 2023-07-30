@@ -8,6 +8,7 @@ import { PostSkeleton } from "../../components/PostSkeleton";
 import photo from "../../img/Profile/photo.png";
 import edit from "../../img/Profile/edit.png";
 import changeAvatar from "../../img/Profile/changeAvatar.png";
+import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage.jsx";
 
 export const ProfilePage = () => {
   const { userId } = useParams();
@@ -19,6 +20,10 @@ export const ProfilePage = () => {
   const filePickerRef = useRef(null);
   const avatarChangeRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
+
+  // MESSAGES
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
 
   const filePickerClick = () => {
     filePickerRef.current.click();
@@ -74,17 +79,11 @@ export const ProfilePage = () => {
     );
     setUserPosts(data.posts.reverse());
     setUserInformation(data);
-  }, []);
-
-  const fetchUserInformation = useCallback(async () => {
-    const data = await request(
-      `http://localhost:5000/api/profile/${userData.userId}`,
-      "GET"
-    );
-    setUserInformation(data);
-    if (data) {
-      console.log(userInformation);
-    }
+    setProfileName(data.name);
+    setProfileLastName(data.lastName);
+    setProfileUsername(data.username);
+    setProfileStatus(data.status);
+    setProfileTown(data.town);
   }, []);
 
   const changeAvatarHandler = async (event) => {
@@ -101,7 +100,6 @@ export const ProfilePage = () => {
           "POST",
           form
         );
-        // window.location.reload();
         fetchUserPosts();
       } catch (error) {
         console.log(error.message);
@@ -116,8 +114,82 @@ export const ProfilePage = () => {
     fetchUserPosts();
   }, []);
 
+  // States for profile-editing
+
+  const [profileName, setProfileName] = useState("");
+  const [profileLastName, setProfileLastName] = useState("");
+  const [profileUsername, setProfileUsername] = useState("");
+  const [profileStatus, setProfileStatus] = useState("");
+  const [profileTown, setProfileTown] = useState("");
+
+  const [editForm, setEditForm] = useState({
+    name: profileName,
+    lastName: profileLastName,
+    username: profileUsername,
+    status: profileStatus,
+    town: profileTown,
+  });
+
+  const editFormChangeHandler = async (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    // Обновляем состояния в зависимости от имени поля ввода
+    if (name === "name") {
+      setProfileName(value);
+    } else if (name === "lastName") {
+      setProfileLastName(value);
+    } else if (name === "username") {
+      setProfileUsername(value);
+    } else if (name === "status") {
+      setProfileStatus(value);
+    } else if (name === "town") {
+      setProfileTown(value);
+    }
+  };
+
+  const saveProfileData = useCallback(async () => {
+    try {
+      const formData = {
+        name: profileName,
+        lastName: profileLastName,
+        username: profileUsername,
+        status: profileStatus,
+        town: profileTown,
+      };
+
+      await request(
+        `http://localhost:5000/api/update-profile/${userData.userId}`,
+        "PATCH",
+        formData
+      );
+      setIsEditing(false);
+      fetchUserPosts();
+      showSuccessMessage("Информация успешно обновлена!");
+    } catch (error) {
+      console.log("Error updating profile data:", error);
+    }
+  }, [
+    request,
+    userData.userId,
+    profileName,
+    profileLastName,
+    profileUsername,
+    profileStatus,
+    profileTown,
+  ]);
+
+  const showSuccessMessage = (message) => {
+    setSuccessMessage(message);
+    setIsSuccessMessageVisible(true);
+    setTimeout(() => {
+      setIsSuccessMessageVisible(false);
+      setSuccessMessage("");
+    }, 3000);
+  };
+
   return (
     <div className="profile">
+      {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
       <div className="profile _container">
         <div className="profile-infoBlock">
           <div className="profile-info-row">
@@ -198,6 +270,67 @@ export const ProfilePage = () => {
         {isEditing && (
           <div className="profile-editing-block">
             <h1 className="profile-editing-title">Редактировать профиль</h1>
+            {profileName ? (
+              <>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Имя"
+                  value={profileName}
+                  onChange={editFormChangeHandler}
+                  className="profileInput"
+                />
+
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Фамилия"
+                  value={profileLastName}
+                  onChange={editFormChangeHandler}
+                  className="profileInput"
+                />
+
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Имя пользователя"
+                  value={profileUsername}
+                  onChange={editFormChangeHandler}
+                  className="profileInput"
+                />
+
+                <textarea
+                  rows={4}
+                  type="text"
+                  name="status"
+                  placeholder="Статус"
+                  value={profileStatus}
+                  onChange={editFormChangeHandler}
+                  className="profileInput"
+                />
+
+                <input
+                  type="text"
+                  name="town"
+                  placeholder="Город"
+                  value={profileTown}
+                  onChange={editFormChangeHandler}
+                  className="profileInput"
+                />
+
+                <button
+                  className="profile-publish-button"
+                  onClick={saveProfileData}
+                >
+                  Сохранить изменения
+                </button>
+              </>
+            ) : (
+              <p>
+                Не удалось получить информацию о пользователе... Попробуйте
+                перезагрузить страницу
+              </p>
+            )}
           </div>
         )}
 
