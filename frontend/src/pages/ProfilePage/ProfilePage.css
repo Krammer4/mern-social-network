@@ -123,6 +123,9 @@ html {
   font-family: "Mulish";
   font-size: 20px;
 }
+.avatar-block {
+  margin-right: 20px;
+}
 .avatar-myProfile {
   margin-right: 20px;
   position: relative;
@@ -145,6 +148,9 @@ html {
   height: 132px;
   object-fit: cover;
   position: relative;
+}
+.profile-info-avatar.anonym {
+  margin-right: 20px;
 }
 
 .avatar-myProfile:hover {
