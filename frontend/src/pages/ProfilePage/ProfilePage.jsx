@@ -123,7 +123,11 @@ export const ProfilePage = () => {
           <div className="profile-info-row">
             {userInformation.avatar ? (
               <div
-                className="avatar-myProfile"
+                className={`${
+                  userData.userId == userId
+                    ? "avatar-myProfile"
+                    : "avatar-block"
+                }`}
                 onClick={() => {
                   if (userData.userId == userId) {
                     avatarClick();
