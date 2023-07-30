@@ -5,7 +5,15 @@ import "./UserCard.css";
 import anonymus from "../../../../frontend/src/img/Profile/none-avatar.png";
 import { Link } from "react-router-dom";
 
-export const UserCard = ({ name, avatar, lastName, username, userCardId }) => {
+export const UserCard = ({
+  name,
+  avatar,
+  lastName,
+  username,
+  userCardId,
+  userStatus,
+  userTown,
+}) => {
   useEffect(() => {
     console.log(avatar);
   });
@@ -30,6 +38,14 @@ export const UserCard = ({ name, avatar, lastName, username, userCardId }) => {
                   {name} {lastName}
                 </p>
                 <p className="user-card-username">@{username}</p>
+
+                {userTown ? (
+                  <p className="user-card-town">{userTown}</p>
+                ) : userStatus ? (
+                  <p className="user-card-status">
+                    {userStatus.slice(0, 40)}...
+                  </p>
+                ) : null}
               </div>
             </div>
           </div>

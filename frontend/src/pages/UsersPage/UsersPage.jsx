@@ -73,6 +73,8 @@ export const UsersPage = () => {
                 lastName={user.lastName}
                 username={user.username}
                 userCardId={user._id}
+                userStatus={user.status}
+                userTown={user.town}
               />
             );
           })
