@@ -5,6 +5,8 @@ import "./PostPage.css";
 import { PostCard } from "../../components/PostCard/PostCard";
 import { CommentCard } from "../../components/CommentCard/CommentCard";
 import { PostSkeleton } from "../../components/PostSkeleton";
+import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
+import { motion } from "framer-motion";
 
 export const PostPage = () => {
   const userInfo = JSON.parse(localStorage.getItem("userData"));
@@ -42,14 +44,36 @@ export const PostPage = () => {
     // window.location.reload();
     fetchPostById();
     commentInputRef.current.value = "";
+    showSuccessMessage("Комментарий успешно опубликован");
   };
 
   useEffect(() => {
     fetchPostById();
   }, []);
 
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
+
+  const showSuccessMessage = (message) => {
+    setSuccessMessage(message);
+    setIsSuccessMessageVisible(true);
+    setTimeout(() => {
+      setIsSuccessMessageVisible(false);
+      setSuccessMessage("");
+    }, 3000);
+  };
+
   return (
     <div className="postPage">
+      {isSuccessMessageVisible && (
+        <motion.div
+          initial={{ opacity: 0, opacity: 0 }}
+          animate={{ opacity: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <SuccessMessage message={successMessage} />
+        </motion.div>
+      )}
       <div className="postPage _container">
         <div className="postPage-postBlock">
           {loading ? (
@@ -82,6 +106,11 @@ export const PostPage = () => {
             type="text"
             placeholder="Текст комментария"
             ref={commentInputRef}
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                publishComment();
+              }
+            }}
             onChange={changeFormHandler}
           />
           <button

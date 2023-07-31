@@ -18,6 +18,64 @@ router.get("/users/alphabetReversed", UsersController.alphabetReversed);
 
 router.get("/users/reversed", UsersController.reversed);
 
+router.get("/strictUserSearch", async (req, res) => {
+  const searchValue = req.query.searchValue.toString();
+
+  // const regex = new RegExp(searchValue, "i");
+
+  const [firstName, lastName] = searchValue.split(" ");
+
+  const firstNameRegex = new RegExp(`^${firstName}$`, "i");
+  const lastNameRegex = new RegExp(`^${lastName}$`, "i");
+
+  try {
+    const findResult = await User.find({
+      $or: [
+        { name: { $regex: firstNameRegex } },
+        { lastName: { $regex: lastNameRegex } },
+        { username: { $regex: firstNameRegex } },
+      ],
+    });
+
+    if (!findResult) {
+      return res.json({ message: "Пользователь не найден!" });
+    }
+
+    res.json(findResult);
+  } catch (error) {
+    res.json({ message: "Server error!" });
+  }
+});
+
+router.get("/laxUserSearch", async (req, res) => {
+  const searchValue = req.query.searchValue.toString();
+
+  const regex = new RegExp(searchValue, "i");
+
+  // const [firstName, lastName] = searchValue.split(" ");
+
+  // const firstNameRegex = new RegExp(firstName, "i");
+  // const lastNameRegex = new RegExp(lastName, "i");
+
+  try {
+    const findResult = await User.find({
+      $or: [
+        { name: { $regex: regex } },
+        { lastName: { $regex: regex } },
+        { username: { $regex: regex } },
+      ],
+    });
+
+    if (!findResult) {
+      return res.json({ message: "Пользователь не найден!" });
+    }
+
+    res.json(findResult);
+  } catch (error) {
+    res.json({ message: "Server error!" });
+  }
+});
+
 router.patch("/update-profile/:userId", async (req, res) => {
   const userId = req.params.userId;
   const { name, lastName, username, status, town, about } = req.body;
