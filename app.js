@@ -12,7 +12,6 @@ app.use(cors());
 
 const PORT = config.get("PORT");
 
-// app.use(bodyParser.json());
 app.use(express.json({ extended: true }));
 app.use("/api/auth", authrouter);
 app.use("/api", postsrouter);
