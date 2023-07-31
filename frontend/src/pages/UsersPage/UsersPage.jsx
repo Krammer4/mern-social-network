@@ -3,6 +3,7 @@ import { useHttp } from "../../hooks/httpHook";
 import { UserCard } from "../../components/UserCard/UserCard";
 
 import "./UsersPage.css";
+import UserCardSkeleton from "../../components/UserCardSkeleton";
 
 export const UsersPage = () => {
   const { request, loading, error } = useHttp();
@@ -65,19 +66,27 @@ export const UsersPage = () => {
         </div>
 
         {allUsers.length !== 0 ? (
-          allUsers.map((user) => {
-            return (
-              <UserCard
-                name={user.name}
-                avatar={user.avatar}
-                lastName={user.lastName}
-                username={user.username}
-                userCardId={user._id}
-                userStatus={user.status}
-                userTown={user.town}
-              />
-            );
-          })
+          loading ? (
+            <div className="user-card-skeleton">
+              <UserCardSkeleton />
+              <UserCardSkeleton />
+              <UserCardSkeleton />
+            </div>
+          ) : (
+            allUsers.map((user) => {
+              return (
+                <UserCard
+                  name={user.name}
+                  avatar={user.avatar}
+                  lastName={user.lastName}
+                  username={user.username}
+                  userCardId={user._id}
+                  userStatus={user.status}
+                  userTown={user.town}
+                />
+              );
+            })
+          )
         ) : (
           <h1>No users</h1>
         )}
