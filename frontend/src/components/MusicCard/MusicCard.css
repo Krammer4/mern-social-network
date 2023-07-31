@@ -38,6 +38,10 @@
   font-family: "Mulish";
   font-size: 18px;
   font-weight: 500;
+  cursor: pointer;
+}
+.music-card-artist:hover {
+  text-decoration: underline;
 }
 .music-card-spotify-link {
   max-width: max-content;
