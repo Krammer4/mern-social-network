@@ -55,6 +55,9 @@ export const ProfilePage = () => {
 
   const [userPosts, setUserPosts] = useState([]);
 
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+
   const fetchUserPosts = useCallback(async () => {
     const data = await request(
       `http://localhost:5000/api/profile/${userId}`,
@@ -126,13 +129,10 @@ export const ProfilePage = () => {
   const [profileTown, setProfileTown] = useState("");
   const [editingMessage, setEditingMessage] = useState("");
 
-  const [editForm, setEditForm] = useState({
-    name: profileName,
-    lastName: profileLastName,
-    username: profileUsername,
-    status: profileStatus,
-    town: profileTown,
-  });
+  const editLastNameRef = useRef(null);
+  const editUsernameRef = useRef(null);
+  const editStatusRef = useRef(null);
+  const editTownRef = useRef(null);
 
   const editFormChangeHandler = async (event) => {
     const name = event.target.name;
@@ -181,6 +181,12 @@ export const ProfilePage = () => {
     profileStatus,
     profileTown,
   ]);
+
+  const saveProfileDataOnKeyPress = (e) => {
+    if (e.key == "Enter") {
+      saveProfileData();
+    }
+  };
 
   const showSuccessMessage = (message) => {
     setSuccessMessage(message);
@@ -329,24 +335,41 @@ export const ProfilePage = () => {
                 placeholder="Имя"
                 value={profileName}
                 onChange={editFormChangeHandler}
+                onKeyDown={(e) => {
+                  if (e.key == "Enter") {
+                    editLastNameRef.current.focus();
+                  }
+                }}
                 className="profileInput"
               />
 
               <input
                 type="text"
                 name="lastName"
+                ref={editLastNameRef}
                 placeholder="Фамилия"
                 value={profileLastName}
                 onChange={editFormChangeHandler}
+                onKeyDown={(e) => {
+                  if (e.key == "Enter") {
+                    editUsernameRef.current.focus();
+                  }
+                }}
                 className="profileInput"
               />
 
               <input
                 type="text"
                 name="username"
+                ref={editUsernameRef}
                 placeholder="Имя пользователя"
                 value={profileUsername}
                 onChange={editFormChangeHandler}
+                onKeyDown={(e) => {
+                  if (e.key == "Enter") {
+                    editStatusRef.current.focus();
+                  }
+                }}
                 className="profileInput"
               />
 
@@ -354,18 +377,26 @@ export const ProfilePage = () => {
                 rows={4}
                 type="text"
                 name="status"
+                ref={editStatusRef}
                 placeholder="Статус"
                 value={profileStatus}
                 onChange={editFormChangeHandler}
+                onKeyDown={(e) => {
+                  if (e.key == "Enter") {
+                    editTownRef.current.focus();
+                  }
+                }}
                 className="profileInput"
               />
 
               <input
                 type="text"
                 name="town"
+                ref={editTownRef}
                 placeholder="Город"
                 value={profileTown}
                 onChange={editFormChangeHandler}
+                onKeyDown={saveProfileDataOnKeyPress}
                 className="profileInput"
               />
 
@@ -388,16 +419,28 @@ export const ProfilePage = () => {
             <input
               type="text"
               name="title"
+              ref={titleRef}
               placeholder="Название поста"
               className="profileInput"
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  subtitleRef.current.focus();
+                }
+              }}
               onChange={changeFormHandler}
             />
             <textarea
               rows={4}
               type="text"
               name="content"
+              ref={subtitleRef}
               placeholder="Описание поста"
               className="profileInput"
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  publishPostHandler();
+                }
+              }}
               onChange={changeFormHandler}
             />
 
