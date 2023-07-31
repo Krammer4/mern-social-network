@@ -238,17 +238,48 @@ export const ProfilePage = () => {
                 />
               </div>
             ) : (
-              <img
+              <div
+                className={`${
+                  userData.userId == userId
+                    ? "avatar-myProfile"
+                    : "avatar-block"
+                }`}
                 onClick={() => {
                   if (userData.userId == userId) {
                     avatarClick();
                   }
                 }}
-                src={anonymus}
-                className={`profile-info-avatar ${
-                  userData.userId == userId && "myProfile"
-                } anonym`}
-              />
+              >
+                <img
+                  onClick={() => {
+                    if (userData.userId == userId) {
+                      console.log("USER ID", userId);
+                      console.log("USER DATA . ID: ", userData.userId);
+                      avatarClick();
+                    }
+                  }}
+                  src={anonymus}
+                  className={`profile-info-avatar ${
+                    userData.userId == userId && "myProfile"
+                  }`}
+                />
+
+                <img
+                  className="profile-change-avatar-icon"
+                  src={changeAvatar}
+                />
+              </div>
+              // <img
+              //   onClick={() => {
+              //     if (userData.userId == userId) {
+              //       avatarClick();
+              //     }
+              //   }}
+              //   src={anonymus}
+              //   className={`profile-info-avatar ${
+              //     userData.userId == userId && "myProfile"
+              //   } anonym`}
+              // />
             )}
 
             <div className="profile-info-block">
