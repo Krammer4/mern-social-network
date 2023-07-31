@@ -21,8 +21,6 @@ router.get("/users/reversed", UsersController.reversed);
 router.get("/strictUserSearch", async (req, res) => {
   const searchValue = req.query.searchValue.toString();
 
-  // const regex = new RegExp(searchValue, "i");
-
   const [firstName, lastName] = searchValue.split(" ");
 
   const firstNameRegex = new RegExp(`^${firstName}$`, "i");
@@ -51,11 +49,6 @@ router.get("/laxUserSearch", async (req, res) => {
   const searchValue = req.query.searchValue.toString();
 
   const regex = new RegExp(searchValue, "i");
-
-  // const [firstName, lastName] = searchValue.split(" ");
-
-  // const firstNameRegex = new RegExp(firstName, "i");
-  // const lastNameRegex = new RegExp(lastName, "i");
 
   try {
     const findResult = await User.find({
