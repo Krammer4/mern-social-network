@@ -31,9 +31,14 @@ export const Header = ({ isAuthentificated }) => {
                 Главная
               </NavLink>
               {isAuthentificated && (
-                <NavLink to="/users" className="header-link">
-                  Пользователи
-                </NavLink>
+                <>
+                  <NavLink to="/users" className="header-link">
+                    Пользователи
+                  </NavLink>
+                  <NavLink to="/music" className="header-link">
+                    Музыка
+                  </NavLink>
+                </>
               )}
             </div>
             {isAuthentificated ? (
@@ -41,7 +46,6 @@ export const Header = ({ isAuthentificated }) => {
                 <NavLink
                   to={`/profile/${userData.userId}`}
                   className="header-link"
-                  // onClick={window.location.reload}
                   onClick={profileLinkClick}
                 >
                   Профиль

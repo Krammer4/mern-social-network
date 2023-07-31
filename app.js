@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const postsrouter = require("./routes/posts.routes");
 const userrouter = require("./routes/user.routes");
+const musicrouter = require("./routes/music.routes");
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,8 @@ app.use(express.json({ extended: true }));
 app.use("/api/auth", authrouter);
 app.use("/api", postsrouter);
 app.use("/api", userrouter);
+app.use("/api", musicrouter);
+
 app.use("/uploads", express.static("uploads"));
 
 const start = async () => {

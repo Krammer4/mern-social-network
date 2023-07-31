@@ -1,0 +1,99 @@
+.music-card {
+  max-width: 700px;
+  width: 100%;
+  border: 1px solid #000;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  border-radius: 20px;
+
+  background-color: #e7e5f0;
+  border: 2px solid #5c529a;
+}
+.music-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.music-info-row {
+  display: flex;
+}
+.music-track-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 20px;
+  margin-right: 20px;
+}
+.music-info-group {
+}
+.music-card-title {
+  color: #5c529a;
+  font-family: "Mulish";
+  font-size: 22px;
+  font-weight: 700;
+}
+.music-card-artist {
+  color: #5c529a;
+  font-family: "Mulish";
+  font-size: 18px;
+  font-weight: 500;
+}
+.music-card-spotify-link {
+  max-width: max-content;
+  display: block;
+}
+.music-spotify-logo {
+  width: 30px;
+  height: 30px;
+  margin-top: 6px;
+  cursor: pointer;
+}
+.music-card-toggler {
+  width: 50px;
+  height: 50px;
+  /* border: 2px solid #5c529a; */
+  padding: 14px;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: 0.3s ease all 0s;
+}
+.music-card-toggler:hover {
+  transform: scale(1.1);
+}
+
+input[type="range"] {
+  overflow: hidden;
+  width: 170px;
+  -webkit-appearance: none;
+  background-color: #bebcb0;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  -webkit-appearance: none;
+  color: #5c529a;
+  margin-top: -1px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 10px;
+  -webkit-appearance: none;
+  height: 10px;
+  cursor: ew-resize;
+  background: #453e74;
+  box-shadow: -80px 0 0 80px #5c529a;
+}
+
+/* input[type="range"]::-moz-range-progress {
+  background-color: #43e5f7;
+} */
+input[type="range"]::-moz-range-track {
+  background-color: #bebcb0;
+}
+input[type="range"]::-ms-fill-lower {
+  background-color: #5c529a;
+}
+input[type="range"]::-ms-fill-upper {
+  background-color: #bebcb0;
+}
