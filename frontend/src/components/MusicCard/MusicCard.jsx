@@ -12,9 +12,10 @@ export const MusicCard = ({
   trackImageUrl,
   trackPreviewUrl,
   trackHref,
+  handleSearchByArtist,
 }) => {
   const [isTrackPlaying, setIsTrackPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
+  const [volume, setVolume] = useState(0.2);
   const audioRef = useRef(null);
 
   const togglePlay = () => {
@@ -39,7 +40,14 @@ export const MusicCard = ({
           <img className="music-track-image" src={trackImageUrl} />
           <div className="music-info-group">
             <p className="music-card-title">{trackName}</p>
-            <p className="music-card-artist">{trackArtist}</p>
+            <p
+              className="music-card-artist"
+              onClick={() => {
+                handleSearchByArtist(trackArtist);
+              }}
+            >
+              {trackArtist}
+            </p>
             <a
               className="music-card-spotify-link"
               href={trackHref}
@@ -67,6 +75,7 @@ export const MusicCard = ({
             ref={audioRef}
             src={trackPreviewUrl}
             volume={volume}
+            onEnded={() => setIsTrackPlaying(false)}
           />
         </div>
         {/* <button className="music-card-button" onClick={togglePlay}>

@@ -90,7 +90,6 @@ html {
   max-width: 700px;
   margin-top: 20px;
   margin-bottom: 20px;
-  margin-bottom: 80px;
 }
 .music-search-input {
   display: block;
@@ -124,4 +123,22 @@ html {
 .music-search-button:hover {
   background-color: #5c529a;
   color: #ffffff;
+}
+
+.music-label {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  color: #5c529a;
+  margin-top: 40px;
+}
+.music-label-track-name {
+  font-weight: 700;
+}
+
+.music-block {
+  margin-top: 80px;
 }

@@ -8,8 +8,6 @@ const authentificateSpotify = async () => {
   const clientId = config.get("spotify_client_id");
   const clientSecret = config.get("spotify_client_secret");
 
-  console.log("CLIENT DATA: ", clientId, clientSecret);
-
   try {
     const response = await axios.request({
       method: "POST",
@@ -57,6 +55,44 @@ const searchTracks = async (trackName, token) => {
   }
 };
 
+const searchArtist = async (artistName, token) => {
+  try {
+    const response = await axios.get(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+        artistName
+      )}&type=artist`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const artists = response.data.artists.items;
+    return artists;
+  } catch (error) {
+    throw new Error("Error while searching for artist");
+  }
+};
+
+const getArtistTracks = async (artistId, token) => {
+  try {
+    const response = await axios.get(
+      `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=US`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const tracks = response.data.tracks;
+    return tracks;
+  } catch (error) {
+    throw new Error("Error while fetching artist tracks");
+  }
+};
+
 router.get(`/search-tracks`, async (req, res) => {
   const { trackName } = req.query;
   try {
@@ -66,6 +102,27 @@ router.get(`/search-tracks`, async (req, res) => {
     res.json(tracks);
   } catch (err) {
     res.status(500).json({ message: "Error while fetching track" });
+  }
+});
+
+router.get("/search-tracks-by-artist/:artistName", async (req, res) => {
+  const { artistName } = req.params;
+  console.log("ARTIST NAME: ", artistName);
+
+  try {
+    const token = await authentificateSpotify();
+    const artists = await searchArtist(artistName, token);
+
+    if (artists.length === 0) {
+      return res.status(404).json({ message: "Artist not found" });
+    }
+
+    const artistId = artists[0].id;
+    const tracks = await getArtistTracks(artistId, token);
+
+    res.json(tracks);
+  } catch (error) {
+    res.status(500).json({ message: "Error while fetching artist and tracks" });
   }
 });
 
