@@ -53,26 +53,6 @@ export const ProfilePage = () => {
     }
   };
 
-  const publishPostHandler = async () => {
-    const formData = new FormData();
-    formData.append("title", form.title);
-    formData.append("content", form.content);
-    formData.append("author", form.author);
-    formData.append("image", form.image);
-
-    try {
-      const data = await request(
-        "http://localhost:5000/api/posts",
-        "POST",
-        formData
-        // { "Content-Type": "multipart/form-data" }
-      );
-
-      console.log(data);
-      window.location.reload();
-    } catch (error) {}
-  };
-
   const [userPosts, setUserPosts] = useState([]);
 
   const fetchUserPosts = useCallback(async () => {
@@ -89,6 +69,25 @@ export const ProfilePage = () => {
     setProfileTown(data.town);
   }, []);
 
+  const publishPostHandler = async () => {
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("content", form.content);
+    formData.append("author", form.author);
+    formData.append("image", form.image);
+
+    try {
+      const data = await request(
+        "http://localhost:5000/api/posts",
+        "POST",
+        formData
+      );
+
+      fetchUserPosts();
+      showSuccessMessage("Пост успешно опубликован!");
+    } catch (error) {}
+  };
+
   const changeAvatarHandler = async (event) => {
     const file = event.target.files[0];
 
@@ -104,6 +103,7 @@ export const ProfilePage = () => {
           form
         );
         fetchUserPosts();
+        showSuccessMessage("Аватар был успешно изменён!");
       } catch (error) {
         console.log(error.message);
       }
