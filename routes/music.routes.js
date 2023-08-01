@@ -107,7 +107,6 @@ router.get(`/search-tracks`, async (req, res) => {
 
 router.get("/search-tracks-by-artist/:artistName", async (req, res) => {
   const { artistName } = req.params;
-  console.log("ARTIST NAME: ", artistName);
 
   try {
     const token = await authentificateSpotify();
@@ -123,6 +122,25 @@ router.get("/search-tracks-by-artist/:artistName", async (req, res) => {
     res.json(tracks);
   } catch (error) {
     res.status(500).json({ message: "Error while fetching artist and tracks" });
+  }
+});
+
+router.get("/get-artist/:artistName", async (req, res) => {
+  const { artistName } = req.params;
+  console.log("ARTIST NAME: ", artistName);
+  try {
+    const token = await authentificateSpotify();
+    const artist = await searchArtist(artistName, token);
+
+    if (!artist) {
+      return es
+        .status(404)
+        .json({ message: "Артиста с таким именем не существует" });
+    }
+
+    res.json(artist);
+  } catch (error) {
+    res.status(500).json({ message: "Error while fetching artist" });
   }
 });
 

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./MusicCard.css";
+import { Link } from "react-router-dom";
 
 import play from "../../img/Music/play.png";
 import pause from "../../img/Music/pause.png";
@@ -40,14 +41,12 @@ export const MusicCard = ({
           <img className="music-track-image" src={trackImageUrl} />
           <div className="music-info-group">
             <p className="music-card-title">{trackName}</p>
-            <p
+            <Link
+              to={`/music/artist/${trackArtist}`}
               className="music-card-artist"
-              onClick={() => {
-                handleSearchByArtist(trackArtist);
-              }}
             >
               {trackArtist}
-            </p>
+            </Link>
             <a
               className="music-card-spotify-link"
               href={trackHref}

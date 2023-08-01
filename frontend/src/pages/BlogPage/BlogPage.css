@@ -84,6 +84,18 @@ html {
 }
 
 .blog {
+  background-color: #faf9f9;
+}
+.blog-content {
+  background-color: #fff;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+
+  -webkit-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+  -moz-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+  box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
 }
 .blog-noBlogs {
   font-size: 32px;
@@ -100,7 +112,7 @@ html {
   text-align: center;
   font-size: 32px;
   font-weight: 700;
-  margin-top: 10px;
+  padding-top: 10px;
 }
 .blog-update {
   font-family: "Mulish";
@@ -115,7 +127,7 @@ html {
   margin-bottom: 40px;
 }
 .blog-allPosts-block {
-  margin-bottom: 60px;
+  padding-bottom: 60px;
 }
 .blog-post-skeleton {
   margin-left: auto;

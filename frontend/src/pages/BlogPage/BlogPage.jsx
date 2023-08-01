@@ -39,53 +39,21 @@ export const BlogPage = () => {
   return (
     <div className="blog">
       <div className="blog _container">
-        <p className="blog-mainTitle">Лента новостей:</p>
-        <p
-          className="blog-update"
-          onClick={() => {
-            fetchPosts();
-          }}
-        >
-          Обновить ленту
-        </p>
-        {/* {allPosts.length == 0 ? (
-          <p className="blog-noBlogs">Нет постов...</p>
-        ) : (
-          allPosts.map((post) => {
-            return (
-              <PostCard
-                title={post.title}
-                authorName={post.author.name}
-                authorLastName={post.author.lastName}
-                content={post.content}
-                postId={post._id}
-                authorEmail={post.author.email}
-                username={post.author.username}
-                date={post.date}
-              />
-            );
-          })
-        )} */}
-
-        <div className="blog-allPosts-block">
-          {loading ? (
-            <>
-              <div className="blog-post-skeleton">
-                <PostSkeleton />
-              </div>
-              <div className="blog-post-skeleton">
-                <PostSkeleton />
-              </div>
-              <div className="blog-post-skeleton">
-                <PostSkeleton />
-              </div>
-            </>
-          ) : allPosts.length > 0 ? (
-            allPosts.map((post) => (
-              <Link
-                className="postcard-redirectToThisPost"
-                to={`/post/${post._id}`}
-              >
+        <div className="blog-content">
+          <p className="blog-mainTitle">Лента новостей:</p>
+          <p
+            className="blog-update"
+            onClick={() => {
+              fetchPosts();
+            }}
+          >
+            Обновить ленту
+          </p>
+          {/* {allPosts.length == 0 ? (
+            <p className="blog-noBlogs">Нет постов...</p>
+          ) : (
+            allPosts.map((post) => {
+              return (
                 <PostCard
                   title={post.title}
                   authorName={post.author.name}
@@ -95,22 +63,59 @@ export const BlogPage = () => {
                   authorEmail={post.author.email}
                   username={post.author.username}
                   date={post.date}
-                  userId={userId}
-                  authorId={post.author._id}
-                  postImage={post.imageUrl}
-                  userAvatar={post.author.avatar}
                 />
-              </Link>
-            ))
-          ) : (
-            <p className="blog-noPosts">
-              Ждем! Пока тут ничего нет... Вы можете стать первым, опубликовав
-              пост во вкладке{" "}
-              <Link to={`/profile/${userId}`} className="blog-noPosts-redirect">
-                Профиль
-              </Link>
-            </p>
-          )}
+              );
+            })
+          )} */}
+
+          <div className="blog-allPosts-block">
+            {loading ? (
+              <>
+                <div className="blog-post-skeleton">
+                  <PostSkeleton />
+                </div>
+                <div className="blog-post-skeleton">
+                  <PostSkeleton />
+                </div>
+                <div className="blog-post-skeleton">
+                  <PostSkeleton />
+                </div>
+              </>
+            ) : allPosts.length > 0 ? (
+              allPosts.map((post) => (
+                <Link
+                  className="postcard-redirectToThisPost"
+                  to={`/post/${post._id}`}
+                >
+                  <PostCard
+                    title={post.title}
+                    authorName={post.author.name}
+                    authorLastName={post.author.lastName}
+                    content={post.content}
+                    postId={post._id}
+                    authorEmail={post.author.email}
+                    username={post.author.username}
+                    date={post.date}
+                    userId={userId}
+                    authorId={post.author._id}
+                    postImage={post.imageUrl}
+                    userAvatar={post.author.avatar}
+                  />
+                </Link>
+              ))
+            ) : (
+              <p className="blog-noPosts">
+                Ждем! Пока тут ничего нет... Вы можете стать первым, опубликовав
+                пост во вкладке{" "}
+                <Link
+                  to={`/profile/${userId}`}
+                  className="blog-noPosts-redirect"
+                >
+                  Профиль
+                </Link>
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>

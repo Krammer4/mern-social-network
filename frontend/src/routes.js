@@ -7,6 +7,7 @@ import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage.jsx"
 import { NotFound } from "./pages/NotFound/NotFound.jsx";
 import { UsersPage } from "./pages/UsersPage/UsersPage.jsx";
 import { MusicPage } from "./pages/MusicPage/MusicPage.jsx";
+import { ArtistPage } from "./pages/ArtistPage/ArtistPage.jsx";
 
 export const useRoutes = (isAuthentificated) => {
   if (isAuthentificated) {
@@ -15,6 +16,7 @@ export const useRoutes = (isAuthentificated) => {
         <Route path="/" element={<BlogPage />} />
         <Route path="/users" element={<UsersPage />} />
         <Route path="/music" element={<MusicPage />} />
+        <Route path="/music/artist/:artistName" element={<ArtistPage />} />
         <Route path="/profile/:userId" element={<ProfilePage />} />
         <Route path="/post/:postId" element={<PostPage />} />
         <Route path="*" element={<NotFound />} />
