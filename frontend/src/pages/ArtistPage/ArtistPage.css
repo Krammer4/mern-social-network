@@ -82,110 +82,75 @@ html {
   padding-left: 20px;
   padding-right: 20px;
 }
-.users {
-  background-color: #faf9f9;
-}
-.users-content {
-  background-color: #fff;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 100vh;
 
-  -webkit-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
-  -moz-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
-  box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+.artistPage {
 }
-.users-search-row {
+.artistInfo-block {
+  margin-top: 40px;
+}
+.artistPage-image {
   margin-left: auto;
   margin-right: auto;
-  display: flex;
-  max-width: 700px;
-  padding-top: 20px;
+  max-width: 400px;
+  border-radius: 20px;
   margin-bottom: 20px;
-}
-.users-search-input {
-  display: block;
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  padding: 6px 0px;
-  font-family: "Mulish";
-  font-size: 20px;
-  border: 2px solid #5c529a;
-  color: #5c529a;
-  border-right: none;
-}
-.users-search-input:focus {
-  outline: none;
-}
-.users-search-button {
-  width: 120px;
-  cursor: pointer;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  border: none;
-  background-color: #e7e5f0;
-  font-family: "Mulish";
-  border: 2px solid #5c529a;
-  transition: 0.3s ease all 0s;
-  font-weight: 600;
-}
-.users-search-button:hover {
-  background-color: #5c529a;
-  color: #ffffff;
-}
 
-.users-sort-row {
+  -webkit-box-shadow: 0px 0px 25px 1px rgba(0, 0, 0, 0.26);
+  -moz-box-shadow: 0px 0px 25px 1px rgba(0, 0, 0, 0.26);
+  box-shadow: 0px 0px 25px 1px rgba(0, 0, 0, 0.26);
+}
+.artistPage-genres {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
-  max-width: 800px;
-  flex-wrap: wrap;
-}
-.users-sort-mainTitle {
+  max-width: max-content;
   font-family: "Mulish";
-  font-size: 22px;
-  margin-bottom: 10px;
-}
-.users-sort-button {
-  padding: 6px 12px;
-  background-color: #f0eff3;
-  margin-left: 20px;
-  cursor: pointer;
-  border-radius: 10px;
-  font-family: "Mulish";
-  transition: 0.3s ease all 0s;
-  margin-bottom: 10px;
-}
-.users-sort-button.active {
-  background-color: #5c529a;
-  color: #ffffff;
-  font-weight: 700;
-}
-.users-sort-button:hover {
-  background-color: #e6e4ec;
-}
-
-.user-card-skeleton {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  max-width: 650px;
   margin-top: 10px;
 }
-
-.users-noUsers {
-  font-size: 32px;
+.artistPage-genre-title {
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.artistPage-genre-card {
+  margin-right: 10px;
+  border-radius: 6px;
+  padding: 2px 8px;
+  background-color: #e7e5f0;
+  /* border: 2px solid #5c529a; */
+}
+.artistPage-name {
   font-family: "Mulish";
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  font-size: 42px;
+  margin-top: 6px;
+  font-weight: 700;
+}
+.artistPage-followers {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+}
+.artistPage-followers-bold {
+  font-weight: 700;
+}
+
+.artistTracks-block {
+}
+.artistTracks-mainTitle {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  color: #5c529a;
   margin-top: 20px;
-  opacity: 0.5;
+  margin-bottom: 20px;
 }

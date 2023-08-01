@@ -79,72 +79,74 @@ export const UsersPage = () => {
   return (
     <div className="users">
       <div className="users _container">
-        <div className="users-search-row">
-          <input
-            value={inputValue}
-            onChange={inputChangeHandler}
-            onKeyDown={(e) => {
-              if (e.key == "Enter") {
-                strictUserSearchHandler(inputValue);
-              }
-            }}
-            className="users-search-input"
-          />
-          <button
-            onClick={() => strictUserSearchHandler(inputValue)}
-            className="users-search-button"
-          >
-            Поиск
-          </button>
-        </div>
-        <div className="users-sort-row">
-          <p className="users-sort-mainTitle">Сортировать по:</p>
-          {sortButtons.map((button) => (
-            <p
-              className={`users-sort-button ${
-                activeSortButton == button.id && "active"
-              }`}
-              onClick={() => {
-                setActiveSortButton(button.id);
-                fetchAllUsers(button.sortMethod);
+        <div className="users-content">
+          <div className="users-search-row">
+            <input
+              value={inputValue}
+              onChange={inputChangeHandler}
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  strictUserSearchHandler(inputValue);
+                }
               }}
+              className="users-search-input"
+            />
+            <button
+              onClick={() => strictUserSearchHandler(inputValue)}
+              className="users-search-button"
             >
-              {button.title}
-            </p>
-          ))}
-        </div>
+              Поиск
+            </button>
+          </div>
+          <div className="users-sort-row">
+            <p className="users-sort-mainTitle">Сортировать по:</p>
+            {sortButtons.map((button) => (
+              <p
+                className={`users-sort-button ${
+                  activeSortButton == button.id && "active"
+                }`}
+                onClick={() => {
+                  setActiveSortButton(button.id);
+                  fetchAllUsers(button.sortMethod);
+                }}
+              >
+                {button.title}
+              </p>
+            ))}
+          </div>
 
-        {Array.isArray(allUsers) ? (
-          allUsers.length !== 0 ? (
-            loading ? (
-              <div className="user-card-skeleton">
-                <UserCardSkeleton />
-                <UserCardSkeleton />
-                <UserCardSkeleton />
-              </div>
+          {Array.isArray(allUsers) ? (
+            allUsers.length !== 0 ? (
+              loading ? (
+                <div className="user-card-skeleton">
+                  <UserCardSkeleton />
+                  <UserCardSkeleton />
+                  <UserCardSkeleton />
+                </div>
+              ) : (
+                allUsers.map((user) => {
+                  return (
+                    <UserCard
+                      name={user.name}
+                      avatar={user.avatar}
+                      lastName={user.lastName}
+                      username={user.username}
+                      userCardId={user._id}
+                      userStatus={user.status}
+                      userTown={user.town}
+                    />
+                  );
+                })
+              )
             ) : (
-              allUsers.map((user) => {
-                return (
-                  <UserCard
-                    name={user.name}
-                    avatar={user.avatar}
-                    lastName={user.lastName}
-                    username={user.username}
-                    userCardId={user._id}
-                    userStatus={user.status}
-                    userTown={user.town}
-                  />
-                );
-              })
+              <h1 className="users-noUsers">
+                Ни одного пользователя не найдено...
+              </h1>
             )
           ) : (
-            <h1 className="users-noUsers">
-              Ни одного пользователя не найдено...
-            </h1>
-          )
-        ) : (
-          <p>{allUsers.name}</p>
-        )}
+            <p>{allUsers.name}</p>
+          )}
+        </div>
       </div>
     </div>
   );

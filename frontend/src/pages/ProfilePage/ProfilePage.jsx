@@ -209,324 +209,330 @@ export const ProfilePage = () => {
         </motion.div>
       )}
       <div className="profile _container">
-        <div className="profile-infoBlock">
-          <div className="profile-info-row">
-            {userInformation.avatar ? (
-              <div
-                className={`${
-                  userData.userId == userId
-                    ? "avatar-myProfile"
-                    : "avatar-block"
-                }`}
-                onClick={() => {
-                  if (userData.userId == userId) {
-                    avatarClick();
-                  }
-                }}
-              >
-                <img
+        <div className="profile-content">
+          <div className="profile-infoBlock">
+            <div className="profile-info-row">
+              {userInformation.avatar ? (
+                <div
+                  className={`${
+                    userData.userId == userId
+                      ? "avatar-myProfile"
+                      : "avatar-block"
+                  }`}
                   onClick={() => {
                     if (userData.userId == userId) {
-                      console.log("USER ID", userId);
-                      console.log("USER DATA . ID: ", userData.userId);
                       avatarClick();
                     }
                   }}
-                  src={`http://localhost:5000/${userInformation.avatar}`}
-                  className={`profile-info-avatar ${
-                    userData.userId == userId && "myProfile"
-                  }`}
-                />
-
-                <img
-                  className="profile-change-avatar-icon"
-                  src={changeAvatar}
-                />
-              </div>
-            ) : (
-              <div
-                className={`${
-                  userData.userId == userId
-                    ? "avatar-myProfile"
-                    : "avatar-block"
-                }`}
-                onClick={() => {
-                  if (userData.userId == userId) {
-                    avatarClick();
-                  }
-                }}
-              >
-                <img
-                  onClick={() => {
-                    if (userData.userId == userId) {
-                      console.log("USER ID", userId);
-                      console.log("USER DATA . ID: ", userData.userId);
-                      avatarClick();
-                    }
-                  }}
-                  src={anonymus}
-                  className={`profile-info-avatar ${
-                    userData.userId == userId && "myProfile"
-                  }`}
-                />
-
-                <img
-                  className="profile-change-avatar-icon"
-                  src={changeAvatar}
-                />
-              </div>
-              // <img
-              //   onClick={() => {
-              //     if (userData.userId == userId) {
-              //       avatarClick();
-              //     }
-              //   }}
-              //   src={anonymus}
-              //   className={`profile-info-avatar ${
-              //     userData.userId == userId && "myProfile"
-              //   } anonym`}
-              // />
-            )}
-
-            <div className="profile-info-block">
-              <input
-                ref={avatarChangeRef}
-                type="file"
-                name="avatar"
-                onChange={changeAvatarHandler}
-                className="avatarInitialPicker"
-                accept="image/*"
-              />
-              <div className="profile-info-name-row">
-                <h2 className="profile-info-name">
-                  {userInformation.name} {userInformation.lastName} •{" "}
-                  {userInformation.username}{" "}
-                </h2>
-                {userData.userId == userId && (
+                >
                   <img
-                    className="profile-info-editSign"
-                    src={edit}
-                    onClick={() => setIsEditing((prev) => !prev)}
+                    onClick={() => {
+                      if (userData.userId == userId) {
+                        console.log("USER ID", userId);
+                        console.log("USER DATA . ID: ", userData.userId);
+                        avatarClick();
+                      }
+                    }}
+                    src={`http://localhost:5000/${userInformation.avatar}`}
+                    className={`profile-info-avatar ${
+                      userData.userId == userId && "myProfile"
+                    }`}
                   />
+
+                  <img
+                    className="profile-change-avatar-icon"
+                    src={changeAvatar}
+                  />
+                </div>
+              ) : (
+                <div
+                  className={`${
+                    userData.userId == userId
+                      ? "avatar-myProfile"
+                      : "avatar-block"
+                  }`}
+                  onClick={() => {
+                    if (userData.userId == userId) {
+                      avatarClick();
+                    }
+                  }}
+                >
+                  <img
+                    onClick={() => {
+                      if (userData.userId == userId) {
+                        console.log("USER ID", userId);
+                        console.log("USER DATA . ID: ", userData.userId);
+                        avatarClick();
+                      }
+                    }}
+                    src={anonymus}
+                    className={`profile-info-avatar ${
+                      userData.userId == userId && "myProfile"
+                    }`}
+                  />
+
+                  <img
+                    className="profile-change-avatar-icon"
+                    src={changeAvatar}
+                  />
+                </div>
+                // <img
+                //   onClick={() => {
+                //     if (userData.userId == userId) {
+                //       avatarClick();
+                //     }
+                //   }}
+                //   src={anonymus}
+                //   className={`profile-info-avatar ${
+                //     userData.userId == userId && "myProfile"
+                //   } anonym`}
+                // />
+              )}
+
+              <div className="profile-info-block">
+                <input
+                  ref={avatarChangeRef}
+                  type="file"
+                  name="avatar"
+                  onChange={changeAvatarHandler}
+                  className="avatarInitialPicker"
+                  accept="image/*"
+                />
+                <div className="profile-info-name-row">
+                  <h2 className="profile-info-name">
+                    {userInformation.name} {userInformation.lastName} •{" "}
+                    {userInformation.username}{" "}
+                  </h2>
+                  {userData.userId == userId && (
+                    <img
+                      className="profile-info-editSign"
+                      src={edit}
+                      onClick={() => setIsEditing((prev) => !prev)}
+                    />
+                  )}
+                </div>
+
+                <p className="profile-info-email">{userInformation.email}</p>
+
+                {userInformation.status && (
+                  <p className="profile-info-status">
+                    {userInformation.status}
+                  </p>
+                )}
+
+                {userInformation.town && (
+                  <p className="profile-info-town">{userInformation.town}</p>
                 )}
               </div>
-
-              <p className="profile-info-email">{userInformation.email}</p>
-
-              {userInformation.status && (
-                <p className="profile-info-status">{userInformation.status}</p>
-              )}
-
-              {userInformation.town && (
-                <p className="profile-info-town">{userInformation.town}</p>
-              )}
             </div>
           </div>
-        </div>
 
-        {isEditing && (
-          <div className="profile-editing-block">
-            <h1 className="profile-editing-title">Редактировать профиль</h1>
+          {isEditing && (
+            <div className="profile-editing-block">
+              <h1 className="profile-editing-title">Редактировать профиль</h1>
 
-            <>
+              <>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Имя"
+                  value={profileName}
+                  onChange={editFormChangeHandler}
+                  onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                      editLastNameRef.current.focus();
+                    }
+                  }}
+                  className="profileInput"
+                />
+
+                <input
+                  type="text"
+                  name="lastName"
+                  ref={editLastNameRef}
+                  placeholder="Фамилия"
+                  value={profileLastName}
+                  onChange={editFormChangeHandler}
+                  onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                      editUsernameRef.current.focus();
+                    }
+                  }}
+                  className="profileInput"
+                />
+
+                <input
+                  type="text"
+                  name="username"
+                  ref={editUsernameRef}
+                  placeholder="Имя пользователя"
+                  value={profileUsername}
+                  onChange={editFormChangeHandler}
+                  onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                      editStatusRef.current.focus();
+                    }
+                  }}
+                  className="profileInput"
+                />
+
+                <textarea
+                  rows={4}
+                  type="text"
+                  name="status"
+                  ref={editStatusRef}
+                  placeholder="Статус"
+                  value={profileStatus}
+                  onChange={editFormChangeHandler}
+                  onKeyDown={(e) => {
+                    if (e.key == "Enter") {
+                      editTownRef.current.focus();
+                    }
+                  }}
+                  className="profileInput"
+                />
+
+                <input
+                  type="text"
+                  name="town"
+                  ref={editTownRef}
+                  placeholder="Город"
+                  value={profileTown}
+                  onChange={editFormChangeHandler}
+                  onKeyDown={saveProfileDataOnKeyPress}
+                  className="profileInput"
+                />
+
+                <button
+                  className="profile-publish-button"
+                  onClick={saveProfileData}
+                >
+                  Сохранить изменения
+                </button>
+                {editingMessage && (
+                  <p className="profile-edit-error">{editingMessage}</p>
+                )}
+              </>
+            </div>
+          )}
+
+          {userId == userData.userId && (
+            <div className="profile-publish-block">
+              <h1 className="profile-publish-title">
+                Опубликовать новый пост:
+              </h1>
               <input
                 type="text"
-                name="name"
-                placeholder="Имя"
-                value={profileName}
-                onChange={editFormChangeHandler}
+                name="title"
+                ref={titleRef}
+                placeholder="Название поста"
+                className="profileInput"
                 onKeyDown={(e) => {
                   if (e.key == "Enter") {
-                    editLastNameRef.current.focus();
+                    subtitleRef.current.focus();
                   }
                 }}
-                className="profileInput"
+                onChange={changeFormHandler}
               />
-
-              <input
-                type="text"
-                name="lastName"
-                ref={editLastNameRef}
-                placeholder="Фамилия"
-                value={profileLastName}
-                onChange={editFormChangeHandler}
-                onKeyDown={(e) => {
-                  if (e.key == "Enter") {
-                    editUsernameRef.current.focus();
-                  }
-                }}
-                className="profileInput"
-              />
-
-              <input
-                type="text"
-                name="username"
-                ref={editUsernameRef}
-                placeholder="Имя пользователя"
-                value={profileUsername}
-                onChange={editFormChangeHandler}
-                onKeyDown={(e) => {
-                  if (e.key == "Enter") {
-                    editStatusRef.current.focus();
-                  }
-                }}
-                className="profileInput"
-              />
-
               <textarea
                 rows={4}
                 type="text"
-                name="status"
-                ref={editStatusRef}
-                placeholder="Статус"
-                value={profileStatus}
-                onChange={editFormChangeHandler}
+                name="content"
+                ref={subtitleRef}
+                placeholder="Описание поста"
+                className="profileInput"
                 onKeyDown={(e) => {
                   if (e.key == "Enter") {
-                    editTownRef.current.focus();
+                    publishPostHandler();
                   }
                 }}
-                className="profileInput"
-              />
-
-              <input
-                type="text"
-                name="town"
-                ref={editTownRef}
-                placeholder="Город"
-                value={profileTown}
-                onChange={editFormChangeHandler}
-                onKeyDown={saveProfileDataOnKeyPress}
-                className="profileInput"
-              />
-
-              <button
-                className="profile-publish-button"
-                onClick={saveProfileData}
-              >
-                Сохранить изменения
-              </button>
-              {editingMessage && (
-                <p className="profile-edit-error">{editingMessage}</p>
-              )}
-            </>
-          </div>
-        )}
-
-        {userId == userData.userId && (
-          <div className="profile-publish-block">
-            <h1 className="profile-publish-title">Опубликовать новый пост:</h1>
-            <input
-              type="text"
-              name="title"
-              ref={titleRef}
-              placeholder="Название поста"
-              className="profileInput"
-              onKeyDown={(e) => {
-                if (e.key == "Enter") {
-                  subtitleRef.current.focus();
-                }
-              }}
-              onChange={changeFormHandler}
-            />
-            <textarea
-              rows={4}
-              type="text"
-              name="content"
-              ref={subtitleRef}
-              placeholder="Описание поста"
-              className="profileInput"
-              onKeyDown={(e) => {
-                if (e.key == "Enter") {
-                  publishPostHandler();
-                }
-              }}
-              onChange={changeFormHandler}
-            />
-
-            <div className="filePickRow">
-              <div className="filePickerPhoto-row">
-                <img
-                  src={photo}
-                  className="filePickerPhoto-icon"
-                  onClick={filePickerClick}
-                />
-                <p className="filePickerPhoto-text" onClick={filePickerClick}>
-                  Прикрепить картинку
-                </p>
-              </div>
-              <input
-                type="file"
-                ref={filePickerRef}
-                name="image"
-                className="filePickerInitialInput"
-                accept="image/*"
                 onChange={changeFormHandler}
               />
 
-              {form.image && (
-                <img src="" className="selected-image" id="selected-image" />
-              )}
+              <div className="filePickRow">
+                <div className="filePickerPhoto-row">
+                  <img
+                    src={photo}
+                    className="filePickerPhoto-icon"
+                    onClick={filePickerClick}
+                  />
+                  <p className="filePickerPhoto-text" onClick={filePickerClick}>
+                    Прикрепить картинку
+                  </p>
+                </div>
+                <input
+                  type="file"
+                  ref={filePickerRef}
+                  name="image"
+                  className="filePickerInitialInput"
+                  accept="image/*"
+                  onChange={changeFormHandler}
+                />
+
+                {form.image && (
+                  <img src="" className="selected-image" id="selected-image" />
+                )}
+              </div>
+              <button
+                className="profile-publish-button"
+                onClick={publishPostHandler}
+              >
+                Опубликовать
+              </button>
+              <p className="profile-error-message">
+                {error && `Пожалуйста, заполните все поля.`}
+              </p>
             </div>
-            <button
-              className="profile-publish-button"
-              onClick={publishPostHandler}
-            >
-              Опубликовать
-            </button>
-            <p className="profile-error-message">
-              {error && `Пожалуйста, заполните все поля.`}
-            </p>
+          )}
+
+          <div className="profile-allposts-block">
+            {userId == userData.userId ? (
+              <h1 className="profile-allposts-title">Все ваши посты:</h1>
+            ) : (
+              <h1 className="profile-allposts-title">
+                Все посты {userInformation.username}
+              </h1>
+            )}
+
+            {loading ? (
+              <>
+                <div className="blog-post-skeleton">
+                  <PostSkeleton />
+                </div>
+                <div className="blog-post-skeleton">
+                  <PostSkeleton />
+                </div>
+              </>
+            ) : userPosts.length == 0 ? (
+              <p className="profile-noPosts">Здесь пока еще нет постов...</p>
+            ) : (
+              userPosts.map((userPost) => {
+                return (
+                  <>
+                    <Link
+                      className="postcard-redirectToThisPost"
+                      to={`/post/${userPost._id}`}
+                    >
+                      <PostCard
+                        title={userPost.title}
+                        authorName={userInformation.name}
+                        authorLastName={userInformation.lastName}
+                        username={userInformation.username}
+                        content={userPost.content}
+                        postId={userPost._id}
+                        authorEmail={userPost.email}
+                        date={userPost.date}
+                        userId={userData.userId}
+                        authorId={userInformation._id}
+                        postImage={userPost.imageUrl}
+                        userAvatar={userInformation.avatar}
+                      />
+                    </Link>
+                  </>
+                );
+              })
+            )}
           </div>
-        )}
-
-        <div className="profile-allposts-block">
-          {userId == userData.userId ? (
-            <h1 className="profile-allposts-title">Все ваши посты:</h1>
-          ) : (
-            <h1 className="profile-allposts-title">
-              Все посты {userInformation.username}
-            </h1>
-          )}
-
-          {loading ? (
-            <>
-              <div className="blog-post-skeleton">
-                <PostSkeleton />
-              </div>
-              <div className="blog-post-skeleton">
-                <PostSkeleton />
-              </div>
-            </>
-          ) : userPosts.length == 0 ? (
-            <p className="profile-noPosts">Здесь пока еще нет постов...</p>
-          ) : (
-            userPosts.map((userPost) => {
-              return (
-                <>
-                  <Link
-                    className="postcard-redirectToThisPost"
-                    to={`/post/${userPost._id}`}
-                  >
-                    <PostCard
-                      title={userPost.title}
-                      authorName={userInformation.name}
-                      authorLastName={userInformation.lastName}
-                      username={userInformation.username}
-                      content={userPost.content}
-                      postId={userPost._id}
-                      authorEmail={userPost.email}
-                      date={userPost.date}
-                      userId={userData.userId}
-                      authorId={userInformation._id}
-                      postImage={userPost.imageUrl}
-                      userAvatar={userInformation.avatar}
-                    />
-                  </Link>
-                </>
-              );
-            })
-          )}
         </div>
       </div>
     </div>

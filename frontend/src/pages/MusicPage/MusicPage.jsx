@@ -58,6 +58,11 @@ export const MusicPage = () => {
             type="text"
             value={trackName}
             onChange={(e) => setTrackName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                handleSearch();
+              }
+            }}
             placeholder="Введите название трека"
             className="music-search-input"
           />
