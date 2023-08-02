@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import "./MusicPage.css";
 import { MusicCard } from "../../components/MusicCard/MusicCard";
+import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
+import { WarningMessage } from "../../Messages/WarningMessage/WarningMessage";
 
 export const MusicPage = () => {
   const [trackName, setTrackName] = useState("");
@@ -9,6 +11,29 @@ export const MusicPage = () => {
 
   const [showedTrack, setShowedTrack] = useState("");
   const [showedArtist, setShowedArtist] = useState("");
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
+  const [isWarningMessageVisible, setIsWarningMessageVisible] = useState(false);
+
+  const showSuccessMessage = (message) => {
+    setSuccessMessage(message);
+    setIsSuccessMessageVisible(true);
+    setTimeout(() => {
+      setIsSuccessMessageVisible(false);
+      setSuccessMessage("");
+    }, 3000);
+  };
+
+  const showWarningMessage = (message) => {
+    setWarningMessage(message);
+    setIsWarningMessageVisible(true);
+    setTimeout(() => {
+      setIsWarningMessageVisible(false);
+      setWarningMessage("");
+    }, 3000);
+  };
 
   const handleSearch = async () => {
     try {
@@ -52,51 +77,57 @@ export const MusicPage = () => {
 
   return (
     <div className="music">
+      {isWarningMessageVisible && <WarningMessage message={warningMessage} />}
+      {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
       <div className="music _container">
-        <div className="music-search-row">
-          <input
-            type="text"
-            value={trackName}
-            onChange={(e) => setTrackName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key == "Enter") {
-                handleSearch();
-              }
-            }}
-            placeholder="Введите название трека"
-            className="music-search-input"
-          />
-          <button className="music-search-button" onClick={handleSearch}>
-            Поиск
-          </button>
-        </div>
+        <div className="music-content">
+          <div className="music-search-row">
+            <input
+              type="text"
+              value={trackName}
+              onChange={(e) => setTrackName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  handleSearch();
+                }
+              }}
+              placeholder="Введите название трека"
+              className="music-search-input"
+            />
+            <button className="music-search-button" onClick={handleSearch}>
+              Поиск
+            </button>
+          </div>
 
-        {showedTrack && (
-          <p className="music-label">
-            Треки c названием{" "}
-            <span className="music-label-track-name">"{showedTrack}"</span>:
-          </p>
-        )}
-        {showedArtist && (
-          <p className="music-label">Треки артиста {showedArtist}:</p>
-        )}
-
-        <div className="music-block">
-          {searchResults.map(
-            (track) =>
-              track.preview_url && (
-                <MusicCard
-                  key={track.id}
-                  trackId={track.id}
-                  trackImageUrl={track.album.images[0].url}
-                  trackName={track.name}
-                  trackArtist={track.artists[0].name}
-                  trackPreviewUrl={track.preview_url}
-                  trackHref={track.external_urls.spotify}
-                  handleSearchByArtist={handleSearchByArtist}
-                />
-              )
+          {showedTrack && (
+            <p className="music-label">
+              Треки c названием{" "}
+              <span className="music-label-track-name">"{showedTrack}"</span>:
+            </p>
           )}
+          {showedArtist && (
+            <p className="music-label">Треки артиста {showedArtist}:</p>
+          )}
+
+          <div className="music-block">
+            {searchResults.map(
+              (track) =>
+                track.preview_url && (
+                  <MusicCard
+                    key={track.id}
+                    trackId={track.id}
+                    trackImageUrl={track.album.images[0].url}
+                    trackName={track.name}
+                    trackArtist={track.artists[0].name}
+                    trackPreviewUrl={track.preview_url}
+                    trackHref={track.external_urls.spotify}
+                    handleSearchByArtist={handleSearchByArtist}
+                    showSuccessMessage={showSuccessMessage}
+                    showWarningMessage={showWarningMessage}
+                  />
+                )
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage.jsx
 import { motion } from "framer-motion";
 
 import "./ProfilePage.css";
+import { MusicCard } from "../../components/MusicCard/MusicCard";
 
 export const ProfilePage = () => {
   const { userId } = useParams();
@@ -23,6 +24,8 @@ export const ProfilePage = () => {
   const filePickerRef = useRef(null);
   const avatarChangeRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isMyTrack, setIsMyTrack] = useState(false);
+  const [isMoreShowed, setIsMoreShowed] = useState(false);
 
   // MESSAGES
   const [successMessage, setSuccessMessage] = useState("");
@@ -72,6 +75,18 @@ export const ProfilePage = () => {
     setProfileTown(data.town);
   }, []);
 
+  const fetchTrackById = async (trackId) => {
+    try {
+      const track = await request(
+        `http://localhost:5000/api/get-track-by-id/${trackId}`,
+        "GET"
+      );
+      return track;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const publishPostHandler = async () => {
     const formData = new FormData();
     formData.append("title", form.title);
@@ -118,6 +133,9 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     fetchUserPosts();
+    if (userId == userData.userId) {
+      setIsMyTrack(true);
+    }
   }, []);
 
   // States for profile-editing
@@ -199,15 +217,7 @@ export const ProfilePage = () => {
 
   return (
     <div className="profile">
-      {isSuccessMessageVisible && (
-        <motion.div
-          initial={{ opacity: 0, opacity: 0 }}
-          animate={{ opacity: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <SuccessMessage message={successMessage} />
-        </motion.div>
-      )}
+      {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
       <div className="profile _container">
         <div className="profile-content">
           <div className="profile-infoBlock">
@@ -323,6 +333,20 @@ export const ProfilePage = () => {
                 {userInformation.town && (
                   <p className="profile-info-town">{userInformation.town}</p>
                 )}
+
+                <div
+                  className="profile-more-button"
+                  onClick={() => setIsMoreShowed((prev) => !prev)}
+                >
+                  Подробнее{" "}
+                  <p
+                    className={`profile-more-rectangle ${
+                      isMoreShowed && "active"
+                    }`}
+                  >
+                    ▼
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -414,6 +438,35 @@ export const ProfilePage = () => {
                 )}
               </>
             </div>
+          )}
+
+          {isMoreShowed && (
+            <motion.div
+              initial={{ opacity: 0, opacity: 0 }}
+              animate={{ opacity: 1, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="profile-more-block">
+                {userInformation.tracks &&
+                  userInformation.tracks.length > 0 && (
+                    <div className="profile-tracks">
+                      <h1 className="profile-tracks-title">Музыка:</h1>
+                      {userInformation.tracks.map((track) => (
+                        <MusicCard
+                          trackId={track.trackId}
+                          trackArtist={track.trackArtist}
+                          trackImageUrl={track.trackImage}
+                          trackPreviewUrl={track.trackPreview}
+                          trackHref={track.trackHref}
+                          trackName={track.trackName}
+                          myTrack={isMyTrack}
+                          fetchUserPosts={fetchUserPosts}
+                        />
+                      ))}
+                    </div>
+                  )}
+              </div>
+            </motion.div>
           )}
 
           {userId == userData.userId && (

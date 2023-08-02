@@ -84,12 +84,24 @@ html {
 }
 
 .profile {
+  background-color: #faf9f9;
+}
+.profile-content {
+  background-color: #fff;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+
+  -webkit-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+  -moz-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+  box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
 }
 .profile-infoBlock {
   margin-left: auto;
   margin-right: auto;
   max-width: 800px;
-  margin-top: 50px;
+  padding-top: 50px;
 }
 .profile-info-row {
   display: flex;
@@ -146,6 +158,37 @@ html {
   font-size: 20px;
   color: #5c529a;
 }
+
+.profile-more-button {
+  font-family: "Mulish";
+  font-size: 18px;
+  color: #5c529a;
+  font-weight: 700;
+  cursor: pointer;
+  display: block;
+  max-width: max-content;
+  display: flex;
+}
+.profile-more-button:hover .profile-more-rectangle {
+  transform: rotate(180deg);
+  transform-origin: center;
+}
+
+.profile-more-rectangle {
+  transform-origin: center;
+  max-width: max-content;
+  transition: 0.3s ease all 0s;
+  margin-left: 6px;
+}
+.profile-more-rectangle.active {
+  transform: rotate(180deg);
+  transform-origin: center;
+}
+.profile-more-rectangle:hover {
+  transform: rotate(180deg);
+  transform-origin: center;
+}
+
 .avatar-block {
   margin-right: 20px;
 }
@@ -213,6 +256,19 @@ html {
   font-weight: 600;
 }
 
+.profile-tracks {
+  margin-top: 80px;
+}
+.profile-tracks-title {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-top: 6px;
+  font-family: "Mulish";
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
 .profile-publish-block {
   margin-left: auto;
   margin-right: auto;
@@ -263,7 +319,7 @@ html {
 
 .profile-allposts-block {
   margin-top: 60px;
-  margin-bottom: 60px;
+  padding-bottom: 60px;
 }
 .profile-allposts-title {
   font-family: "Mulish";

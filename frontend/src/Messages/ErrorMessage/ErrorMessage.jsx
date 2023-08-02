@@ -1,16 +1,15 @@
 import React from "react";
-import { motion } from "framer-motion";
 
-import "./SuccessMessage.css";
+import "./ErrorMessage.css";
 
-export const SuccessMessage = ({ message }) => {
+export const ErrorMessage = ({ message }) => {
   return (
     <motion.div
       initial={{ opacity: 0, opacity: 0 }}
       animate={{ opacity: 1, opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="success-message">{message}</div>
+      <div className="error-message">{message}</div>
     </motion.div>
   );
 };
