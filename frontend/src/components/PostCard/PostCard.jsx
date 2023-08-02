@@ -171,7 +171,7 @@ export const PostCard = ({
           <div>
             {isLiked ? (
               <img
-                className="postcard-like-icon"
+                className="postcard-like-icon active"
                 src={filledHeart}
                 onClick={() => handleUnlike(postId)}
               />

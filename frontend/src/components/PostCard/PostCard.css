@@ -71,6 +71,10 @@
   width: 40px;
   cursor: pointer;
   transition: 0.3s ease all 0s;
+  margin-top: 20px;
+}
+.postcard-like-icon.active {
+  transform: scale(1.2);
 }
 .postcard-like-icon:hover {
   transform: scale(1.1);

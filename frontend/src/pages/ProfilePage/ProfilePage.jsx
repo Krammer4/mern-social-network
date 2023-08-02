@@ -26,6 +26,7 @@ export const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isMyTrack, setIsMyTrack] = useState(false);
   const [isMoreShowed, setIsMoreShowed] = useState(false);
+  const [userLikedPosts, setUserLikedPosts] = useState([]);
 
   // MESSAGES
   const [successMessage, setSuccessMessage] = useState("");
@@ -75,15 +76,17 @@ export const ProfilePage = () => {
     setProfileTown(data.town);
   }, []);
 
-  const fetchTrackById = async (trackId) => {
+  const fetchUserLikedPosts = async (userId) => {
     try {
-      const track = await request(
-        `http://localhost:5000/api/get-track-by-id/${trackId}`,
+      const userPosts = await request(
+        `http://localhost:5000/api/get-user-liked/${userId}`,
         "GET"
       );
-      return track;
+
+      setUserLikedPosts(userPosts);
+      console.log("USER LIKED POSTS: ", userPosts);
     } catch (error) {
-      console.log(error);
+      console.log("Error while fetching user posts: ", error.message);
     }
   };
 
@@ -133,6 +136,7 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     fetchUserPosts();
+    fetchUserLikedPosts(userId);
     if (userId == userData.userId) {
       setIsMyTrack(true);
     }
@@ -446,23 +450,52 @@ export const ProfilePage = () => {
               animate={{ opacity: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
+              {userLikedPosts.length !== 0 && (
+                <div className="profile-likedPosts">
+                  <h1 className="profile-likedPosts-title">Лайкнутые посты:</h1>
+                  <div className="profile-liked-Posts-block">
+                    {userLikedPosts.reverse().map((post) => {
+                      return (
+                        <PostCard
+                          title={post.name}
+                          authorName={post.author.name}
+                          authorLastName={post.author.lastName}
+                          content={post.content}
+                          postId={post._id}
+                          authorEmail={post.author.email}
+                          username={post.author.username}
+                          date={post.date}
+                          userId={userId}
+                          authorId={post.author.id}
+                          postImage={post.imageUrl}
+                          userAvatar={post.author.avatar}
+                          isRoute={true}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
               <div className="profile-more-block">
                 {userInformation.tracks &&
                   userInformation.tracks.length > 0 && (
                     <div className="profile-tracks">
                       <h1 className="profile-tracks-title">Музыка:</h1>
-                      {userInformation.tracks.map((track) => (
-                        <MusicCard
-                          trackId={track.trackId}
-                          trackArtist={track.trackArtist}
-                          trackImageUrl={track.trackImage}
-                          trackPreviewUrl={track.trackPreview}
-                          trackHref={track.trackHref}
-                          trackName={track.trackName}
-                          myTrack={isMyTrack}
-                          fetchUserPosts={fetchUserPosts}
-                        />
-                      ))}
+                      <div className="profile-tracks-block">
+                        {userInformation.tracks.map((track) => (
+                          <MusicCard
+                            trackId={track.trackId}
+                            trackArtist={track.trackArtist}
+                            trackImageUrl={track.trackImage}
+                            trackPreviewUrl={track.trackPreview}
+                            trackHref={track.trackHref}
+                            trackName={track.trackName}
+                            myTrack={isMyTrack}
+                            fetchUserPosts={fetchUserPosts}
+                          />
+                        ))}
+                      </div>
                     </div>
                   )}
               </div>
