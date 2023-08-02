@@ -164,4 +164,27 @@ router.get("/get-user-tracks/:userId", async (req, res) => {
   }
 });
 
+router.get("/get-user-liked/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findById(userId).populate({
+      path: "likedPosts",
+      populate: { path: "author" },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Пользователь не найден... Пожалуйста, повторите попытку",
+      });
+    }
+
+    res.json(user.likedPosts);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error while fetching user's liked posts" });
+  }
+});
+
 module.exports = router;
