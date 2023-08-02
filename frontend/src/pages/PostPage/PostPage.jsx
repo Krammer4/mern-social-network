@@ -6,12 +6,15 @@ import { PostCard } from "../../components/PostCard/PostCard";
 import { CommentCard } from "../../components/CommentCard/CommentCard";
 import { PostSkeleton } from "../../components/PostSkeleton";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
+import { WarningMessage } from "../../Messages/WarningMessage/WarningMessage";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 export const PostPage = () => {
   const userInfo = JSON.parse(localStorage.getItem("userData"));
   const userId = userInfo.userId;
   const commentInputRef = useRef();
+  const [userData, setUserData] = useState({});
 
   const [form, setForm] = useState({
     content: "",
@@ -31,7 +34,21 @@ export const PostPage = () => {
       `http://localhost:5000/api/post/${postId}`,
       "GET"
     );
+
     setPost(data);
+  };
+
+  const fetchUserPosts = async (userId) => {
+    try {
+      const userData = await request(
+        `http://localhost:5000/api/profile/${userId}`,
+        "GET"
+      );
+
+      setUserData(userData);
+    } catch (error) {
+      console.log("Error while fetching UserData: ", userData);
+    }
   };
 
   const publishComment = async () => {
@@ -41,18 +58,33 @@ export const PostPage = () => {
       { ...form }
     );
 
-    // window.location.reload();
     fetchPostById();
     commentInputRef.current.value = "";
     showSuccessMessage("Комментарий успешно опубликован");
   };
 
+  const [isLiked, setIsLiked] = useState(false);
+
   useEffect(() => {
     fetchPostById();
+    fetchUserPosts(userId);
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(userData).length !== 0) {
+      console.log(userData);
+      if (userData.likedPosts.includes(postId)) {
+        setIsLiked(true);
+        console.log(userData.likedPosts.includes(postId));
+      }
+    }
+  }, [userData]);
 
   const [successMessage, setSuccessMessage] = useState("");
   const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
+
+  const [warningMessage, setWarningMessage] = useState("");
+  const [isWarningMessageVisible, setIsWarningMessageVisible] = useState(false);
 
   const showSuccessMessage = (message) => {
     setSuccessMessage(message);
@@ -63,17 +95,19 @@ export const PostPage = () => {
     }, 3000);
   };
 
+  const showWarningMessage = (message) => {
+    setWarningMessage(message);
+    setIsWarningMessageVisible(true);
+    setTimeout(() => {
+      setIsWarningMessageVisible(false);
+      setWarningMessage("");
+    }, 3000);
+  };
+
   return (
     <div className="postPage">
-      {isSuccessMessageVisible && (
-        <motion.div
-          initial={{ opacity: 0, opacity: 0 }}
-          animate={{ opacity: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <SuccessMessage message={successMessage} />
-        </motion.div>
-      )}
+      {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
+      {isWarningMessageVisible && <WarningMessage message={warningMessage} />}
       <div className="postPage _container">
         <div className="postPage-postBlock">
           {loading ? (
@@ -94,6 +128,14 @@ export const PostPage = () => {
                 authorId={post.author._id}
                 postImage={post.imageUrl}
                 userAvatar={post.author.avatar}
+                isRoute={false}
+                // handleUnlike={handleUnlike}
+                // handleLike={handleLike}
+                showSuccessMessage={showSuccessMessage}
+                isLikeAvailible={true}
+                showWarningMessage={showWarningMessage}
+                isLiked={isLiked}
+                setIsLiked={setIsLiked}
               />
             )
           )}

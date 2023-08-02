@@ -67,6 +67,14 @@
   min-width: 150px;
   margin-bottom: 20px;
 }
+.postcard-like-icon {
+  width: 40px;
+  cursor: pointer;
+  transition: 0.3s ease all 0s;
+}
+.postcard-like-icon:hover {
+  transform: scale(1.1);
+}
 .postcard-deletePost {
   color: #ff6251;
   font-family: "Mulish";

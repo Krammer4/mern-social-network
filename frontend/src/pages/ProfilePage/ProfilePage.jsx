@@ -579,6 +579,7 @@ export const ProfilePage = () => {
                         authorId={userInformation._id}
                         postImage={userPost.imageUrl}
                         userAvatar={userInformation.avatar}
+                        isLikeAvailible={false}
                       />
                     </Link>
                   </>

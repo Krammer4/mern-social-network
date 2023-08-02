@@ -14,6 +14,7 @@ const schema = new Schema({
   date: { type: Date, default: Date.now },
   comments: [commentSchema],
   imageUrl: { type: String },
+  likes: { type: Number, default: 0 },
 });
 
 module.exports = model("Post", schema);
