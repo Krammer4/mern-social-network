@@ -3,6 +3,7 @@ import formatDate from "../../utils/formatDate";
 import anonymus from "../../img/Profile/none-avatar.png";
 import "./CommentCard.css";
 import { useHttp } from "../../hooks/httpHook";
+import { Link } from "react-router-dom";
 
 export const CommentCard = ({
   content,
@@ -44,10 +45,13 @@ export const CommentCard = ({
             )}
 
             <div>
-              <p className="commentcard-author-name">
+              <Link
+                to={`/profile/${authorId}`}
+                className="commentcard-author-name"
+              >
                 {username}{" "}
                 {authorName ? `(${authorName} ${authorLastName})` : `Я`}
-              </p>
+              </Link>
               <p className="commentcard-date">{formatDate(date)}</p>
             </div>
           </div>

@@ -20,6 +20,7 @@ const schema = new Schema({
       trackHref: { type: String, required: true },
     },
   ],
+  likedPosts: [{ type: Types.ObjectId, ref: "Post" }],
 });
 
 module.exports = model("User", schema);

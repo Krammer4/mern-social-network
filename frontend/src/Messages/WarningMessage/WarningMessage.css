@@ -6,7 +6,9 @@
   font-family: "Mulish";
   color: #ffffff;
   font-weight: 700;
-  position: absolute;
-  top: 54px;
+  position: fixed;
+  width: 100%;
+  /* top: 54px; */
+  top: 0;
   z-index: 50;
 }

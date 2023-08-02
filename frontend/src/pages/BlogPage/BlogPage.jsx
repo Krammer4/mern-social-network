@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { PostCard } from "../../components/PostCard/PostCard";
 import { ColorRing } from "react-loader-spinner";
 import { PostSkeleton } from "../../components/PostSkeleton";
+import axios from "axios";
 
 export const BlogPage = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -21,20 +22,6 @@ export const BlogPage = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-
-  // if (loading) {
-  //   return (
-  //     <ColorRing
-  //       visible={true}
-  //       height="80"
-  //       width="80"
-  //       ariaLabel="blocks-loading"
-  //       wrapperStyle={{}}
-  //       wrapperClass="blocks-wrapper"
-  //       colors={["#e7e5f0", "#5c529a", "1aa0a0", "dbf2f2"]}
-  //     />
-  //   );
-  // }
 
   return (
     <div className="blog">
@@ -83,25 +70,22 @@ export const BlogPage = () => {
               </>
             ) : allPosts.length > 0 ? (
               allPosts.map((post) => (
-                <Link
-                  className="postcard-redirectToThisPost"
-                  to={`/post/${post._id}`}
-                >
-                  <PostCard
-                    title={post.title}
-                    authorName={post.author.name}
-                    authorLastName={post.author.lastName}
-                    content={post.content}
-                    postId={post._id}
-                    authorEmail={post.author.email}
-                    username={post.author.username}
-                    date={post.date}
-                    userId={userId}
-                    authorId={post.author._id}
-                    postImage={post.imageUrl}
-                    userAvatar={post.author.avatar}
-                  />
-                </Link>
+                <PostCard
+                  title={post.title}
+                  authorName={post.author.name}
+                  authorLastName={post.author.lastName}
+                  content={post.content}
+                  postId={post._id}
+                  authorEmail={post.author.email}
+                  username={post.author.username}
+                  date={post.date}
+                  userId={userId}
+                  authorId={post.author._id}
+                  postImage={post.imageUrl}
+                  userAvatar={post.author.avatar}
+                  isRoute={true}
+                  isLikeAvailible={false}
+                />
               ))
             ) : (
               <p className="blog-noPosts">
