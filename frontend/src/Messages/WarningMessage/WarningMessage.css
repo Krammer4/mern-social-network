@@ -1,0 +1,12 @@
+.warning-message {
+  background-color: #f7a841;
+  text-align: center;
+  width: 100%;
+  padding: 6px 0px;
+  font-family: "Mulish";
+  color: #ffffff;
+  font-weight: 700;
+  position: absolute;
+  top: 54px;
+  z-index: 50;
+}

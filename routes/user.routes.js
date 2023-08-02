@@ -101,4 +101,67 @@ router.patch("/update-profile/:userId", async (req, res) => {
   }
 });
 
+router.post("/add-track", async (req, res) => {
+  const {
+    trackName,
+    trackArtist,
+    trackImage,
+    trackPreview,
+    trackHref,
+    trackId,
+    userId,
+  } = req.body;
+
+  const track = {
+    trackName,
+    trackArtist,
+    trackImage,
+    trackPreview,
+    trackHref,
+    trackId,
+    userId,
+  };
+
+  try {
+    let trackError = [];
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Не удалось найти пользователя..." });
+    }
+
+    const userTracks = user.tracks;
+
+    userTracks.forEach((userTrack) => {
+      if (userTrack.trackName == track.trackName) {
+        trackError.push({ message: "Такой трек уже есть у вас" });
+        return res.json({ message: "Такой трек уже есть у вас" });
+      }
+    });
+    if (trackError.length == 0) {
+      user.tracks.push(track);
+
+      await user.save();
+
+      res.json({ message: "Трек успешно добавлен!" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error while adding track" });
+  }
+});
+
+router.get("/get-user-tracks/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId);
+    const userPosts = user.posts;
+
+    res.json(userPosts);
+  } catch (error) {
+    res.status(500).json({ message: "Error while getting user tracks" });
+  }
+});
+
 module.exports = router;

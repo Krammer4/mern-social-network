@@ -44,54 +44,56 @@ export const ArtistPage = () => {
   return (
     <div className="artistPage">
       <div className="artistPage _container">
-        <div className="artistInfo-block">
-          {artistInfo !== {} && (
-            <>
-              {artistInfo.images && artistInfo.images.length > 0 && (
-                <img
-                  src={artistInfo.images[0].url}
-                  className="artistPage-image"
-                />
-              )}
+        <div className="artistPage-content">
+          <div className="artistInfo-block">
+            {artistInfo !== {} && (
+              <>
+                {artistInfo.images && artistInfo.images.length > 0 && (
+                  <img
+                    src={artistInfo.images[0].url}
+                    className="artistPage-image"
+                  />
+                )}
 
-              <h1 className="artistPage-name">{artistName}</h1>
+                <h1 className="artistPage-name">{artistName}</h1>
 
-              {artistInfo.followers && (
-                <p className="artistPage-followers">
-                  Отслеживают:{" "}
-                  <span className="artistPage-followers-bold">
-                    {artistInfo.followers.total}
-                  </span>{" "}
-                </p>
-              )}
+                {artistInfo.followers && (
+                  <p className="artistPage-followers">
+                    Отслеживают:{" "}
+                    <span className="artistPage-followers-bold">
+                      {artistInfo.followers.total}
+                    </span>{" "}
+                  </p>
+                )}
 
-              {artistInfo.genres && artistInfo.genres.length !== 0 && (
-                <div className="artistPage-genres">
-                  <span className="artistPage-genre-title">Жанры: </span>
-                  {artistInfo.genres.slice(0, 3).map((genre) => (
-                    <p className="artistPage-genre-card">{genre}</p>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-        </div>
+                {artistInfo.genres && artistInfo.genres.length !== 0 && (
+                  <div className="artistPage-genres">
+                    <span className="artistPage-genre-title">Жанры: </span>
+                    {artistInfo.genres.slice(0, 3).map((genre) => (
+                      <p className="artistPage-genre-card">{genre}</p>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
 
-        <div className="artistTracks-block">
-          <h1 className="artistTracks-mainTitle">
-            Треки артиста {artistName}:
-          </h1>
+          <div className="artistTracks-block">
+            <h1 className="artistTracks-mainTitle">
+              Треки артиста {artistName}:
+            </h1>
 
-          {artistTracks.map((track) => (
-            <MusicCard
-              trackId={track.id}
-              trackName={track.name}
-              trackArtist={track.artists[0].name}
-              trackPreviewUrl={track.preview_url}
-              trackHref={track.external_urls.spotify}
-              trackImageUrl={track.album.images[0].url}
-            />
-          ))}
+            {artistTracks.map((track) => (
+              <MusicCard
+                trackId={track.id}
+                trackName={track.name}
+                trackArtist={track.artists[0].name}
+                trackPreviewUrl={track.preview_url}
+                trackHref={track.external_urls.spotify}
+                trackImageUrl={track.album.images[0].url}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

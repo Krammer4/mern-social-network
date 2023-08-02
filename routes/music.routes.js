@@ -3,6 +3,7 @@ const router = Router();
 const config = require("config");
 const axios = require("axios");
 const querystring = require("querystring");
+const User = require("../Models/User");
 
 const authentificateSpotify = async () => {
   const clientId = config.get("spotify_client_id");
@@ -141,6 +142,24 @@ router.get("/get-artist/:artistName", async (req, res) => {
     res.json(artist);
   } catch (error) {
     res.status(500).json({ message: "Error while fetching artist" });
+  }
+});
+
+router.post("/delete-user-post", async (req, res) => {
+  const { trackId, userId } = req.body;
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { tracks: { trackId } } },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+    res.json({ message: "Трек успешно удален", user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: "Error while deleting track" });
   }
 });
 

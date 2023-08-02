@@ -10,6 +10,16 @@ const schema = new Schema({
   avatar: { type: String },
   status: { type: String },
   town: { type: String },
+  tracks: [
+    {
+      trackName: { type: String, required: true },
+      trackId: { type: String },
+      trackArtist: { type: String, required: true },
+      trackImage: { type: String, required: true },
+      trackPreview: { type: String, required: true },
+      trackHref: { type: String, required: true },
+    },
+  ],
 });
 
 module.exports = model("User", schema);
