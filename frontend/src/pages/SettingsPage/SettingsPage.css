@@ -82,10 +82,11 @@ html {
   padding-left: 20px;
   padding-right: 20px;
 }
-.music {
+
+.settings {
   background-color: #faf9f9;
 }
-.music-content {
+.settings-content {
   background-color: #fff;
   max-width: 900px;
   margin-left: auto;
@@ -96,71 +97,144 @@ html {
   -moz-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
   box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
 }
-.music-mainTitle {
+.settings-block {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.settings-mainTitle {
   font-family: "Mulish";
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 800;
   padding-top: 10px;
 }
-.music-search-row {
-  margin-left: auto;
-  margin-right: auto;
+.settings-secondary-title {
+  font-family: "Mulish";
+  font-size: 26px;
+  font-weight: 700;
+  padding-top: 40px;
+}
+.settings-setting-type {
+  font-family: "Mulish";
+  font-size: 22px;
+  margin-right: 20px;
+  font-weight: 400;
+}
+
+.settings-setting-row {
   display: flex;
-  max-width: 700px;
-  padding-top: 20px;
+  align-items: center;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
-.music-search-input {
-  display: block;
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  padding: 6px 0px;
-  font-family: "Mulish";
-  font-size: 20px;
-  border: 2px solid #5c529a;
-  color: #5c529a;
-  border-right: none;
-}
-.music-search-input:focus {
-  outline: none;
-}
-.music-search-button {
-  width: 120px;
-  cursor: pointer;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  border: none;
-  background-color: #e7e5f0;
-  font-family: "Mulish";
-  border: 2px solid #5c529a;
-  transition: 0.3s ease all 0s;
-  font-weight: 600;
-}
-.music-search-button:hover {
-  background-color: #5c529a;
-  color: #ffffff;
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 34px;
 }
 
-.music-label {
-  font-family: "Mulish";
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #5c529a;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.settings-save-button {
+  display: block;
+  max-width: max-content;
+  margin-right: 0;
   margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 600;
+  background-color: #e7e5f0;
+  border: none;
   color: #5c529a;
+  font-size: 18px;
+  padding: 4px 20px;
+  cursor: pointer;
+  font-family: "Mulish";
+  font-weight: 600;
+  border-radius: 10px;
+  transition: 0.3s ease all 0s;
   margin-top: 40px;
 }
-.music-label-track-name {
+.settings-save-button:hover {
+  background-color: #5c529a;
+  color: #e7e5f0;
+}
+.settings-your-genre {
+  font-family: "Mulish";
+  font-size: 22px;
   font-weight: 700;
 }
-
-.music-block {
-  margin-top: 80px;
+.settings-genres-buttons-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.settings-genre-button {
+  background-color: #e7e5f0;
+  border: none;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  padding: 4px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: "Mulish";
+}
+.settings-genre-button.active {
+  background-color: #5c529a;
+  color: #e7e5f0;
 }

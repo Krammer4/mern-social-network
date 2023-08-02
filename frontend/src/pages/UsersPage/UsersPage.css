@@ -85,6 +85,15 @@ html {
 .users {
   background-color: #faf9f9;
 }
+.users-mainTitle {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  padding-top: 10px;
+}
 .users-content {
   background-color: #fff;
   max-width: 900px;

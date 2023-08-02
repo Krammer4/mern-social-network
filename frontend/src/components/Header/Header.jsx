@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/authContext";
 
 import "./Header.css";
 import { useHttp } from "../../hooks/httpHook";
+import settings from "../../img/Profile/settings.png";
 
 export const Header = ({ isAuthentificated }) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -53,6 +54,9 @@ export const Header = ({ isAuthentificated }) => {
                 <p onClick={makeLogout} className="header-link exit">
                   Выйти
                 </p>
+                <Link to={`/settings/${userData.userId}`}>
+                  <img className="header-link settingsLink" src={settings} />
+                </Link>
               </div>
             ) : (
               <div className="header-group">

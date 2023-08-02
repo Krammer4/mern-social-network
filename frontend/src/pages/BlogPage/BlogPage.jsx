@@ -27,7 +27,7 @@ export const BlogPage = () => {
     <div className="blog">
       <div className="blog _container">
         <div className="blog-content">
-          <p className="blog-mainTitle">Лента новостей:</p>
+          <h1 className="blog-mainTitle">Лента новостей</h1>
           <p
             className="blog-update"
             onClick={() => {

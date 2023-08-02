@@ -12,6 +12,42 @@ router.post(
 
 router.get("/users", UsersController.getAll);
 
+router.get("/user/:userId", async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Такого пользователя не найдено" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error while getting user data" });
+  }
+});
+
+router.post("/update-user-settings", async (req, res) => {
+  const { userId, isClosedProfile, userFavGenre } = req.body;
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.settings.isClosedProfile = isClosedProfile;
+    user.settings.userFavGenre = userFavGenre;
+
+    await user.save();
+    res.json({ message: "Настройки успешно сохранены" });
+  } catch (error) {
+    res.status(500).json({ message: "Error while updating user settings" });
+  }
+});
+
 router.get("/users/alphabet", UsersController.alphabetSort);
 
 router.get("/users/alphabetReversed", UsersController.alphabetReversed);
