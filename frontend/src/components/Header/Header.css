@@ -92,12 +92,14 @@ html {
 }
 .header-left-part {
   display: flex;
+  align-items: center;
 }
 .header-content {
   padding: 12px 0px;
 }
 .header-group {
   display: flex;
+  align-items: center;
 }
 .header-link {
   display: block;
@@ -114,4 +116,11 @@ html {
 }
 .header-link.exit {
   color: rgb(145, 54, 54);
+}
+.header-link.settingsLink {
+  max-width: 40px;
+  transition: 1.5s ease all 0s;
+}
+.header-link.settingsLink:hover {
+  transform: rotate(360deg);
 }

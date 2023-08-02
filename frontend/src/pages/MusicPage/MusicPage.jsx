@@ -81,6 +81,7 @@ export const MusicPage = () => {
       {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
       <div className="music _container">
         <div className="music-content">
+          <h1 className="music-mainTitle">Музыка</h1>
           <div className="music-search-row">
             <input
               type="text"

@@ -80,6 +80,7 @@ export const UsersPage = () => {
     <div className="users">
       <div className="users _container">
         <div className="users-content">
+          <h1 className="users-mainTitle">Пользователи</h1>
           <div className="users-search-row">
             <input
               value={inputValue}

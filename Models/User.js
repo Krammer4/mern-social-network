@@ -21,6 +21,10 @@ const schema = new Schema({
     },
   ],
   likedPosts: [{ type: Types.ObjectId, ref: "Post" }],
+  settings: {
+    isClosedProfile: { type: Boolean, default: false },
+    userFavGenre: { type: String, default: "" },
+  },
 });
 
 module.exports = model("User", schema);
