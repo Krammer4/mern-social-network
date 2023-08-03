@@ -141,6 +141,7 @@ html {
   border: 2px solid #5c529a;
   transition: 0.3s ease all 0s;
   font-weight: 600;
+  font-size: 20px;
 }
 .users-search-button:hover {
   background-color: #5c529a;
@@ -179,6 +180,33 @@ html {
 }
 .users-sort-button:hover {
   background-color: #e6e4ec;
+}
+
+.users-by-town-title {
+  font-family: "Mulish";
+  font-size: 22px;
+  margin-bottom: 10px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+.users-by-town-town {
+  font-weight: 700;
+}
+.users-by-town-show-all {
+  font-family: "Mulish";
+  font-size: 18px;
+  color: #5c529a;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  max-width: max-content;
+  cursor: pointer;
+}
+.users-by-town-show-all:hover {
+  text-decoration: underline;
 }
 
 .user-card-skeleton {

@@ -16,6 +16,7 @@ export const useRoutes = (isAuthentificated) => {
       <Routes>
         <Route path="/" element={<BlogPage />} />
         <Route path="/users" element={<UsersPage />} />
+        {/* <Route path="/users/:filterType" element={<UsersPage />} /> */}
         <Route path="/music" element={<MusicPage />} />
         <Route path="/music/artist/:artistName" element={<ArtistPage />} />
         <Route path="/profile/:userId" element={<ProfilePage />} />

@@ -5,8 +5,11 @@ import { MusicCard } from "../../components/MusicCard/MusicCard";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
 import { WarningMessage } from "../../Messages/WarningMessage/WarningMessage";
 import { Link } from "react-router-dom";
+import MusicCardSkeleton from "../../components/MusicCardSkeleton";
+import { useHttp } from "../../hooks/httpHook";
 
 export const MusicPage = () => {
+  const { request, error, loading } = useHttp();
   const userStorageData = JSON.parse(localStorage.getItem("userData"));
   const userId = userStorageData.userId;
   const [userData, setUserData] = useState({});
@@ -43,12 +46,12 @@ export const MusicPage = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/user/${userId}`
+      const response = await request(
+        `http://localhost:5000/api/user/${userId}`,
+        "GET"
       );
 
-      setUserData(response.data);
-      console.log(response.data);
+      setUserData(response);
     } catch (error) {
       console.log("Error while fetching user data: ", error.message);
     }
@@ -96,15 +99,16 @@ export const MusicPage = () => {
 
   const fetchTracksByGenre = async (genre) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/get-tracks-by-genre/${genre}`
+      const response = await request(
+        `http://localhost:5000/api/get-tracks-by-genre/${genre}`,
+        "GET"
       );
-      if (!response.ok) {
+      if (!response) {
         throw new Error("Ошибка при выполнении запроса");
       }
-      const data = await response.json();
-      setRecommendedByGenre(data);
-      console.log(data);
+
+      setRecommendedByGenre(response);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -126,6 +130,7 @@ export const MusicPage = () => {
       <div className="music _container">
         <div className="music-content">
           <h1 className="music-mainTitle">Музыка</h1>
+
           <div className="music-search-row">
             <input
               type="text"
@@ -164,7 +169,15 @@ export const MusicPage = () => {
                   </Link>
                 </h3>
                 <div className="music-recs-genre-row">
-                  {recommendedByGenre &&
+                  {loading ? (
+                    <>
+                      <MusicCardSkeleton />
+                      <MusicCardSkeleton />
+                      <MusicCardSkeleton />
+                      <MusicCardSkeleton />
+                    </>
+                  ) : (
+                    recommendedByGenre &&
                     recommendedByGenre.map((track) => {
                       return (
                         <MusicCard
@@ -178,7 +191,8 @@ export const MusicPage = () => {
                           showWarningMessage={showWarningMessage}
                         />
                       );
-                    })}
+                    })
+                  )}
                 </div>
               </div>
             </div>

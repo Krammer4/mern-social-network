@@ -132,6 +132,7 @@ html {
   outline: none;
 }
 .music-search-button {
+  font-size: 20px;
   width: 120px;
   cursor: pointer;
   border-top-right-radius: 6px;
@@ -189,6 +190,7 @@ html {
   font-size: 34px;
   font-weight: 600;
   padding-top: 10px;
+  text-align: center;
 }
 .music-recs-genre-block {
   margin-top: 20px;
