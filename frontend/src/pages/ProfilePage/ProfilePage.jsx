@@ -223,6 +223,8 @@ export const ProfilePage = () => {
 
   const isProfileClosed =
     !isOwnProfile && userInformation.settings?.isClosedProfile;
+  const isMusicClosed =
+    !isOwnProfile && userInformation.settings?.isClosedMusic;
 
   return (
     <div className="profile">
@@ -484,28 +486,30 @@ export const ProfilePage = () => {
                     </div>
                   )}
 
-                  <div className="profile-more-block">
-                    {userInformation.tracks &&
-                      userInformation.tracks.length > 0 && (
-                        <div className="profile-tracks">
-                          <h1 className="profile-tracks-title">Музыка:</h1>
-                          <div className="profile-tracks-block">
-                            {userInformation.tracks.map((track) => (
-                              <MusicCard
-                                trackId={track.trackId}
-                                trackArtist={track.trackArtist}
-                                trackImageUrl={track.trackImage}
-                                trackPreviewUrl={track.trackPreview}
-                                trackHref={track.trackHref}
-                                trackName={track.trackName}
-                                myTrack={isMyTrack}
-                                fetchUserPosts={fetchUserPosts}
-                              />
-                            ))}
+                  {isMusicClosed ? null : (
+                    <div className="profile-more-block">
+                      {userInformation.tracks &&
+                        userInformation.tracks.length > 0 && (
+                          <div className="profile-tracks">
+                            <h1 className="profile-tracks-title">Музыка:</h1>
+                            <div className="profile-tracks-block">
+                              {userInformation.tracks.map((track) => (
+                                <MusicCard
+                                  trackId={track.trackId}
+                                  trackArtist={track.trackArtist}
+                                  trackImageUrl={track.trackImage}
+                                  trackPreviewUrl={track.trackPreview}
+                                  trackHref={track.trackHref}
+                                  trackName={track.trackName}
+                                  myTrack={isMyTrack}
+                                  fetchUserPosts={fetchUserPosts}
+                                />
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      )}
-                  </div>
+                        )}
+                    </div>
+                  )}
                 </motion.div>
               )}
 
