@@ -255,9 +255,7 @@ html {
   font-family: "Mulish";
   font-weight: 600;
 }
-.profile-likedPosts {
-  margin-top: 60px;
-}
+
 .profile-likedPosts-title {
   margin-left: auto;
   margin-right: auto;
@@ -266,12 +264,11 @@ html {
   font-family: "Mulish";
   font-weight: 600;
   margin-bottom: 10px;
+  margin-top: 20px;
 }
-.profile-liked-Posts-block {
-  margin-top: 40px;
-}
+
 .profile-tracks {
-  margin-top: 60px;
+  margin-top: 80px;
 }
 .profile-tracks-title {
   margin-left: auto;
@@ -281,9 +278,6 @@ html {
   font-family: "Mulish";
   font-weight: 600;
   margin-bottom: 10px;
-}
-.profile-tracks-block {
-  margin-top: 40px;
 }
 
 .profile-publish-block {
@@ -332,6 +326,17 @@ html {
   font-size: 18px;
   text-align: center;
   margin-top: 6px;
+}
+
+.profile-closed-profile-message {
+  font-family: "Mulish";
+  font-size: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: 700;
+  opacity: 0.5;
+  margin-top: 60px;
 }
 
 .profile-allposts-block {
