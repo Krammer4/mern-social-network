@@ -1,16 +1,22 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MusicPage.css";
 import { MusicCard } from "../../components/MusicCard/MusicCard";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
 import { WarningMessage } from "../../Messages/WarningMessage/WarningMessage";
+import { Link } from "react-router-dom";
 
 export const MusicPage = () => {
+  const userStorageData = JSON.parse(localStorage.getItem("userData"));
+  const userId = userStorageData.userId;
+  const [userData, setUserData] = useState({});
   const [trackName, setTrackName] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const [showedTrack, setShowedTrack] = useState("");
   const [showedArtist, setShowedArtist] = useState("");
+
+  const [recommendedByGenre, setRecommendedByGenre] = useState([]);
 
   const [successMessage, setSuccessMessage] = useState("");
   const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
@@ -33,6 +39,19 @@ export const MusicPage = () => {
       setIsWarningMessageVisible(false);
       setWarningMessage("");
     }, 3000);
+  };
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/user/${userId}`
+      );
+
+      setUserData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error while fetching user data: ", error.message);
+    }
   };
 
   const handleSearch = async () => {
@@ -75,6 +94,31 @@ export const MusicPage = () => {
     }
   };
 
+  const fetchTracksByGenre = async (genre) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/get-tracks-by-genre/${genre}`
+      );
+      if (!response.ok) {
+        throw new Error("Ошибка при выполнении запроса");
+      }
+      const data = await response.json();
+      setRecommendedByGenre(data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    if (userData && userData.settings)
+      fetchTracksByGenre(userData.settings?.userFavGenre);
+  }, [userData]);
+
   return (
     <div className="music">
       {isWarningMessageVisible && <WarningMessage message={warningMessage} />}
@@ -100,14 +144,55 @@ export const MusicPage = () => {
             </button>
           </div>
 
-          {showedTrack && (
+          {showedTrack ? (
             <p className="music-label">
               Треки c названием{" "}
               <span className="music-label-track-name">"{showedTrack}"</span>:
             </p>
-          )}
-          {showedArtist && (
-            <p className="music-label">Треки артиста {showedArtist}:</p>
+          ) : userData.settings?.userFavGenre ? (
+            <div className="music-recs">
+              <h2 className="music-recs-mainTitle">Рекоммендации для вас:</h2>
+              <div className="music-recs-genre-block">
+                <h3 className="music-recs-genre-block-title">
+                  В жанре{" "}
+                  <Link
+                    to={`/settings/${userId}`}
+                    className="music-recs-genre-name"
+                  >
+                    {userData.settings?.userFavGenre &&
+                      `${userData.settings?.userFavGenre}`}
+                  </Link>
+                </h3>
+                <div className="music-recs-genre-row">
+                  {recommendedByGenre &&
+                    recommendedByGenre.map((track) => {
+                      return (
+                        <MusicCard
+                          trackId={track.is}
+                          trackName={track.name}
+                          trackArtist={track.artists[0]?.name}
+                          trackImageUrl={track.album?.images[0]?.url}
+                          trackPreviewUrl={track.preview_url}
+                          trackHref={track.href}
+                          showSuccessMessage={showSuccessMessage}
+                          showWarningMessage={showWarningMessage}
+                        />
+                      );
+                    })}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <p className="music-fill-settings">
+              Для подборки музыкальных рекомендаций, укажите предпочитаемый жанр
+              на странице{" "}
+              <Link
+                to={`/settings/${userId}`}
+                className="music-fill-settings-redirect"
+              >
+                Настройки
+              </Link>
+            </p>
           )}
 
           <div className="music-block">

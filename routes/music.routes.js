@@ -94,6 +94,47 @@ const getArtistTracks = async (artistId, token) => {
   }
 };
 
+const getTopRandomTracksByGenre = async (genre, limit, token) => {
+  try {
+    // Запрос к Spotify API для поиска треков по жанру
+    const response = await axios.get(`https://api.spotify.com/v1/search`, {
+      params: {
+        q: `genre:${genre}`,
+        type: "track",
+        limit: 50,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const tracks = response.data.tracks.items;
+
+    // Если список пуст, вернем пустой массив
+    if (tracks.length === 0) {
+      return [];
+    }
+
+    // Случайным образом выберем несколько треков из списка
+    const randomTracks = [];
+    const selectedIndexes = new Set();
+
+    while (randomTracks.length < Math.min(limit, tracks.length)) {
+      const randomIndex = Math.floor(Math.random() * tracks.length);
+
+      if (!selectedIndexes.has(randomIndex)) {
+        randomTracks.push(tracks[randomIndex]);
+        selectedIndexes.add(randomIndex);
+      }
+    }
+
+    return randomTracks;
+  } catch (error) {
+    console.error("Error while fetching top random tracks:", error);
+    return [];
+  }
+};
+
 router.get(`/search-tracks`, async (req, res) => {
   const { trackName } = req.query;
   try {
@@ -145,7 +186,26 @@ router.get("/get-artist/:artistName", async (req, res) => {
   }
 });
 
-router.post("/delete-user-post", async (req, res) => {
+router.get("/get-tracks-by-genre/:genre", async (req, res) => {
+  const { genre } = req.params;
+  try {
+    const token = await authentificateSpotify();
+    const tracksByGenre = await getTopRandomTracksByGenre(genre, 10, token);
+    if (!tracksByGenre) {
+      return res.status(404).json({
+        message:
+          "Не удалось подобрать рекомендации( Пожалуйста, перезагрузите страницу",
+      });
+    }
+    res.json(tracksByGenre);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error while fetching random tracks by genre" });
+  }
+});
+
+router.post("/delete-user-track", async (req, res) => {
   const { trackId, userId } = req.body;
   try {
     const updatedUser = await User.findByIdAndUpdate(
