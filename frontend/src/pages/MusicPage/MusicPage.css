@@ -84,17 +84,18 @@ html {
 }
 .music {
   background-color: #faf9f9;
+  background-color: #fff;
 }
 .music-content {
   background-color: #fff;
-  max-width: 900px;
+  max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
   min-height: 100vh;
 
-  -webkit-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+  /* -webkit-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
   -moz-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
-  box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+  box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09); */
 }
 .music-mainTitle {
   font-family: "Mulish";
@@ -102,7 +103,7 @@ html {
   margin-right: auto;
   text-align: center;
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 800;
   padding-top: 10px;
 }
 .music-search-row {
@@ -160,7 +161,51 @@ html {
 .music-label-track-name {
   font-weight: 700;
 }
+.music-fill-settings {
+  font-family: "Mulish";
+  font-size: 34px;
+  font-weight: 600;
+  padding-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  max-width: 900px;
+  color: #969696;
+}
+.music-fill-settings-redirect {
+  color: #5c529a;
+  opacity: 0.9;
+  font-weight: 700;
+}
 
 .music-block {
   margin-top: 80px;
+}
+
+.music-recs {
+}
+.music-recs-mainTitle {
+  font-family: "Mulish";
+  font-size: 34px;
+  font-weight: 600;
+  padding-top: 10px;
+}
+.music-recs-genre-block {
+  margin-top: 20px;
+}
+.music-recs-genre-name {
+  color: #5c529a;
+  font-weight: 700;
+}
+.music-recs-genre-block-title {
+  font-family: "Mulish";
+  font-size: 28px;
+  font-weight: 600;
+  padding-top: 10px;
+}
+.music-recs-genre-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
 }

@@ -4,6 +4,8 @@ import { useHttp } from "../../hooks/httpHook";
 
 import "./ArtistPage.css";
 import { MusicCard } from "../../components/MusicCard/MusicCard";
+import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
+import { WarningMessage } from "../../Messages/WarningMessage/WarningMessage";
 
 export const ArtistPage = () => {
   const { artistName } = useParams();
@@ -11,6 +13,29 @@ export const ArtistPage = () => {
 
   const [artistInfo, setArtistInfo] = useState({});
   const [artistTracks, setArtistTracks] = useState([]);
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
+  const [isWarningMessageVisible, setIsWarningMessageVisible] = useState(false);
+
+  const showSuccessMessage = (message) => {
+    setSuccessMessage(message);
+    setIsSuccessMessageVisible(true);
+    setTimeout(() => {
+      setIsSuccessMessageVisible(false);
+      setSuccessMessage("");
+    }, 3000);
+  };
+
+  const showWarningMessage = (message) => {
+    setWarningMessage(message);
+    setIsWarningMessageVisible(true);
+    setTimeout(() => {
+      setIsWarningMessageVisible(false);
+      setWarningMessage("");
+    }, 3000);
+  };
 
   const fetchArtist = useCallback(async (artistName) => {
     const artist = await request(
@@ -43,6 +68,8 @@ export const ArtistPage = () => {
 
   return (
     <div className="artistPage">
+      {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
+      {isWarningMessageVisible && <WarningMessage message={warningMessage} />}
       <div className="artistPage _container">
         <div className="artistPage-content">
           <div className="artistInfo-block">
@@ -91,6 +118,8 @@ export const ArtistPage = () => {
                 trackPreviewUrl={track.preview_url}
                 trackHref={track.external_urls.spotify}
                 trackImageUrl={track.album.images[0].url}
+                showWarningMessage={showWarningMessage}
+                showSuccessMessage={showSuccessMessage}
               />
             ))}
           </div>

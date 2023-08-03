@@ -72,7 +72,7 @@ export const MusicCard = ({
   const removeTrack = async () => {
     try {
       const removeTrackData = await request(
-        `http://localhost:5000/api/delete-user-post`,
+        `http://localhost:5000/api/delete-user-track`,
         "POST",
         {
           userId,
