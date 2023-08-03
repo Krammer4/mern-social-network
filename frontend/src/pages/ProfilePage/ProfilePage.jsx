@@ -17,6 +17,8 @@ import { MusicCard } from "../../components/MusicCard/MusicCard";
 export const ProfilePage = () => {
   const { userId } = useParams();
   const userData = JSON.parse(localStorage.getItem("userData"));
+  const isOwnProfile = userId === userData.userId;
+
   const { request, error, loading } = useHttp();
   const [userInformation, setUserInformation] = useState({});
   // const [titleInputValue, setTitleInputValue] = useState("");
@@ -137,7 +139,7 @@ export const ProfilePage = () => {
   useEffect(() => {
     fetchUserPosts();
     fetchUserLikedPosts(userId);
-    if (userId == userData.userId) {
+    if (isOwnProfile) {
       setIsMyTrack(true);
     }
   }, []);
@@ -219,6 +221,9 @@ export const ProfilePage = () => {
     }, 3000);
   };
 
+  const isProfileClosed =
+    !isOwnProfile && userInformation.settings?.isClosedProfile;
+
   return (
     <div className="profile">
       {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
@@ -229,19 +234,17 @@ export const ProfilePage = () => {
               {userInformation.avatar ? (
                 <div
                   className={`${
-                    userData.userId == userId
-                      ? "avatar-myProfile"
-                      : "avatar-block"
+                    isOwnProfile ? "avatar-myProfile" : "avatar-block"
                   }`}
                   onClick={() => {
-                    if (userData.userId == userId) {
+                    if (isOwnProfile) {
                       avatarClick();
                     }
                   }}
                 >
                   <img
                     onClick={() => {
-                      if (userData.userId == userId) {
+                      if (isOwnProfile) {
                         console.log("USER ID", userId);
                         console.log("USER DATA . ID: ", userData.userId);
                         avatarClick();
@@ -261,12 +264,10 @@ export const ProfilePage = () => {
               ) : (
                 <div
                   className={`${
-                    userData.userId == userId
-                      ? "avatar-myProfile"
-                      : "avatar-block"
+                    isOwnProfile ? "avatar-myProfile" : "avatar-block"
                   }`}
                   onClick={() => {
-                    if (userData.userId == userId) {
+                    if (isOwnProfile) {
                       avatarClick();
                     }
                   }}
@@ -317,7 +318,7 @@ export const ProfilePage = () => {
                     {userInformation.name} {userInformation.lastName} •{" "}
                     {userInformation.username}{" "}
                   </h2>
-                  {userData.userId == userId && (
+                  {isOwnProfile && (
                     <img
                       className="profile-info-editSign"
                       src={edit}
@@ -338,19 +339,21 @@ export const ProfilePage = () => {
                   <p className="profile-info-town">{userInformation.town}</p>
                 )}
 
-                <div
-                  className="profile-more-button"
-                  onClick={() => setIsMoreShowed((prev) => !prev)}
-                >
-                  Подробнее{" "}
-                  <p
-                    className={`profile-more-rectangle ${
-                      isMoreShowed && "active"
-                    }`}
+                {isProfileClosed ? null : (
+                  <div
+                    className="profile-more-button"
+                    onClick={() => setIsMoreShowed((prev) => !prev)}
                   >
-                    ▼
-                  </p>
-                </div>
+                    Подробнее{" "}
+                    <p
+                      className={`profile-more-rectangle ${
+                        isMoreShowed && "active"
+                      }`}
+                    >
+                      ▼
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -444,65 +447,69 @@ export const ProfilePage = () => {
             </div>
           )}
 
-          {isMoreShowed && (
-            <motion.div
-              initial={{ opacity: 0, opacity: 0 }}
-              animate={{ opacity: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              {userLikedPosts.length !== 0 && (
-                <div className="profile-likedPosts">
-                  <h1 className="profile-likedPosts-title">Лайкнутые посты:</h1>
-                  <div className="profile-liked-Posts-block">
-                    {userLikedPosts.reverse().map((post) => {
-                      return (
-                        <PostCard
-                          title={post.name}
-                          authorName={post.author.name}
-                          authorLastName={post.author.lastName}
-                          content={post.content}
-                          postId={post._id}
-                          authorEmail={post.author.email}
-                          username={post.author.username}
-                          date={post.date}
-                          userId={userId}
-                          authorId={post.author.id}
-                          postImage={post.imageUrl}
-                          userAvatar={post.author.avatar}
-                          isRoute={true}
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              <div className="profile-more-block">
-                {userInformation.tracks &&
-                  userInformation.tracks.length > 0 && (
-                    <div className="profile-tracks">
-                      <h1 className="profile-tracks-title">Музыка:</h1>
-                      <div className="profile-tracks-block">
-                        {userInformation.tracks.map((track) => (
-                          <MusicCard
-                            trackId={track.trackId}
-                            trackArtist={track.trackArtist}
-                            trackImageUrl={track.trackImage}
-                            trackPreviewUrl={track.trackPreview}
-                            trackHref={track.trackHref}
-                            trackName={track.trackName}
-                            myTrack={isMyTrack}
-                            fetchUserPosts={fetchUserPosts}
-                          />
-                        ))}
+          {isProfileClosed
+            ? null
+            : isMoreShowed && (
+                <motion.div
+                  initial={{ opacity: 0, opacity: 0 }}
+                  animate={{ opacity: 1, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {userLikedPosts.length !== 0 && (
+                    <div className="profile-likedPosts">
+                      <h1 className="profile-likedPosts-title">
+                        Лайкнутые посты:
+                      </h1>
+                      <div className="profile-liked-Posts-block">
+                        {userLikedPosts.reverse().map((post) => {
+                          return (
+                            <PostCard
+                              title={post.name}
+                              authorName={post.author.name}
+                              authorLastName={post.author.lastName}
+                              content={post.content}
+                              postId={post._id}
+                              authorEmail={post.author.email}
+                              username={post.author.username}
+                              date={post.date}
+                              userId={userId}
+                              authorId={post.author.id}
+                              postImage={post.imageUrl}
+                              userAvatar={post.author.avatar}
+                              isRoute={true}
+                            />
+                          );
+                        })}
                       </div>
                     </div>
                   )}
-              </div>
-            </motion.div>
-          )}
 
-          {userId == userData.userId && (
+                  <div className="profile-more-block">
+                    {userInformation.tracks &&
+                      userInformation.tracks.length > 0 && (
+                        <div className="profile-tracks">
+                          <h1 className="profile-tracks-title">Музыка:</h1>
+                          <div className="profile-tracks-block">
+                            {userInformation.tracks.map((track) => (
+                              <MusicCard
+                                trackId={track.trackId}
+                                trackArtist={track.trackArtist}
+                                trackImageUrl={track.trackImage}
+                                trackPreviewUrl={track.trackPreview}
+                                trackHref={track.trackHref}
+                                trackName={track.trackName}
+                                myTrack={isMyTrack}
+                                fetchUserPosts={fetchUserPosts}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                  </div>
+                </motion.div>
+              )}
+
+          {isOwnProfile && (
             <div className="profile-publish-block">
               <h1 className="profile-publish-title">
                 Опубликовать новый пост:
@@ -571,55 +578,59 @@ export const ProfilePage = () => {
             </div>
           )}
 
-          <div className="profile-allposts-block">
-            {userId == userData.userId ? (
-              <h1 className="profile-allposts-title">Все ваши посты:</h1>
-            ) : (
-              <h1 className="profile-allposts-title">
-                Все посты {userInformation.username}
-              </h1>
-            )}
+          {isProfileClosed ? (
+            <p className="profile-closed-profile-message">Закрытый профиль</p>
+          ) : (
+            <div className="profile-allposts-block">
+              {isOwnProfile ? (
+                <h1 className="profile-allposts-title">Все ваши посты:</h1>
+              ) : (
+                <h1 className="profile-allposts-title">
+                  Все посты {userInformation.username}
+                </h1>
+              )}
 
-            {loading ? (
-              <>
-                <div className="blog-post-skeleton">
-                  <PostSkeleton />
-                </div>
-                <div className="blog-post-skeleton">
-                  <PostSkeleton />
-                </div>
-              </>
-            ) : userPosts.length == 0 ? (
-              <p className="profile-noPosts">Здесь пока еще нет постов...</p>
-            ) : (
-              userPosts.map((userPost) => {
-                return (
-                  <>
-                    <Link
-                      className="postcard-redirectToThisPost"
-                      to={`/post/${userPost._id}`}
-                    >
-                      <PostCard
-                        title={userPost.title}
-                        authorName={userInformation.name}
-                        authorLastName={userInformation.lastName}
-                        username={userInformation.username}
-                        content={userPost.content}
-                        postId={userPost._id}
-                        authorEmail={userPost.email}
-                        date={userPost.date}
-                        userId={userData.userId}
-                        authorId={userInformation._id}
-                        postImage={userPost.imageUrl}
-                        userAvatar={userInformation.avatar}
-                        isLikeAvailible={false}
-                      />
-                    </Link>
-                  </>
-                );
-              })
-            )}
-          </div>
+              {loading ? (
+                <>
+                  <div className="blog-post-skeleton">
+                    <PostSkeleton />
+                  </div>
+                  <div className="blog-post-skeleton">
+                    <PostSkeleton />
+                  </div>
+                </>
+              ) : userPosts.length == 0 ? (
+                <p className="profile-noPosts">Здесь пока еще нет постов...</p>
+              ) : (
+                userPosts.map((userPost) => {
+                  return (
+                    <>
+                      <Link
+                        className="postcard-redirectToThisPost"
+                        to={`/post/${userPost._id}`}
+                      >
+                        <PostCard
+                          title={userPost.title}
+                          authorName={userInformation.name}
+                          authorLastName={userInformation.lastName}
+                          username={userInformation.username}
+                          content={userPost.content}
+                          postId={userPost._id}
+                          authorEmail={userPost.email}
+                          date={userPost.date}
+                          userId={userData.userId}
+                          authorId={userInformation._id}
+                          postImage={userPost.imageUrl}
+                          userAvatar={userInformation.avatar}
+                          isLikeAvailible={false}
+                        />
+                      </Link>
+                    </>
+                  );
+                })
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
