@@ -4,8 +4,12 @@ import { UserCard } from "../../components/UserCard/UserCard";
 
 import "./UsersPage.css";
 import UserCardSkeleton from "../../components/UserCardSkeleton";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 export const UsersPage = () => {
+  const [searchParams, SetSearchParams] = useSearchParams();
+  const filterType = searchParams.get("filterType");
+  const town = searchParams.get("town");
   const { request, loading, error } = useHttp();
   const [allUsers, setAllUsers] = useState([]);
 
@@ -41,9 +45,29 @@ export const UsersPage = () => {
     setAllUsers(data);
   };
 
+  const fetchUserByTown = async () => {
+    try {
+      const usersByTown = await request(
+        `http://localhost:5000/api/get-user-by-filterType?filterType=town&town=${town}`,
+        "GET"
+      );
+      setAllUsers(usersByTown);
+    } catch (error) {
+      console.log("Error while fetching user by town: ", error.message);
+    }
+  };
+
   useEffect(() => {
     fetchAllUsers("");
   }, []);
+
+  useEffect(() => {
+    if (filterType) {
+      fetchUserByTown();
+    } else {
+      fetchAllUsers("");
+    }
+  }, [filterType, town]);
 
   const [inputValue, setInputValue] = useState("");
 
@@ -115,6 +139,29 @@ export const UsersPage = () => {
               </p>
             ))}
           </div>
+
+          {activeSortButton !== null && (
+            <p
+              onClick={() => {
+                fetchAllUsers("");
+                setActiveSortButton(null);
+              }}
+              className="users-by-town-show-all"
+            >
+              Показать всех
+            </p>
+          )}
+
+          {town && (
+            <p className="users-by-town-title">
+              Показаны пользователи из города{" "}
+              <span className="users-by-town-town">{town} </span>
+              <br />
+              <Link to={`/users`} className="users-by-town-show-all">
+                Показать всех
+              </Link>
+            </p>
+          )}
 
           {Array.isArray(allUsers) ? (
             allUsers.length !== 0 ? (

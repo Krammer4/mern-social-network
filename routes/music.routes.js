@@ -24,7 +24,7 @@ const authentificateSpotify = async () => {
     });
 
     const accessToken = response.data.access_token;
-    console.log("ACCESS TOKEN:", accessToken);
+
     return accessToken;
   } catch (error) {
     console.log(error);
@@ -96,7 +96,6 @@ const getArtistTracks = async (artistId, token) => {
 
 const getTopRandomTracksByGenre = async (genre, limit, token) => {
   try {
-    // Запрос к Spotify API для поиска треков по жанру
     const response = await axios.get(`https://api.spotify.com/v1/search`, {
       params: {
         q: `genre:${genre}`,
@@ -110,12 +109,10 @@ const getTopRandomTracksByGenre = async (genre, limit, token) => {
 
     const tracks = response.data.tracks.items;
 
-    // Если список пуст, вернем пустой массив
     if (tracks.length === 0) {
       return [];
     }
 
-    // Случайным образом выберем несколько треков из списка
     const randomTracks = [];
     const selectedIndexes = new Set();
 

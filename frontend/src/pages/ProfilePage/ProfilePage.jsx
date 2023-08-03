@@ -338,7 +338,12 @@ export const ProfilePage = () => {
                 )}
 
                 {userInformation.town && (
-                  <p className="profile-info-town">{userInformation.town}</p>
+                  <Link
+                    to={`/users?filterType=town&town=${userInformation.town}`}
+                    className="profile-info-town"
+                  >
+                    {userInformation.town}
+                  </Link>
                 )}
 
                 {isProfileClosed ? null : (

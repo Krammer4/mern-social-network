@@ -29,6 +29,25 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
+router.get("/get-user-by-filterType", async (req, res) => {
+  const { filterType } = req.query;
+  try {
+    if (filterType == "town") {
+      const { town } = req.query;
+      const userByTown = await User.find({ town: town });
+      if (!userByTown) {
+        return res
+          .status(404)
+          .json({ message: `Не найдено пользователя по городу ${town}` });
+      } else {
+        return res.json(userByTown);
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error while fetching user by town" });
+  }
+});
+
 router.post("/update-user-settings", async (req, res) => {
   const { userId, isClosedProfile, userFavGenre, isClosedMusic } = req.body;
   try {
