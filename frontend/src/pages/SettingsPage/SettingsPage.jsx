@@ -10,6 +10,7 @@ export const SettingsPage = () => {
   const { request, loading, error } = useHttp();
 
   const [isClosedProfile, setIsClosedProfile] = useState(false);
+  const [isClosedMusic, setIsClosedMusic] = useState(false);
   const [userFavGenre, setUserFavGenre] = useState("");
   const [userData, setUserData] = useState({});
   const genres = [
@@ -82,14 +83,20 @@ export const SettingsPage = () => {
   }, []);
 
   useEffect(() => {
-    // При изменении userData.settings.userFavGenre обновляем состояние userFavGenres
     if (userData.settings && userData.settings.userFavGenre) {
       setUserFavGenre(userData.settings.userFavGenre);
     }
     if (userData.settings && userData.settings.isClosedProfile) {
       setIsClosedProfile(userData.settings.isClosedProfile);
     }
-  }, [userData.settings?.userFavGenre, userData.settings?.isClosedProfile]);
+    if (userData.settings && userData.settings.isClosedMusic) {
+      setIsClosedMusic(userData.settings.isClosedMusic);
+    }
+  }, [
+    userData.settings?.userFavGenre,
+    userData.settings?.isClosedProfile,
+    userData.settings?.isClosedMusic,
+  ]);
 
   const saveUserSettings = async () => {
     try {
@@ -100,6 +107,7 @@ export const SettingsPage = () => {
           userId: userId,
           isClosedProfile: isClosedProfile,
           userFavGenre: userFavGenre,
+          isClosedMusic: isClosedMusic,
         }
       );
 
@@ -179,6 +187,23 @@ export const SettingsPage = () => {
               >
                 Очистить
               </button>
+            </div>
+
+            <div className="settings-setting-row">
+              <p className="settings-setting-type">
+                Закрыть от всех мою музыку:
+              </p>
+
+              {userData.settings && (
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    checked={isClosedMusic}
+                    onChange={() => setIsClosedMusic((prev) => !prev)}
+                  />
+                  <span class="slider round"></span>
+                </label>
+              )}
             </div>
 
             <button onClick={saveUserSettings} className="settings-save-button">

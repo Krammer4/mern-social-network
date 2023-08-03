@@ -30,7 +30,7 @@ router.get("/user/:userId", async (req, res) => {
 });
 
 router.post("/update-user-settings", async (req, res) => {
-  const { userId, isClosedProfile, userFavGenre } = req.body;
+  const { userId, isClosedProfile, userFavGenre, isClosedMusic } = req.body;
   try {
     const user = await User.findById(userId);
 
@@ -40,6 +40,7 @@ router.post("/update-user-settings", async (req, res) => {
 
     user.settings.isClosedProfile = isClosedProfile;
     user.settings.userFavGenre = userFavGenre;
+    user.settings.isClosedMusic = isClosedMusic;
 
     await user.save();
     res.json({ message: "Настройки успешно сохранены" });
