@@ -225,6 +225,8 @@ export const ProfilePage = () => {
     !isOwnProfile && userInformation.settings?.isClosedProfile;
   const isMusicClosed =
     !isOwnProfile && userInformation.settings?.isClosedMusic;
+  const isLikedClosed =
+    !isOwnProfile && userInformation.settings?.isClosedLikes;
 
   return (
     <div className="profile">
@@ -462,34 +464,36 @@ export const ProfilePage = () => {
                   animate={{ opacity: 1, opacity: 1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  {userLikedPosts.length !== 0 && (
-                    <div className="profile-likedPosts">
-                      <h1 className="profile-likedPosts-title">
-                        Лайкнутые посты:
-                      </h1>
-                      <div className="profile-liked-Posts-block">
-                        {userLikedPosts.reverse().map((post) => {
-                          return (
-                            <PostCard
-                              title={post.name}
-                              authorName={post.author.name}
-                              authorLastName={post.author.lastName}
-                              content={post.content}
-                              postId={post._id}
-                              authorEmail={post.author.email}
-                              username={post.author.username}
-                              date={post.date}
-                              userId={userId}
-                              authorId={post.author.id}
-                              postImage={post.imageUrl}
-                              userAvatar={post.author.avatar}
-                              isRoute={true}
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
+                  {isLikedClosed
+                    ? null
+                    : userLikedPosts.length !== 0 && (
+                        <div className="profile-likedPosts">
+                          <h1 className="profile-likedPosts-title">
+                            Лайкнутые посты:
+                          </h1>
+                          <div className="profile-liked-Posts-block">
+                            {userLikedPosts.reverse().map((post) => {
+                              return (
+                                <PostCard
+                                  title={post.name}
+                                  authorName={post.author.name}
+                                  authorLastName={post.author.lastName}
+                                  content={post.content}
+                                  postId={post._id}
+                                  authorEmail={post.author.email}
+                                  username={post.author.username}
+                                  date={post.date}
+                                  userId={userId}
+                                  authorId={post.author.id}
+                                  postImage={post.imageUrl}
+                                  userAvatar={post.author.avatar}
+                                  isRoute={true}
+                                />
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
 
                   {isMusicClosed ? null : (
                     <div className="profile-more-block">
