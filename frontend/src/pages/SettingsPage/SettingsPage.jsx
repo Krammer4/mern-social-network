@@ -11,6 +11,7 @@ export const SettingsPage = () => {
 
   const [isClosedProfile, setIsClosedProfile] = useState(false);
   const [isClosedMusic, setIsClosedMusic] = useState(false);
+  const [isClosedLikes, setIsClosedLikes] = useState(false);
   const [userFavGenre, setUserFavGenre] = useState("");
   const [userData, setUserData] = useState({});
   const genres = [
@@ -92,10 +93,14 @@ export const SettingsPage = () => {
     if (userData.settings && userData.settings.isClosedMusic) {
       setIsClosedMusic(userData.settings.isClosedMusic);
     }
+    if (userData.settings && userData.settings.isClosedLikes) {
+      setIsClosedLikes(userData.settings.isClosedLikes);
+    }
   }, [
     userData.settings?.userFavGenre,
     userData.settings?.isClosedProfile,
     userData.settings?.isClosedMusic,
+    userData.settings?.isClosedLikes,
   ]);
 
   const saveUserSettings = async () => {
@@ -108,6 +113,7 @@ export const SettingsPage = () => {
           isClosedProfile: isClosedProfile,
           userFavGenre: userFavGenre,
           isClosedMusic: isClosedMusic,
+          isClosedLikes,
         }
       );
 
@@ -139,6 +145,23 @@ export const SettingsPage = () => {
                     type="checkbox"
                     checked={isClosedProfile}
                     onChange={() => setIsClosedProfile((prev) => !prev)}
+                  />
+                  <span class="slider round"></span>
+                </label>
+              )}
+            </div>
+
+            <div className="settings-setting-row">
+              <p className="settings-setting-type">
+                Скрыть понравившиеся посты:
+              </p>
+
+              {userData.settings && (
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    checked={isClosedLikes}
+                    onChange={() => setIsClosedLikes((prev) => !prev)}
                   />
                   <span class="slider round"></span>
                 </label>
