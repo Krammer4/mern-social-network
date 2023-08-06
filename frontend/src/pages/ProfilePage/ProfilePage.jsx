@@ -348,6 +348,14 @@ export const ProfilePage = () => {
                   </Link>
                 )}
 
+                {isOwnProfile ? null : (
+                  <Link
+                    to={`/chat?userId=${userData.userId}&user2Id=${userId}`}
+                  >
+                    <button>Отправить сообщение</button>
+                  </Link>
+                )}
+
                 {isProfileClosed ? null : (
                   <div
                     className="profile-more-button"
