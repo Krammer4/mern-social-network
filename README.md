@@ -2,6 +2,26 @@
 
 MERN (MongoDB + Express + React + NodeJS) Social Network.
 
+СТЕК ТЕХНОЛОГИЙ:
+
+- MongoDB
+- Express
+- ReactJS
+- NodeJS
+- Mongoose
+- bcryptjs
+- cors
+- jwt
+- express-validator
+- multer
+- axios
+- react-router-v6
+- config
+- concurrently
+- nodemon
+- framer-motion
+- react-content-loader
+
 # To launch frontend:
 
 - ./frontend
