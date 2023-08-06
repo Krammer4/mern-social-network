@@ -10,7 +10,7 @@ const musicrouter = require("./routes/music.routes");
 const http = require("http");
 
 const redis = require("redis");
-const redisAdapter = require("socket.io-redis");
+// const redisAdapter = require("socket.io-redis");
 
 const app = express();
 app.use(
@@ -38,25 +38,20 @@ io.on("connection", async (socket) => {
   socket.on("join-chat", async (roomName) => {
     socket.join(roomName);
     console.log("SOCKET JOINED: ", roomName);
-    await redisClient.lRange(
-      `messages:${roomName}`,
-      0,
-      -1,
-      (error, messages) => {
-        if (!error) {
-          socket.emit("load-messages", messages.reverse());
-          console.log("Success while ranging messages");
-        } else {
-          cosnole.log("Error while ranging messages");
-        }
+    await redisClient.lRange(roomName, 0, -1, (error, messages) => {
+      if (!error) {
+        socket.emit("load-messages", messages.reverse());
+        console.log("Success while ranging messages");
+      } else {
+        cosnole.log("Error while ranging messages");
       }
-    );
+    });
     console.log("ROOM NAME: ", roomName);
   });
 
   socket.on("send-message", async (roomName, message) => {
     try {
-      await redisClient.lPush(roomName, message, (err) => {
+      await redisClient.lPush(roomName, JSON.stringify(message), (err) => {
         if (err) {
           console.log("Error while saving message to Redis: ", err);
         } else {
@@ -64,7 +59,7 @@ io.on("connection", async (socket) => {
         }
       });
 
-      io.to(roomName).emit("new-message", message);
+      io.to(roomName).emit("new-message", JSON.stringify(message));
       console.log("СООБЩЕНИЕ", message);
     } catch (error) {
       console.log("Error while saving messages to Redis: ", error.message);

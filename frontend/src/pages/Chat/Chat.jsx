@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import io from "socket.io-client";
+import { useHttp } from "../../hooks/httpHook";
 
 import "./Chat.css";
+import { MessageCard } from "../../components/MessageCard/MessageCard";
 
 export const Chat = () => {
+  const { request, error, message } = useHttp();
   const [socket, setSocket] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
   const [searchParams] = useSearchParams();
 
@@ -16,7 +21,20 @@ export const Chat = () => {
 
   const roomName = [userId, user2Id].sort().join("");
 
+  const fetchUserData = async () => {
+    try {
+      const userData = await request(
+        `http://localhost:5000/api/user/${userId}`,
+        "GET"
+      );
+      setUserData(userData);
+    } catch (error) {
+      console.error("Error while fetching user data: ", error.message);
+    }
+  };
+
   useEffect(() => {
+    fetchUserData();
     const newSocket = io("http://localhost:5000", {
       withCredentials: true,
     });
@@ -48,8 +66,13 @@ export const Chat = () => {
 
   const handleSendMessage = () => {
     if (messageText.trim() === "") return;
-
-    socket.emit("send-message", roomName, messageText);
+    const message = {
+      text: messageText,
+      user: userData,
+      date: new Date(),
+    };
+    console.log("USERDATA: ", userData);
+    socket.emit("send-message", roomName, message);
 
     setMessageText("");
   };
@@ -64,16 +87,25 @@ export const Chat = () => {
       <div className="chat _container">
         <div className="chat-content">
           <div>
-            {messages.map((message, index) => (
-              <div key={index}>{message}</div>
-            ))}
+            {messages &&
+              messages.map((message, index) => (
+                <MessageCard
+                  text={JSON.parse(message).text}
+                  userAvatar={JSON.parse(message).user.avatar}
+                  authorId={JSON.parse(message).user._id}
+                  date={JSON.parse(message).date}
+                />
+              ))}
           </div>
+
           <div className="chat-row">
             <input
               className="chat-input"
               type="text"
               value={messageText}
-              onChange={(e) => setMessageText(e.target.value)}
+              onChange={(e) => {
+                setMessageText(e.target.value);
+              }}
               placeholder="Ваше сообщение"
             />
             <button className="chat-send-button" onClick={handleSendMessage}>

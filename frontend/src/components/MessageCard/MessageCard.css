@@ -1,0 +1,50 @@
+.message {
+  display: flex;
+  align-items: flex-end;
+
+  max-width: 600px;
+}
+.message.mine {
+  margin-left: auto;
+  margin-right: 0;
+  display: flex;
+}
+.message.mine .message-userAvatar {
+  order: 3;
+  margin-left: 20px;
+}
+.message.mine .message-card {
+  background-color: #e7e5f0;
+  border-radius: 20px;
+  border-bottom-right-radius: 0;
+}
+.message-userAvatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 100%;
+  object-fit: cover;
+  flex-direction: row-reverse;
+}
+.message-card {
+  max-width: 600px;
+  width: 100%;
+  background-color: #f0eff3;
+  margin-top: 20px;
+  border-radius: 20px;
+  border-bottom-left-radius: 0;
+}
+.message-content {
+  padding: 10px 20px;
+}
+.message-text {
+  font-family: "Mulish";
+  font-size: 20px;
+  font-weight: 500;
+}
+.message-date {
+  text-align: right;
+  font-family: "Mulish";
+  font-size: 12px;
+  padding-top: 10px;
+}
