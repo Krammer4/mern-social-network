@@ -7,8 +7,6 @@ const redisClient = new Redis();
 const getAsync = promisify(redisClient.get).bind(redisClient);
 const setAsync = promisify(redisClient.set).bind(redisClient);
 
-// redisClient.connect();
-
 redisClient.on("connect", () => {
   console.log("Controller connected to redis");
 });
@@ -29,14 +27,22 @@ class PostController {
         imageUrl,
       });
 
-      await post.save();
+      const savedPost = await post.save();
 
-      user.posts.push(post._id);
+      const populatedPost = await Post.findById(savedPost._id).populate(
+        "author",
+        "name lastName email username avatar"
+      );
+
+      await redisClient.lpush("posts", JSON.stringify(populatedPost));
+      await redisClient.ltrim("posts", 0, 99);
+
+      user.posts.push(savedPost._id);
       await user.save();
 
       res
         .status(201)
-        .json({ message: "Пост успешно опубликован!", id: post.id });
+        .json({ message: "Пост успешно опубликован!", post: populatedPost });
     } catch (e) {
       res
         .status(500)
@@ -46,26 +52,33 @@ class PostController {
 
   async getAll(req, res) {
     try {
-      const cachPosts = await redisClient.lrange("posts", 0, -1);
-      if (cachPosts.length !== 0) {
-        console.log(cachPosts);
-        return res.json(JSON.parse(cachPosts));
-      }
+      redisClient.lrange("posts", 0, -1, async (err, cachedPosts) => {
+        if (err) {
+          console.error("Redis Cache Error:", err);
+        }
 
-      const posts = await Post.find().populate(
-        "author",
-        "name lastName email username avatar"
-      );
+        if (cachedPosts && cachedPosts.length > 0) {
+          const posts = cachedPosts.map((post) => JSON.parse(post));
+          return res.json(posts);
+        }
 
-      if (posts.length === 0) {
-        return res.status(200).json({
-          message: "Тут пока нет ни одного поста. Вы можете быть первым!",
-        });
-      }
+        const posts = await Post.find().populate(
+          "author",
+          "name lastName email username avatar"
+        );
 
-      redisClient.lpush("posts", JSON.stringify(posts));
+        if (posts.length === 0) {
+          return res.status(200).json({
+            message: "Тут пока нет ни одного поста. Вы можете быть первым!",
+          });
+        }
 
-      return res.json(posts);
+        const postsJSON = posts.map((post) => JSON.stringify(post));
+        await redisClient.lpush("posts", ...postsJSON);
+        await redisClient.expire("posts", 600);
+
+        res.json(posts.reverse());
+      });
     } catch (e) {
       res.status(500).json({
         message: `Не удалось загрузить посты... Пожалуйста, попробуйте еще раз... (${e.message})`,
@@ -83,7 +96,19 @@ class PostController {
         return res.status(404).json({ message: "Post not found" });
       }
 
-      postDeleting.deleteOne();
+      await postDeleting.deleteOne();
+
+      const cachedPosts = await redisClient.lrange("posts", 0, -1);
+      const posts = cachedPosts.map((post) => JSON.parse(post));
+
+      const updatedPosts = posts.filter(
+        (post) => post._id.toString() !== postId
+      );
+
+      const updatedPostsJSON = updatedPosts.map((post) => JSON.stringify(post));
+      await redisClient.del("posts");
+      await redisClient.lpush("posts", ...updatedPostsJSON);
+      await redisClient.expire("posts", 600);
 
       res.json({ message: "Post was deleted successfully" });
     } catch (error) {
