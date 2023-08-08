@@ -12,7 +12,6 @@ export const Chat = () => {
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [messageText, setMessageText] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
 
   const [searchParams] = useSearchParams();
 
@@ -51,6 +50,7 @@ export const Chat = () => {
 
     socket.on("load-messages", (loadedMessages) => {
       setMessages(loadedMessages);
+      console.log("LOADED MESSAGES: ", loadedMessages);
     });
 
     socket.on("new-message", (message) => {
@@ -71,16 +71,11 @@ export const Chat = () => {
       user: userData,
       date: new Date(),
     };
-    console.log("USERDATA: ", userData);
+    console.log("ALL MESSAGES: ", messages);
     socket.emit("send-message", roomName, message);
 
     setMessageText("");
   };
-
-  //   const getRoomName = (userId, user2Id) => {
-  //     const sortedIds = [userId, user2Id].sort().join("");
-  //     return `room:${sortedIds}`;
-  //   };
 
   return (
     <div className="chat">
@@ -90,10 +85,10 @@ export const Chat = () => {
             {messages &&
               messages.map((message, index) => (
                 <MessageCard
-                  text={JSON.parse(message).text}
-                  userAvatar={JSON.parse(message).user.avatar}
-                  authorId={JSON.parse(message).user._id}
-                  date={JSON.parse(message).date}
+                  text={message.text}
+                  userAvatar={message.user.avatar}
+                  authorId={message.user._id}
+                  date={message.date}
                 />
               ))}
           </div>

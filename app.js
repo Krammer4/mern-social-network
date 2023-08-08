@@ -10,6 +10,7 @@ const musicrouter = require("./routes/music.routes");
 const http = require("http");
 
 const redis = require("redis");
+const { error } = require("console");
 // const redisAdapter = require("socket.io-redis");
 
 const app = express();
@@ -28,42 +29,36 @@ const io = require("socket.io")(server, {
 });
 
 const redisClient = redis.createClient({
-  host: "localhost",
+  host: "127.0.0.1",
   port: 6379,
 });
 
-io.on("connection", async (socket) => {
+io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
   socket.on("join-chat", async (roomName) => {
     socket.join(roomName);
-    console.log("SOCKET JOINED: ", roomName);
-    await redisClient.lRange(roomName, 0, -1, (error, messages) => {
-      if (!error) {
-        socket.emit("load-messages", messages.reverse());
-        console.log("Success while ranging messages");
-      } else {
-        cosnole.log("Error while ranging messages");
+    console.log("User joined chat:", roomName);
+
+    await redisClient.lRange(
+      `messages:${roomName}`,
+      0,
+      -1,
+      (error, messages) => {
+        if (!error) {
+          socket.emit("load-messages", messages);
+          console.log("Loaded messages:", messages);
+        } else {
+          console.log("ERROR while ranging messages: ", error);
+        }
       }
-    });
-    console.log("ROOM NAME: ", roomName);
+    );
   });
 
   socket.on("send-message", async (roomName, message) => {
-    try {
-      await redisClient.lPush(roomName, JSON.stringify(message), (err) => {
-        if (err) {
-          console.log("Error while saving message to Redis: ", err);
-        } else {
-          console.log("MESSAGE WAS PUSHED TO REDIS");
-        }
-      });
-
-      io.to(roomName).emit("new-message", JSON.stringify(message));
-      console.log("СООБЩЕНИЕ", message);
-    } catch (error) {
-      console.log("Error while saving messages to Redis: ", error.message);
-    }
+    await redisClient.lPush(`messages:${roomName}`, JSON.stringify(message));
+    io.to(roomName).emit("new-message", message);
+    console.log("New message:");
   });
 
   socket.on("disconnect", () => {
@@ -94,7 +89,7 @@ const start = async () => {
         useUnifiedTopology: true,
       })
     );
-    await redisClient.connect();
+    redisClient.connect();
     server.listen(PORT, () => {
       console.log(`Server was started at port ${PORT}`);
     });

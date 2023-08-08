@@ -1,5 +1,17 @@
+const { promisify } = require("util");
 const Post = require("../Models/Post");
 const User = require("../Models/User");
+const Redis = require("ioredis");
+const redisClient = new Redis();
+
+const getAsync = promisify(redisClient.get).bind(redisClient);
+const setAsync = promisify(redisClient.set).bind(redisClient);
+
+// redisClient.connect();
+
+redisClient.on("connect", () => {
+  console.log("Controller connected to redis");
+});
 
 class PostController {
   async createPost(req, res) {
@@ -34,22 +46,28 @@ class PostController {
 
   async getAll(req, res) {
     try {
+      const cachPosts = await redisClient.get("posts");
+      if (cachPosts) {
+        return res.json(JSON.parse(cachPosts));
+      }
+
       const posts = await Post.find().populate(
         "author",
         "name lastName email username avatar"
       );
 
-      if (!posts) {
+      if (posts.length === 0) {
         return res.status(200).json({
           message: "Тут пока нет ни одного поста. Вы можете быть первым!",
         });
       }
 
-      res.json(posts);
+      redisClient.set("posts", JSON.stringify(posts));
+
+      return res.json(posts);
     } catch (e) {
       res.status(500).json({
-        message:
-          "Не удалось загрузить посты... Пожалуйста, попробуйте еще раз...",
+        message: `Не удалось загрузить посты... Пожалуйста, попробуйте еще раз... (${e.message})`,
       });
     }
   }

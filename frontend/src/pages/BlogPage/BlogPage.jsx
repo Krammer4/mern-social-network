@@ -15,6 +15,7 @@ export const BlogPage = () => {
 
   const fetchPosts = useCallback(async () => {
     const data = await request("http://localhost:5000/api/posts", "GET");
+    console.log("DATA: ", data);
     setAllPosts(data.reverse());
     console.log(data);
   }, []);
