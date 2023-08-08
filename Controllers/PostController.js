@@ -46,8 +46,9 @@ class PostController {
 
   async getAll(req, res) {
     try {
-      const cachPosts = await redisClient.get("posts");
-      if (cachPosts) {
+      const cachPosts = await redisClient.lrange("posts", 0, -1);
+      if (cachPosts.length !== 0) {
+        console.log(cachPosts);
         return res.json(JSON.parse(cachPosts));
       }
 
@@ -62,7 +63,7 @@ class PostController {
         });
       }
 
-      redisClient.set("posts", JSON.stringify(posts));
+      redisClient.lpush("posts", JSON.stringify(posts));
 
       return res.json(posts);
     } catch (e) {
