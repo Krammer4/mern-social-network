@@ -90,16 +90,17 @@ export const Chat = () => {
         <div className="chat-content">
           <div>
             {messages.length != 0 &&
-              messages
-                .reverse()
-                .map((message, index) => (
-                  <MessageCard
-                    text={message.text}
-                    userAvatar={message.user.avatar}
-                    authorId={message.user._id}
-                    date={message.date}
-                  />
-                ))}
+              messages.map(
+                (message, index) =>
+                  message.user && (
+                    <MessageCard
+                      text={message.text}
+                      userAvatar={message.user.avatar}
+                      authorId={message.user._id}
+                      date={message.date}
+                    />
+                  )
+              )}
           </div>
 
           <div className="chat-row">
