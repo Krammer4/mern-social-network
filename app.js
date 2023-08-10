@@ -9,9 +9,13 @@ const userrouter = require("./routes/user.routes");
 const musicrouter = require("./routes/music.routes");
 const http = require("http");
 
-const redis = require("redis");
+const Redis = require("ioredis");
 const { error } = require("console");
-// const redisAdapter = require("socket.io-redis");
+const redisClient = new Redis();
+
+redisClient.on("connect", () => {
+  console.log("Controller connected to redis");
+});
 
 const app = express();
 app.use(
@@ -28,11 +32,6 @@ const io = require("socket.io")(server, {
   },
 });
 
-const redisClient = redis.createClient({
-  host: "127.0.0.1",
-  port: 6379,
-});
-
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
@@ -40,7 +39,7 @@ io.on("connection", (socket) => {
     socket.join(roomName);
     console.log("User joined chat:", roomName);
 
-    await redisClient.lRange(
+    await redisClient.lrange(
       `messages:${roomName}`,
       0,
       -1,
@@ -56,7 +55,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send-message", async (roomName, message) => {
-    await redisClient.lPush(`messages:${roomName}`, JSON.stringify(message));
+    await redisClient.lpush(`messages:${roomName}`, JSON.stringify(message));
     io.to(roomName).emit("new-message", message);
     console.log("New message:");
   });
@@ -89,7 +88,6 @@ const start = async () => {
         useUnifiedTopology: true,
       })
     );
-    redisClient.connect();
     server.listen(PORT, () => {
       console.log(`Server was started at port ${PORT}`);
     });

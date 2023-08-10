@@ -49,8 +49,15 @@ export const Chat = () => {
     if (!socket) return;
 
     socket.on("load-messages", (loadedMessages) => {
-      setMessages(loadedMessages);
+      const load = loadedMessages.map((message) => {
+        JSON.parse(message);
+        setMessages((prev) => [...prev, JSON.parse(message)]);
+      });
+      // setMessages((prev) => [...prev, ...load]);
       console.log("LOADED MESSAGES: ", loadedMessages);
+      if (messages) {
+        console.log(messages);
+      }
     });
 
     socket.on("new-message", (message) => {
@@ -82,15 +89,17 @@ export const Chat = () => {
       <div className="chat _container">
         <div className="chat-content">
           <div>
-            {messages &&
-              messages.map((message, index) => (
-                <MessageCard
-                  text={message.text}
-                  userAvatar={message.user.avatar}
-                  authorId={message.user._id}
-                  date={message.date}
-                />
-              ))}
+            {messages.length != 0 &&
+              messages
+                .reverse()
+                .map((message, index) => (
+                  <MessageCard
+                    text={message.text}
+                    userAvatar={message.user.avatar}
+                    authorId={message.user._id}
+                    date={message.date}
+                  />
+                ))}
           </div>
 
           <div className="chat-row">
@@ -102,6 +111,11 @@ export const Chat = () => {
                 setMessageText(e.target.value);
               }}
               placeholder="Ваше сообщение"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSendMessage();
+                }
+              }}
             />
             <button className="chat-send-button" onClick={handleSendMessage}>
               Send
