@@ -82,6 +82,53 @@ html {
   padding-left: 20px;
   padding-right: 20px;
 }
+.chat-friend-info {
+  /* border-bottom: 1px solid #5c529a; */
+  -webkit-box-shadow: 2px 2px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 2px 2px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 2px 2px 8px 0px rgba(34, 60, 80, 0.2);
+}
+.chat-friend-info-block {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px;
+}
+.chat-friend-back {
+  font-size: 18px;
+  font-family: "Mulish";
+  font-weight: 700;
+  opacity: 0.3;
+}
+.chat-friend-back:hover {
+  opacity: 0.2;
+}
+.chat-friend-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat-friend-avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+.chat-friend-name {
+  margin-left: 60px;
+  margin-right: 60px;
+  font-size: 26px;
+  font-family: "Mulish";
+}
+.chat-messages {
+  padding-bottom: 100px;
+  overflow-y: scroll;
+  max-height: 78vh;
+  padding-right: 20px;
+}
+.chat-messages::-webkit-scrollbar {
+  display: none;
+}
 .chat-row {
   display: flex;
   width: 100%;

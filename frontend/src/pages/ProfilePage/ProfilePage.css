@@ -158,7 +158,25 @@ html {
   font-size: 20px;
   color: #5c529a;
 }
-
+.profile-send-message {
+  display: block;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.profile-send-message-button {
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: none;
+  background-color: #5c529a;
+  color: #fff;
+  font-weight: 700;
+  font-family: "Mulish";
+  cursor: pointer;
+  transition: 0.3s ease all 0s;
+}
+.profile-send-message-button:hover {
+  transform: translateY(2px);
+}
 .profile-more-button {
   font-family: "Mulish";
   font-size: 18px;
@@ -169,6 +187,7 @@ html {
   max-width: max-content;
   display: flex;
 }
+
 .profile-more-button:hover .profile-more-rectangle {
   transform: rotate(180deg);
   transform-origin: center;
