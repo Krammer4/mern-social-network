@@ -45,8 +45,8 @@ io.on("connection", (socket) => {
       -1,
       (error, messages) => {
         if (!error) {
-          socket.emit("load-messages", messages);
-          console.log("Loaded messages:", messages);
+          socket.emit("load-messages", messages.reverse());
+          console.log("Messages was loaded");
         } else {
           console.log("ERROR while ranging messages: ", error);
         }
