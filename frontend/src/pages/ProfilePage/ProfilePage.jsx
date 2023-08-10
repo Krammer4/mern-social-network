@@ -351,8 +351,11 @@ export const ProfilePage = () => {
                 {isOwnProfile ? null : (
                   <Link
                     to={`/chat?userId=${userData.userId}&user2Id=${userId}`}
+                    className="profile-send-message"
                   >
-                    <button>Отправить сообщение</button>
+                    <button className="profile-send-message-button">
+                      Отправить сообщение
+                    </button>
                   </Link>
                 )}
 
