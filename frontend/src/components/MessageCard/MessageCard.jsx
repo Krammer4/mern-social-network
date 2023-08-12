@@ -2,6 +2,7 @@ import React from "react";
 import "./MessageCard.css";
 import formatDate from "../../utils/formatDate";
 import { Link } from "react-router-dom";
+import { backend_url } from "../../consts";
 
 export const MessageCard = ({ text, userAvatar, authorId, date }) => {
   const userStorageData = JSON.parse(localStorage.getItem("userData"));
@@ -14,7 +15,7 @@ export const MessageCard = ({ text, userAvatar, authorId, date }) => {
       <Link className="message-userAvatar" to={`/profile/${authorId}`}>
         <img
           className="message-userAvatar"
-          src={`http://localhost:5000/${userAvatar}`}
+          src={`${backend_url}/${userAvatar}`}
         />
       </Link>
       <div className="message-card">

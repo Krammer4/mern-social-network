@@ -4,6 +4,7 @@ import "./UserCard.css";
 
 import anonymus from "../../../../frontend/src/img/Profile/none-avatar.png";
 import { Link } from "react-router-dom";
+import { backend_url } from "../../consts";
 
 export const UserCard = ({
   name,
@@ -27,7 +28,7 @@ export const UserCard = ({
               {avatar ? (
                 <img
                   className="user-card-avatar"
-                  src={`http://localhost:5000/${avatar}`}
+                  src={`${backend_url}/${avatar}`}
                   alt="avatar"
                 />
               ) : (
