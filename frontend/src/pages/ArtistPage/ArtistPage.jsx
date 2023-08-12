@@ -6,6 +6,7 @@ import "./ArtistPage.css";
 import { MusicCard } from "../../components/MusicCard/MusicCard";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
 import { WarningMessage } from "../../Messages/WarningMessage/WarningMessage";
+import { backend_url } from "../../consts";
 
 export const ArtistPage = () => {
   const { artistName } = useParams();
@@ -38,16 +39,14 @@ export const ArtistPage = () => {
   };
 
   const fetchArtist = useCallback(async (artistName) => {
-    const artist = await request(
-      `http://localhost:5000/api/get-artist/${artistName}`
-    );
+    const artist = await request(`${backend_url}/api/get-artist/${artistName}`);
     setArtistInfo(artist[0]);
   }, []);
 
   const handleSearchByArtist = async (artistName) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/search-tracks-by-artist/${encodeURIComponent(
+        `${backend_url}/api/search-tracks-by-artist/${encodeURIComponent(
           artistName
         )}`
       );

@@ -207,7 +207,7 @@ export const ProfilePage = () => {
   ]);
 
   const saveProfileDataOnKeyPress = (e) => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       saveProfileData();
     }
   };
@@ -256,7 +256,7 @@ export const ProfilePage = () => {
                     }}
                     src={`http://localhost:5000/${userInformation.avatar}`}
                     className={`profile-info-avatar ${
-                      userData.userId == userId && "myProfile"
+                      isOwnProfile && "myProfile"
                     }`}
                   />
 
@@ -278,7 +278,7 @@ export const ProfilePage = () => {
                 >
                   <img
                     onClick={() => {
-                      if (userData.userId == userId) {
+                      if (isOwnProfile) {
                         console.log("USER ID", userId);
                         console.log("USER DATA . ID: ", userData.userId);
                         avatarClick();
@@ -286,7 +286,7 @@ export const ProfilePage = () => {
                     }}
                     src={anonymus}
                     className={`profile-info-avatar ${
-                      userData.userId == userId && "myProfile"
+                      isOwnProfile && "myProfile"
                     }`}
                   />
 
@@ -295,17 +295,6 @@ export const ProfilePage = () => {
                     src={changeAvatar}
                   />
                 </div>
-                // <img
-                //   onClick={() => {
-                //     if (userData.userId == userId) {
-                //       avatarClick();
-                //     }
-                //   }}
-                //   src={anonymus}
-                //   className={`profile-info-avatar ${
-                //     userData.userId == userId && "myProfile"
-                //   } anonym`}
-                // />
               )}
 
               <div className="profile-info-block">
@@ -390,7 +379,7 @@ export const ProfilePage = () => {
                   value={profileName}
                   onChange={editFormChangeHandler}
                   onKeyDown={(e) => {
-                    if (e.key == "Enter") {
+                    if (e.key === "Enter") {
                       editLastNameRef.current.focus();
                     }
                   }}
@@ -405,7 +394,7 @@ export const ProfilePage = () => {
                   value={profileLastName}
                   onChange={editFormChangeHandler}
                   onKeyDown={(e) => {
-                    if (e.key == "Enter") {
+                    if (e.key === "Enter") {
                       editUsernameRef.current.focus();
                     }
                   }}
@@ -420,7 +409,7 @@ export const ProfilePage = () => {
                   value={profileUsername}
                   onChange={editFormChangeHandler}
                   onKeyDown={(e) => {
-                    if (e.key == "Enter") {
+                    if (e.key === "Enter") {
                       editStatusRef.current.focus();
                     }
                   }}
@@ -436,7 +425,7 @@ export const ProfilePage = () => {
                   value={profileStatus}
                   onChange={editFormChangeHandler}
                   onKeyDown={(e) => {
-                    if (e.key == "Enter") {
+                    if (e.key === "Enter") {
                       editTownRef.current.focus();
                     }
                   }}
@@ -545,7 +534,7 @@ export const ProfilePage = () => {
                 placeholder="Название поста"
                 className="profileInput"
                 onKeyDown={(e) => {
-                  if (e.key == "Enter") {
+                  if (e.key === "Enter") {
                     subtitleRef.current.focus();
                   }
                 }}
@@ -559,7 +548,7 @@ export const ProfilePage = () => {
                 placeholder="Описание поста"
                 className="profileInput"
                 onKeyDown={(e) => {
-                  if (e.key == "Enter") {
+                  if (e.key === "Enter") {
                     publishPostHandler();
                   }
                 }}
@@ -623,7 +612,7 @@ export const ProfilePage = () => {
                     <PostSkeleton />
                   </div>
                 </>
-              ) : userPosts.length == 0 ? (
+              ) : userPosts.length === 0 ? (
                 <p className="profile-noPosts">Здесь пока еще нет постов...</p>
               ) : (
                 userPosts.map((userPost) => {

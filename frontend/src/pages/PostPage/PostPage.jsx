@@ -7,8 +7,7 @@ import { CommentCard } from "../../components/CommentCard/CommentCard";
 import { PostSkeleton } from "../../components/PostSkeleton";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
 import { WarningMessage } from "../../Messages/WarningMessage/WarningMessage";
-import { motion } from "framer-motion";
-import axios from "axios";
+import { backend_url } from "../../consts";
 
 export const PostPage = () => {
   const userInfo = JSON.parse(localStorage.getItem("userData"));
@@ -30,10 +29,7 @@ export const PostPage = () => {
   const [post, setPost] = useState({});
 
   const fetchPostById = async () => {
-    const data = await request(
-      `http://localhost:5000/api/post/${postId}`,
-      "GET"
-    );
+    const data = await request(`${backend_url}/api/post/${postId}`, "GET");
 
     setPost(data);
   };
@@ -41,7 +37,7 @@ export const PostPage = () => {
   const fetchUserPosts = async (userId) => {
     try {
       const userData = await request(
-        `http://localhost:5000/api/profile/${userId}`,
+        `${backend_url}/api/profile/${userId}`,
         "GET"
       );
 
@@ -53,7 +49,7 @@ export const PostPage = () => {
 
   const publishComment = async () => {
     const publishCommentData = await request(
-      `http://localhost:5000/api/post/${postId}`,
+      `${backend_url}/api/post/${postId}`,
       "POST",
       { ...form }
     );
@@ -149,7 +145,7 @@ export const PostPage = () => {
             placeholder="Текст комментария"
             ref={commentInputRef}
             onKeyDown={(e) => {
-              if (e.key == "Enter") {
+              if (e.key === "Enter") {
                 publishComment();
               }
             }}
@@ -165,7 +161,7 @@ export const PostPage = () => {
 
         <div className="postPage-allComments-block">
           <h3 className="postPage-allComments-title">Комментарии к посту:</h3>
-          {post.comments && post.comments.length == 0 && (
+          {post.comments && post.comments.length === 0 && (
             <p className="postPage-noComments">
               Здесь пока нет ни одного комментария
             </p>

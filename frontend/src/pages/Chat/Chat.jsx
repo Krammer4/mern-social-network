@@ -5,6 +5,7 @@ import { useHttp } from "../../hooks/httpHook";
 
 import "./Chat.css";
 import { MessageCard } from "../../components/MessageCard/MessageCard";
+import { backend_url } from "../../consts";
 
 export const Chat = () => {
   const { request, error, message } = useHttp();
@@ -24,7 +25,7 @@ export const Chat = () => {
   const fetchUserData = async () => {
     try {
       const userData = await request(
-        `http://localhost:5000/api/user/${userId}`,
+        `${backend_url}/api/user/${userId}`,
         "GET"
       );
       setUserData(userData);
@@ -37,7 +38,7 @@ export const Chat = () => {
   const fetchFriendData = async () => {
     try {
       const userData = await request(
-        `http://localhost:5000/api/user/${user2Id}`,
+        `${backend_url}/api/user/${user2Id}`,
         "GET"
       );
       setFriendData(userData);
@@ -51,7 +52,7 @@ export const Chat = () => {
     fetchUserData();
     fetchFriendData();
 
-    const newSocket = io("http://localhost:5000", {
+    const newSocket = io(`${backend_url}`, {
       withCredentials: true,
     });
 
