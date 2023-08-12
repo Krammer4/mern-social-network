@@ -1,2 +1,11 @@
-export const backend_url = "http://localhost:5000";
-export const frontend_url = "http://localhost:3000";
+const isProduction = process.env.MODE === "production" ? true : false;
+
+const backend_url = isProduction
+  ? process.env.BACKEND_URL
+  : "http://localhost:5000";
+const frontend_url = isProduction
+  ? process.env.FRONTEND_URL
+  : "http://localhost:3000";
+
+module.exports = backend_url;
+module.exports = frontend_url;
