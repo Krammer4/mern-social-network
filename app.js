@@ -11,6 +11,7 @@ const http = require("http");
 
 const Redis = require("ioredis");
 const { error } = require("console");
+const { frontend_url } = require("./consts");
 const redisClient = new Redis();
 
 redisClient.on("connect", () => {
@@ -20,13 +21,13 @@ redisClient.on("connect", () => {
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: `${frontend_url}`,
   })
 );
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: `${frontend_url}`,
     allowedHeaders: ["my-custom-header"],
     credentials: true,
   },

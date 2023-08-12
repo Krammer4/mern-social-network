@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 
 import "./ProfilePage.css";
 import { MusicCard } from "../../components/MusicCard/MusicCard";
+import { backend_url } from "../../consts";
 
 export const ProfilePage = () => {
   const { userId } = useParams();
@@ -65,10 +66,7 @@ export const ProfilePage = () => {
   const subtitleRef = useRef(null);
 
   const fetchUserPosts = useCallback(async () => {
-    const data = await request(
-      `http://localhost:5000/api/profile/${userId}`,
-      "GET"
-    );
+    const data = await request(`${backend_url}/api/profile/${userId}`, "GET");
     setUserPosts(data.posts.reverse());
     setUserInformation(data);
     setProfileName(data.name);
@@ -81,7 +79,7 @@ export const ProfilePage = () => {
   const fetchUserLikedPosts = async (userId) => {
     try {
       const userPosts = await request(
-        `http://localhost:5000/api/get-user-liked/${userId}`,
+        `${backend_url}/api/get-user-liked/${userId}`,
         "GET"
       );
 
@@ -100,11 +98,7 @@ export const ProfilePage = () => {
     formData.append("image", form.image);
 
     try {
-      const data = await request(
-        "http://localhost:5000/api/posts",
-        "POST",
-        formData
-      );
+      const data = await request(`${backend_url}/api/posts`, "POST", formData);
 
       fetchUserPosts();
       showSuccessMessage("Пост успешно опубликован!");
@@ -121,7 +115,7 @@ export const ProfilePage = () => {
         form.append("avatar", file);
 
         const avatarResponse = await request(
-          `http://localhost:5000/api/update-avatar`,
+          `${backend_url}/api/update-avatar`,
           "POST",
           form
         );
@@ -186,7 +180,7 @@ export const ProfilePage = () => {
       };
 
       await request(
-        `http://localhost:5000/api/update-profile/${userData.userId}`,
+        `${backend_url}/api/update-profile/${userData.userId}`,
         "PATCH",
         formData
       );
@@ -254,7 +248,7 @@ export const ProfilePage = () => {
                         avatarClick();
                       }
                     }}
-                    src={`http://localhost:5000/${userInformation.avatar}`}
+                    src={`${backend_url}/${userInformation.avatar}`}
                     className={`profile-info-avatar ${
                       isOwnProfile && "myProfile"
                     }`}

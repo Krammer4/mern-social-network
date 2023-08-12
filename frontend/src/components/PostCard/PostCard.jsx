@@ -8,6 +8,7 @@ import axios from "axios";
 
 import filledHeart from "../../img/Post/filledHeart.png";
 import unFilledHeart from "../../img/Post/unFilledHeart.png";
+import { backend_url } from "../../consts";
 
 export const PostCard = ({
   title,
@@ -35,7 +36,7 @@ export const PostCard = ({
 
   const deletePost = async () => {
     const deletePostData = await request(
-      `http://localhost:5000/api/post/${postId}`,
+      `${backend_url}/api/post/${postId}`,
       "DELETE"
     );
 
@@ -44,7 +45,7 @@ export const PostCard = ({
 
   const handleLike = async (postId) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/like-post", {
+      const response = await axios.post(`${backend_url}/api/like-post`, {
         userId: userId,
         postId: postId,
       });
@@ -62,13 +63,10 @@ export const PostCard = ({
 
   const handleUnlike = async (postId) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/unlike-post",
-        {
-          userId: userId,
-          postId: postId,
-        }
-      );
+      const response = await axios.post(`${backend_url}/api/unlike-post`, {
+        userId: userId,
+        postId: postId,
+      });
       setIsLiked(false);
       showSuccessMessage("Лайк был успешно убран");
     } catch (error) {
@@ -84,7 +82,7 @@ export const PostCard = ({
             <div className="postcard-authpr-group">
               {userAvatar ? (
                 <img
-                  src={`http://localhost:5000/${userAvatar}`}
+                  src={`${backend_url}/${userAvatar}`}
                   className="postcard-author-avatar"
                 />
               ) : (
@@ -109,7 +107,7 @@ export const PostCard = ({
           {postImage && (
             <img
               className="postcard-postImage"
-              src={`http://localhost:5000/${postImage}`}
+              src={`${backend_url}/${postImage}`}
             />
           )}
 
@@ -128,7 +126,7 @@ export const PostCard = ({
           <div className="postcard-authpr-group">
             {userAvatar ? (
               <img
-                src={`http://localhost:5000/${userAvatar}`}
+                src={`${backend_url}/${userAvatar}`}
                 className="postcard-author-avatar"
               />
             ) : (
@@ -153,7 +151,7 @@ export const PostCard = ({
         {postImage && (
           <img
             className="postcard-postImage"
-            src={`http://localhost:5000/${postImage}`}
+            src={`${backend_url}/${postImage}`}
           />
         )}
 
