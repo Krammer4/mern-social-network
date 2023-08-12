@@ -3,9 +3,8 @@ import { useHttp } from "../../hooks/httpHook";
 import "./BlogPage.css";
 import { Link } from "react-router-dom";
 import { PostCard } from "../../components/PostCard/PostCard";
-import { ColorRing } from "react-loader-spinner";
 import { PostSkeleton } from "../../components/PostSkeleton";
-import axios from "axios";
+import { backend_url } from "../../consts";
 
 export const BlogPage = () => {
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -14,7 +13,7 @@ export const BlogPage = () => {
   const { request, loading, error } = useHttp();
 
   const fetchPosts = useCallback(async () => {
-    const data = await request("http://localhost:5000/api/posts", "GET");
+    const data = await request(`${backend_url}/api/posts`, "GET");
     console.log("DATA: ", data);
     setAllPosts(data);
   }, []);
@@ -36,24 +35,6 @@ export const BlogPage = () => {
           >
             Обновить ленту
           </p>
-          {/* {allPosts.length == 0 ? (
-            <p className="blog-noBlogs">Нет постов...</p>
-          ) : (
-            allPosts.map((post) => {
-              return (
-                <PostCard
-                  title={post.title}
-                  authorName={post.author.name}
-                  authorLastName={post.author.lastName}
-                  content={post.content}
-                  postId={post._id}
-                  authorEmail={post.author.email}
-                  username={post.author.username}
-                  date={post.date}
-                />
-              );
-            })
-          )} */}
 
           <div className="blog-allPosts-block">
             {loading ? (

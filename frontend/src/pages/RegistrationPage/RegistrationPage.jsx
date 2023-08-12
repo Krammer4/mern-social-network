@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./RegistrationPage.css";
 import { useHttp } from "../../hooks/httpHook.js";
-import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { backend_url } from "../../consts";
 
 export const RegistrationPage = () => {
   const navigate = useNavigate();
@@ -21,12 +22,11 @@ export const RegistrationPage = () => {
   const registerHandler = async () => {
     try {
       const data = await request(
-        "http://localhost:5000/api/auth/registration",
+        `${backend_url}/api/auth/registration`,
         "POST",
         { ...form }
       );
       navigate("/");
-      console.log(`DATA Message: ${data.message}`);
     } catch (e) {
       console.log(error);
       console.log(e);

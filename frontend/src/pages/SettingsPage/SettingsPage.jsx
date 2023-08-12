@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import "./SettingsPage.css";
 import { useHttp } from "../../hooks/httpHook";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
+import { backend_url } from "../../consts";
 
 export const SettingsPage = () => {
   const { userId } = useParams();
   const userDataFormStorage = JSON.parse(localStorage.getItem("userData"));
-  const { request, loading, error } = useHttp();
+  const { request } = useHttp();
 
   const [isClosedProfile, setIsClosedProfile] = useState(false);
   const [isClosedMusic, setIsClosedMusic] = useState(false);
@@ -72,7 +73,7 @@ export const SettingsPage = () => {
 
   const fetchUserData = async (userId) => {
     const userFetchedData = await request(
-      `http://localhost:5000/api/user/${userId}`,
+      `${backend_url}/api/user/${userId}`,
       "GET"
     );
 
@@ -106,7 +107,7 @@ export const SettingsPage = () => {
   const saveUserSettings = async () => {
     try {
       const saveSettingsResult = await request(
-        "http://localhost:5000/api/update-user-settings",
+        `${backend_url}/api/update-user-settings`,
         "POST",
         {
           userId: userId,
@@ -124,7 +125,7 @@ export const SettingsPage = () => {
     }
   };
 
-  return userId == userDataFormStorage.userId ? (
+  return userId === userDataFormStorage.userId ? (
     <div className="settings">
       {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
       <div className="settings _container">
@@ -194,7 +195,7 @@ export const SettingsPage = () => {
                       }}
                       key={genre.id}
                       className={`settings-genre-button ${
-                        genre.id == activeGenreButton && "active"
+                        genre.id === activeGenreButton && "active"
                       }`}
                     >
                       {genre.title}

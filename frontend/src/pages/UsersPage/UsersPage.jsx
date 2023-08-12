@@ -4,13 +4,14 @@ import { UserCard } from "../../components/UserCard/UserCard";
 
 import "./UsersPage.css";
 import UserCardSkeleton from "../../components/UserCardSkeleton";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { backend_url } from "../../consts";
 
 export const UsersPage = () => {
   const [searchParams, SetSearchParams] = useSearchParams();
   const filterType = searchParams.get("filterType");
   const town = searchParams.get("town");
-  const { request, loading, error } = useHttp();
+  const { request, loading } = useHttp();
   const [allUsers, setAllUsers] = useState([]);
 
   const [sortButtons, setSortButtons] = useState([
@@ -38,17 +39,14 @@ export const UsersPage = () => {
   const [activeSortButton, setActiveSortButton] = useState(null);
 
   const fetchAllUsers = async (sortMethod) => {
-    const data = await request(
-      `http://localhost:5000/api/users/${sortMethod}`,
-      "GET"
-    );
+    const data = await request(`${backend_url}/api/users/${sortMethod}`, "GET");
     setAllUsers(data);
   };
 
   const fetchUserByTown = async () => {
     try {
       const usersByTown = await request(
-        `http://localhost:5000/api/get-user-by-filterType?filterType=town&town=${town}`,
+        `${backend_url}/api/get-user-by-filterType?filterType=town&town=${town}`,
         "GET"
       );
       setAllUsers(usersByTown);
@@ -73,7 +71,7 @@ export const UsersPage = () => {
 
   const laxUserSearchHandler = async (searchValue) => {
     const searchedUsers = await request(
-      `http://localhost:5000/api/laxUserSearch?searchValue=${searchValue}`,
+      `${backend_url}/api/laxUserSearch?searchValue=${searchValue}`,
       "GET"
     );
 
@@ -84,7 +82,7 @@ export const UsersPage = () => {
   const strictUserSearchHandler = async (searchValue) => {
     if (searchValue.trim() !== "") {
       const searchedUsers = await request(
-        `http://localhost:5000/api/strictUserSearch?searchValue=${searchValue}`,
+        `${backend_url}/api/strictUserSearch?searchValue=${searchValue}`,
         "GET"
       );
 

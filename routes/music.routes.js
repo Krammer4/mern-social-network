@@ -4,6 +4,7 @@ const config = require("config");
 const axios = require("axios");
 const querystring = require("querystring");
 const User = require("../Models/User");
+const spotifyAuthMiddleware = require("../middleware/spotifyAuthMiddleware");
 
 const authentificateSpotify = async () => {
   const clientId = config.get("spotify_client_id");
@@ -132,11 +133,11 @@ const getTopRandomTracksByGenre = async (genre, limit, token) => {
   }
 };
 
-router.get(`/search-tracks`, async (req, res) => {
+router.get(`/search-tracks`, spotifyAuthMiddleware, async (req, res) => {
   const { trackName } = req.query;
   try {
-    const token = await authentificateSpotify();
-    const tracks = await searchTracks(trackName, token);
+    // const token = await authentificateSpotify();
+    const tracks = await searchTracks(trackName, req.token);
 
     res.json(tracks);
   } catch (err) {
@@ -164,43 +165,55 @@ router.get("/search-tracks-by-artist/:artistName", async (req, res) => {
   }
 });
 
-router.get("/get-artist/:artistName", async (req, res) => {
-  const { artistName } = req.params;
-  console.log("ARTIST NAME: ", artistName);
-  try {
-    const token = await authentificateSpotify();
-    const artist = await searchArtist(artistName, token);
+router.get(
+  "/get-artist/:artistName",
+  spotifyAuthMiddleware,
+  async (req, res) => {
+    const { artistName } = req.params;
+    console.log("ARTIST NAME: ", artistName);
+    try {
+      // const token = await authentificateSpotify();
+      const artist = await searchArtist(artistName, req.token);
 
-    if (!artist) {
-      return es
-        .status(404)
-        .json({ message: "Артиста с таким именем не существует" });
+      if (!artist) {
+        return es
+          .status(404)
+          .json({ message: "Артиста с таким именем не существует" });
+      }
+
+      res.json(artist);
+    } catch (error) {
+      res.status(500).json({ message: "Error while fetching artist" });
     }
-
-    res.json(artist);
-  } catch (error) {
-    res.status(500).json({ message: "Error while fetching artist" });
   }
-});
+);
 
-router.get("/get-tracks-by-genre/:genre", async (req, res) => {
-  const { genre } = req.params;
-  try {
-    const token = await authentificateSpotify();
-    const tracksByGenre = await getTopRandomTracksByGenre(genre, 10, token);
-    if (!tracksByGenre) {
-      return res.status(404).json({
-        message:
-          "Не удалось подобрать рекомендации( Пожалуйста, перезагрузите страницу",
-      });
+router.get(
+  "/get-tracks-by-genre/:genre",
+  spotifyAuthMiddleware,
+  async (req, res) => {
+    const { genre } = req.params;
+    try {
+      // const token = await authentificateSpotify();
+      const tracksByGenre = await getTopRandomTracksByGenre(
+        genre,
+        10,
+        req.token
+      );
+      if (!tracksByGenre) {
+        return res.status(404).json({
+          message:
+            "Не удалось подобрать рекомендации( Пожалуйста, перезагрузите страницу",
+        });
+      }
+      res.json(tracksByGenre);
+    } catch (error) {
+      res
+        .status(500)
+        .json({ message: "Error while fetching random tracks by genre" });
     }
-    res.json(tracksByGenre);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error while fetching random tracks by genre" });
   }
-});
+);
 
 router.post("/delete-user-track", async (req, res) => {
   const { trackId, userId } = req.body;

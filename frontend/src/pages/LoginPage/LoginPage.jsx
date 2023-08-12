@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useHttp } from "../../hooks/httpHook";
 import { useAuth } from "../../hooks/authHook";
 import { AuthContext } from "../../context/authContext";
+import { backend_url } from "../../consts";
 
 export const LoginPage = () => {
   const auth = useContext(AuthContext);
@@ -19,14 +20,10 @@ export const LoginPage = () => {
 
   const loginHandler = async () => {
     try {
-      const data = await request(
-        "http://localhost:5000/api/auth/login",
-        "POST",
-        {
-          ...form,
-        }
-      );
-      console.log(`DATA Message: ${JSON.stringify(data)}`);
+      const data = await request(`${backend_url}/api/auth/login`, "POST", {
+        ...form,
+      });
+
       auth.login(data.token, data.userId);
     } catch (e) {}
   };

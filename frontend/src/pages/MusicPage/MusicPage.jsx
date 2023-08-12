@@ -7,6 +7,7 @@ import { WarningMessage } from "../../Messages/WarningMessage/WarningMessage";
 import { Link } from "react-router-dom";
 import MusicCardSkeleton from "../../components/MusicCardSkeleton";
 import { useHttp } from "../../hooks/httpHook";
+import { backend_url } from "../../consts";
 
 export const MusicPage = () => {
   const { request, error, loading } = useHttp();
@@ -47,7 +48,7 @@ export const MusicPage = () => {
   const fetchUserData = async () => {
     try {
       const response = await request(
-        `http://localhost:5000/api/user/${userId}`,
+        `${backend_url}/api/user/${userId}`,
         "GET"
       );
 
@@ -60,7 +61,7 @@ export const MusicPage = () => {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/search-tracks?trackName=${encodeURIComponent(
+        `${backend_url}/api/search-tracks?trackName=${encodeURIComponent(
           trackName
         )}`
       );
@@ -81,7 +82,7 @@ export const MusicPage = () => {
     console.log("ARTIST NAME: ", artistName);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/search-tracks-by-artist/${encodeURIComponent(
+        `${backend_url}/api/search-tracks-by-artist/${encodeURIComponent(
           artistName
         )}`
       );
@@ -100,7 +101,7 @@ export const MusicPage = () => {
   const fetchTracksByGenre = async (genre) => {
     try {
       const response = await request(
-        `http://localhost:5000/api/get-tracks-by-genre/${genre}`,
+        `${backend_url}/api/get-tracks-by-genre/${genre}`,
         "GET"
       );
       if (!response) {

@@ -11,6 +11,7 @@ MERN (MongoDB + Express + React + NodeJS) Social Network.
 - Mongoose
 - WebSocket
 - Redis
+- SpotifyAPI
 - socket.io
 - bcryptjs
 - cors
