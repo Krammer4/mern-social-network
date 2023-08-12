@@ -4,6 +4,7 @@ import anonymus from "../../img/Profile/none-avatar.png";
 import "./CommentCard.css";
 import { useHttp } from "../../hooks/httpHook";
 import { Link } from "react-router-dom";
+import { backend_url } from "../../consts";
 
 export const CommentCard = ({
   content,
@@ -22,7 +23,7 @@ export const CommentCard = ({
   const { request, error, loading } = useHttp();
   const deleteComment = async () => {
     const deleteData = await request(
-      `http://localhost:5000/api/post/${postId}/comment/${commentId}`,
+      `${backend_url}/api/post/${postId}/comment/${commentId}`,
       "DELETE"
     );
 
@@ -37,7 +38,7 @@ export const CommentCard = ({
           <div className="commentcard-authpr-group">
             {authorAvatar ? (
               <img
-                src={`http://localhost:5000/${authorAvatar}`}
+                src={`${backend_url}/${authorAvatar}`}
                 className="commentcard-author-avatar"
               />
             ) : (

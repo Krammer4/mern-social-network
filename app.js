@@ -9,10 +9,20 @@ const userrouter = require("./routes/user.routes");
 const musicrouter = require("./routes/music.routes");
 const http = require("http");
 
+const isProduction = process.env.MODE === "production" ? true : false;
+const redisLabsUrl = process.env.REDIS_URL;
+const mongoUrl = isProduction
+  ? process.env.MONGO_URL
+  : config.get("mongourl", {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+    });
+
 const Redis = require("ioredis");
-const { error } = require("console");
-const { frontend_url } = require("./consts");
-const redisClient = new Redis();
+let { frontend_url } = require("./consts");
+
+const redisClient = isProduction ? new Redis(redisLabsUrl) : new Redis();
 
 redisClient.on("connect", () => {
   console.log("Controller connected to redis");
@@ -21,13 +31,13 @@ redisClient.on("connect", () => {
 const app = express();
 app.use(
   cors({
-    origin: `${frontend_url}`,
+    origin: isProduction ? "PROD URL" : `http://localhost:3000`,
   })
 );
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: `${frontend_url}`,
+    origin: isProduction ? "PROD URL" : `http://localhost:3000`,
     allowedHeaders: ["my-custom-header"],
     credentials: true,
   },
@@ -70,7 +80,7 @@ redisClient.on("connect", () => {
   console.log("CONNECTED TO REDIS");
 });
 
-const PORT = config.get("PORT");
+const PORT = isProduction ? process.env.PORT || 5000 : config.get("PORT");
 
 app.use(express.json({ extended: true }));
 app.use("/api/auth", authrouter);
@@ -82,13 +92,7 @@ app.use("/uploads", express.static("uploads"));
 
 const start = async () => {
   try {
-    await mongoose.connect(
-      config.get("mongourl", {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-      })
-    );
+    await mongoose.connect(mongoUrl);
     server.listen(PORT, () => {
       console.log(`Server was started at port ${PORT}`);
     });
