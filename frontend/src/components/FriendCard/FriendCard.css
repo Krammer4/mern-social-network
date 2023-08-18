@@ -1,0 +1,69 @@
+.friend-card {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: #f0eff3;
+  width: 100%;
+  border-radius: 10px;
+}
+.friend-card-content {
+  padding: 12px 20px;
+}
+.friend-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.friend-card-group {
+  display: flex;
+  align-items: center;
+}
+.friend-card-name {
+  font-family: "Mulish";
+  font-size: 22px;
+  line-height: 24px;
+}
+.friend-card-username {
+  font-family: "Mulish";
+  font-size: 18px;
+  padding-top: 10px;
+  line-height: 20px;
+  font-weight: 600;
+}
+.friend-card-town {
+  font-family: "Mulish";
+  font-size: 18px;
+}
+.friend-card-status {
+  font-family: "Mulish";
+  font-size: 18px;
+  opacity: 0.5;
+}
+.friend-card-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  margin-right: 20px;
+  object-fit: cover;
+}
+.friend-addToFriendsButton {
+  background-color: rgb(86, 148, 24);
+  color: #fff;
+  font-family: "Mulish";
+  font-weight: 700;
+  padding: 10px 12px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+}
+.friend-accept {
+  background-color: #276813;
+  color: #fff;
+  font-family: "Mulish";
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}

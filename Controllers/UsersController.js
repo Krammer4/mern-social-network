@@ -4,7 +4,10 @@ class UsersController {
   async getUser(req, res) {
     const { userId } = req.params;
     try {
-      const user = await User.findById(userId);
+      const user = await User.findById(userId).populate([
+        "requests",
+        "friends",
+      ]);
 
       if (!user) {
         return res
