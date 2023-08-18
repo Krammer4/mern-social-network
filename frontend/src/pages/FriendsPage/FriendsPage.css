@@ -1,0 +1,202 @@
+/* Убираем внешние отступы */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Выставляем основные настройки по-умолчанию для body */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Упрощаем работу с изображениями */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Указываем понятную периодичность в потоке данных у article*/
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Наследуем шрифты для инпутов и кнопок */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* --------------------ОБНУЛЕНИЕ----------------------------------------- */
+html {
+  width: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  overflow: hidden;
+}
+._container {
+  max-width: 1600px;
+  margin: 0px auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.friends {
+  background-color: #faf9f9;
+}
+.friends-content {
+  background-color: #fff;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+
+  padding: 20px;
+
+  -webkit-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+  -moz-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+  box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
+}
+.friends-mainTitle {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  padding-top: 10px;
+}
+.friends-toggleRequestsVisibility {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
+  font-weight: 700;
+  padding-top: 10px;
+  text-align: center;
+  margin-top: 20px;
+  cursor: pointer;
+  color: #5c529a;
+}
+.friend-card {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: #f0eff3;
+  width: 100%;
+  border-radius: 10px;
+}
+.friend-card-content {
+  padding: 12px 20px;
+}
+.friend-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.friend-card-group {
+  display: flex;
+  align-items: center;
+}
+.friend-card-name {
+  font-family: "Mulish";
+  font-size: 22px;
+  line-height: 24px;
+}
+.friend-card-username {
+  font-family: "Mulish";
+  font-size: 18px;
+  padding-top: 10px;
+  line-height: 20px;
+  font-weight: 600;
+}
+.friend-card-town {
+  font-family: "Mulish";
+  font-size: 18px;
+}
+.friend-card-status {
+  font-family: "Mulish";
+  font-size: 18px;
+  opacity: 0.5;
+}
+.friend-card-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  margin-right: 20px;
+  object-fit: cover;
+}
+.friend-addToFriendsButton {
+  background-color: rgb(86, 148, 24);
+  color: #fff;
+  font-family: "Mulish";
+  font-weight: 700;
+  padding: 10px 12px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+}
+.friend-accept {
+  background-color: #276813;
+  color: #fff;
+  font-family: "Mulish";
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+.friend-noFriendsMessage {
+  font-family: "Mulish";
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 800;
+  padding-top: 10px;
+  opacity: 0.3;
+  margin-top: 20px;
+}

@@ -39,6 +39,9 @@ export const Header = ({ isAuthentificated }) => {
                   <NavLink to="/music" className="header-link">
                     Музыка
                   </NavLink>
+                  <NavLink to="/friends" className="header-link">
+                    Друзья
+                  </NavLink>
                 </>
               )}
             </div>

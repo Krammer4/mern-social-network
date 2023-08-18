@@ -60,8 +60,6 @@ router.post("/send-request", async (req, res) => {
     const requestedUser = await User.findById(requestedUserId);
     const requestingUser = await User.findById(requestingUserId);
 
-    console.log(requestedUser);
-
     if (!requestedUser || !requestingUser) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -81,6 +79,47 @@ router.post("/send-request", async (req, res) => {
     return res.json({ message: "Запрос на дружбу был отправлен!" });
   } catch (error) {
     res.status(500).json({ message: "Error while sending request" });
+  }
+});
+
+router.post("/accept-request", async (req, res) => {
+  const { requestedUserId, requestingUserId } = req.body;
+  try {
+    const requestedUser = await User.findById(requestedUserId);
+    const requestingUser = await User.findById(requestingUserId);
+
+    if (!requestedUser || !requestingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // requestedUser.requests = requestedUser.requests.filter(
+    //   (request) => request !== requestingUser._id
+    // );
+
+    await User.updateOne(
+      { _id: requestedUserId },
+      { $pull: { requests: requestingUser._id } }
+    );
+    requestedUser.friends.includes(requestingUser)
+      ? null
+      : requestedUser.friends.push(requestingUser);
+    requestingUser.friends.includes(requestedUser)
+      ? null
+      : requestingUser.friends.push(requestedUser);
+
+    requestingUser.friends.push(requestedUser);
+    requestingUser.notes.push(
+      `Пользователь ${requestedUser.name} ${requestedUser.lastName} принял вашу заявку в друзья`
+    );
+
+    await requestedUser.save();
+    await requestingUser.save();
+
+    return res.json({
+      message: `Пользователь ${requestingUser.name} ${requestingUser.lastName} теперь ваш друг`,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error while accepting request" });
   }
 });
 
