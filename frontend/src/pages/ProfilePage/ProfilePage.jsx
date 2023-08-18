@@ -35,6 +35,26 @@ export const ProfilePage = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
 
+  // FRIENDS
+
+  const [isRequestSent, setIsRequestSent] = useState(false);
+  const sendRequest = async () => {
+    try {
+      const requestSendingData = request(
+        `${backend_url}/api/send-request`,
+        "POST",
+        {
+          requestingUserId: userData.userId,
+          requestedUserId: userId,
+        }
+      );
+      showSuccessMessage(requestSendingData.message);
+      setIsRequestSent(true);
+    } catch (error) {
+      console.log(`Error while sending request ${error.message}`);
+    }
+  };
+
   const filePickerClick = () => {
     filePickerRef.current.click();
   };
@@ -331,15 +351,41 @@ export const ProfilePage = () => {
                   </Link>
                 )}
 
-                {isOwnProfile ? null : (
-                  <Link
-                    to={`/chat?userId=${userData.userId}&user2Id=${userId}`}
-                    className="profile-send-message"
-                  >
-                    <button className="profile-send-message-button">
-                      Отправить сообщение
-                    </button>
-                  </Link>
+                {!isOwnProfile && (
+                  <div className="profile-actions-row">
+                    {userInformation.requests &&
+                    userInformation.requests.length !== 0 &&
+                    userInformation.requests.includes(userData.userId) ? (
+                      <button className="profile-requestSent-button">
+                        Запрос отправлен
+                      </button>
+                    ) : userInformation.friends &&
+                      userInformation.friends.length !== 0 &&
+                      userInformation.friends.includes(userData.userId) ? (
+                      <button
+                        onClick={sendRequest}
+                        className="profile-addToFriends-button"
+                      >
+                        Удалить из друзей
+                      </button>
+                    ) : (
+                      <button
+                        onClick={sendRequest}
+                        className="profile-addToFriends-button"
+                      >
+                        Добавить в друзья
+                      </button>
+                    )}
+
+                    <Link
+                      to={`/chat?userId=${userData.userId}&user2Id=${userId}`}
+                      className="profile-send-message"
+                    >
+                      <button className="profile-send-message-button">
+                        Отправить сообщение
+                      </button>
+                    </Link>
+                  </div>
                 )}
 
                 {isProfileClosed ? null : (

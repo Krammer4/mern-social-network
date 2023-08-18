@@ -7,6 +7,7 @@ const cors = require("cors");
 const postsrouter = require("./routes/posts.routes");
 const userrouter = require("./routes/user.routes");
 const musicrouter = require("./routes/music.routes");
+const publicrouter = require("./routes/public.routes");
 const http = require("http");
 
 const isProduction = process.env.MODE === "production" ? true : false;
@@ -87,6 +88,7 @@ app.use("/api/auth", authrouter);
 app.use("/api", postsrouter);
 app.use("/api", userrouter);
 app.use("/api", musicrouter);
+app.use("/api", publicrouter);
 
 app.use("/uploads", express.static("uploads"));
 

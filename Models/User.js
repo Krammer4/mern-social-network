@@ -10,6 +10,9 @@ const schema = new Schema({
   avatar: { type: String },
   status: { type: String },
   town: { type: String },
+  requests: [{ type: Types.ObjectId, ref: "User" }],
+  friends: [{ type: Types.ObjectId, ref: "User" }],
+  notes: [{ type: String }],
   tracks: [
     {
       trackName: { type: String, required: true },

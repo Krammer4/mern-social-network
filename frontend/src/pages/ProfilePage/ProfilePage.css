@@ -158,6 +158,26 @@ html {
   font-size: 20px;
   color: #5c529a;
 }
+.profile-actions-row {
+  display: flex;
+}
+.profile-addToFriends-button {
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: none;
+  background-color: #276813;
+  color: #fff;
+  font-weight: 700;
+  font-family: "Mulish";
+  cursor: pointer;
+  transition: 0.3s ease all 0s;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 10px;
+}
+.profile-addToFriends-button:hover {
+  transform: translateY(2px);
+}
 .profile-send-message {
   display: block;
   margin-top: 6px;
@@ -173,6 +193,20 @@ html {
   font-family: "Mulish";
   cursor: pointer;
   transition: 0.3s ease all 0s;
+}
+.profile-requestSent-button {
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: none;
+  background-color: #949494;
+  color: #fff;
+  font-weight: 700;
+  font-family: "Mulish";
+  cursor: cell;
+  transition: 0.3s ease all 0s;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 10px;
 }
 .profile-send-message-button:hover {
   transform: translateY(2px);
