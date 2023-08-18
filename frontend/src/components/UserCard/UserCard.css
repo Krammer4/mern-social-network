@@ -19,6 +19,8 @@
 }
 .user-card-row {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .user-card-group {
   display: flex;
@@ -51,4 +53,14 @@
   border-radius: 100%;
   margin-right: 20px;
   object-fit: cover;
+}
+.user-addToFriendsButton {
+  background-color: rgb(86, 148, 24);
+  color: #fff;
+  font-family: "Mulish";
+  font-weight: 700;
+  padding: 10px 12px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
 }

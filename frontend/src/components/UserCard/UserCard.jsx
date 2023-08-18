@@ -14,6 +14,8 @@ export const UserCard = ({
   userCardId,
   userStatus,
   userTown,
+  requests,
+  friends,
 }) => {
   useEffect(() => {
     console.log(avatar);
@@ -49,6 +51,14 @@ export const UserCard = ({
                 ) : null}
               </div>
             </div>
+            {friends.includes(userCardId) && (
+              <p
+                onClick={() => console.log("PRESSED")}
+                className="user-addToFriendsButton"
+              >
+                Ваш друг
+              </p>
+            )}
           </div>
         </div>
       </div>

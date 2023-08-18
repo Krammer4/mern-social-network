@@ -180,6 +180,8 @@ export const UsersPage = () => {
                       userCardId={user._id}
                       userStatus={user.status}
                       userTown={user.town}
+                      requests={user.requests}
+                      friends={user.friends}
                     />
                   );
                 })
