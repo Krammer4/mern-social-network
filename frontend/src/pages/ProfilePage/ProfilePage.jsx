@@ -40,7 +40,7 @@ export const ProfilePage = () => {
   const [isRequestSent, setIsRequestSent] = useState(false);
   const sendRequest = async () => {
     try {
-      const requestSendingData = request(
+      const requestSendingData = await request(
         `${backend_url}/api/send-request`,
         "POST",
         {
@@ -48,11 +48,30 @@ export const ProfilePage = () => {
           requestedUserId: userId,
         }
       );
-      showSuccessMessage(requestSendingData.message);
-      fetchUserPosts();
+      showSuccessMessage(`${requestSendingData}`);
+      window.location.reload();
+
       setIsRequestSent(true);
     } catch (error) {
       console.log(`Error while sending request ${error.message}`);
+    }
+  };
+
+  const removeFriend = async () => {
+    try {
+      const removingData = await request(
+        `${backend_url}/api/delete-friend?deletingUserId=${userData.userId}&deletedUserId=${userId}`,
+        "DELETE"
+      );
+      const reloadPromise = new Promise((res, rej) => {
+        window.location.reload();
+        res();
+      });
+      reloadPromise.then(() => {
+        showSuccessMessage(removingData);
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -363,7 +382,10 @@ export const ProfilePage = () => {
                     ) : userInformation.friends &&
                       userInformation.friends.length !== 0 &&
                       userInformation.friends.includes(userData.userId) ? (
-                      <button className="profile-addToFriends-button">
+                      <button
+                        onClick={removeFriend}
+                        className="profile-addToFriends-button"
+                      >
                         Удалить из друзей
                       </button>
                     ) : (

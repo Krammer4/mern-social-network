@@ -51,7 +51,7 @@ export const NotesPage = () => {
           <div className="notes-allNotes">
             {userData &&
               userData.notes.length !== 0 &&
-              userData.notes.map((note) => {
+              userData.notes.reverse().map((note) => {
                 return (
                   <div className="note">
                     <div className="note-container">
