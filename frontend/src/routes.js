@@ -11,6 +11,7 @@ import { ArtistPage } from "./pages/ArtistPage/ArtistPage.jsx";
 import { SettingsPage } from "./pages/SettingsPage/SettingsPage.jsx";
 import { Chat } from "./pages/Chat/Chat.jsx";
 import { FriendsPage } from "./pages/FriendsPage/FriendsPage.jsx";
+import { NotesPage } from "./pages/NotesPage/NotesPage.jsx";
 
 export const useRoutes = (isAuthentificated) => {
   if (isAuthentificated) {
@@ -21,6 +22,7 @@ export const useRoutes = (isAuthentificated) => {
         {/* <Route path="/users/:filterType" element={<UsersPage />} /> */}
         <Route path="/music" element={<MusicPage />} />
         <Route path="/friends" element={<FriendsPage />} />
+        <Route path="/notes" element={<NotesPage />} />
         <Route path="/music/artist/:artistName" element={<ArtistPage />} />
         <Route path="/profile/:userId" element={<ProfilePage />} />
         <Route path="/post/:postId" element={<PostPage />} />

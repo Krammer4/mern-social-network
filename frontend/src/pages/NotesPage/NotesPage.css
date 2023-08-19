@@ -83,10 +83,10 @@ html {
   padding-right: 20px;
 }
 
-.friends {
+.notes {
   background-color: #faf9f9;
 }
-.friends-content {
+.notes-content {
   background-color: #fff;
   max-width: 900px;
   margin-left: auto;
@@ -97,7 +97,7 @@ html {
   -moz-box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
   box-shadow: 0px 11px 8px 5px rgba(34, 60, 80, 0.09);
 }
-.friends-mainTitle {
+.notes-mainTitle {
   font-family: "Mulish";
   margin-left: auto;
   margin-right: auto;
@@ -106,95 +106,30 @@ html {
   font-weight: 800;
   padding-top: 10px;
 }
-.friends-toggleRequestsVisibility {
-  font-family: "Mulish";
+.notes-allNotes {
   margin-left: auto;
   margin-right: auto;
-  font-size: 20px;
-  font-weight: 700;
-  padding-top: 10px;
-  text-align: center;
-  margin-top: 20px;
-  cursor: pointer;
-  color: #5c529a;
-}
-.friend-card {
   max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  background-color: #f0eff3;
-  width: 100%;
+}
+.note {
+  max-width: 700px;
+  border: 2px solid #5c529a;
   border-radius: 10px;
+  margin-top: 20px;
 }
-.friend-card-content {
-  padding: 12px 20px;
+.note-container {
+  padding: 10px 20px;
 }
-.friend-card-row {
+.note-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.friend-card-group {
-  display: flex;
-  align-items: center;
-}
-.friend-card-name {
+.note-text {
   font-family: "Mulish";
-  font-size: 22px;
-  line-height: 24px;
+  font-size: 20px;
 }
-.friend-card-username {
-  font-family: "Mulish";
-  font-size: 18px;
-  padding-top: 10px;
-  line-height: 20px;
-  font-weight: 600;
-}
-.friend-card-town {
-  font-family: "Mulish";
-  font-size: 18px;
-}
-.friend-card-status {
-  font-family: "Mulish";
-  font-size: 18px;
-  opacity: 0.5;
-}
-.friend-card-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 100%;
-  margin-right: 20px;
-  object-fit: cover;
-}
-.friend-addToFriendsButton {
-  background-color: rgb(86, 148, 24);
-  color: #fff;
-  font-family: "Mulish";
-  font-weight: 700;
-  padding: 10px 12px;
+.note-cross {
+  max-width: 30px;
   cursor: pointer;
-  border: none;
-  border-radius: 10px;
-}
-.friend-accept {
-  background-color: #276813;
-  color: #fff;
-  font-family: "Mulish";
-  border-radius: 10px;
-  padding: 6px 12px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-}
-.friend-noFriendsMessage {
-  font-family: "Mulish";
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  font-size: 26px;
-  font-weight: 800;
-  padding-top: 10px;
-  opacity: 0.3;
-  margin-top: 20px;
 }

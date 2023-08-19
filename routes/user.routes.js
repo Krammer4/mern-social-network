@@ -107,7 +107,6 @@ router.post("/accept-request", async (req, res) => {
       ? null
       : requestingUser.friends.push(requestedUser);
 
-    requestingUser.friends.push(requestedUser);
     requestingUser.notes.push(
       `Пользователь ${requestedUser.name} ${requestedUser.lastName} принял вашу заявку в друзья`
     );
@@ -120,6 +119,25 @@ router.post("/accept-request", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Error while accepting request" });
+  }
+});
+
+router.delete("/delete-note", async (req, res) => {
+  const { userId, note } = req.query;
+  try {
+    const user = await User.findById(userId);
+
+    if (!user)
+      return res.status(404).json({ message: "Пользователь не найден..." });
+
+    await User.updateOne({ _id: userId }, { $pull: { notes: note } });
+    await user.save();
+
+    return res.json({
+      message: `Уведомление успешно удалено`,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error while deleting note" });
   }
 });
 
