@@ -161,6 +161,23 @@ html {
 .profile-actions-row {
   display: flex;
 }
+.profile-removeFriend-button {
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: none;
+  background-color: #8d1f1f;
+  color: #fff;
+  font-weight: 700;
+  font-family: "Mulish";
+  cursor: pointer;
+  transition: 0.3s ease all 0s;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 10px;
+}
+.profile-removeFriend-button:hover {
+  transform: translateY(2px);
+}
 .profile-addToFriends-button {
   padding: 6px 12px;
   border-radius: 10px;
