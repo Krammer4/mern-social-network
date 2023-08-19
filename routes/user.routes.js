@@ -92,10 +92,6 @@ router.post("/accept-request", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // requestedUser.requests = requestedUser.requests.filter(
-    //   (request) => request !== requestingUser._id
-    // );
-
     await User.updateOne(
       { _id: requestedUserId },
       { $pull: { requests: requestingUser._id } }

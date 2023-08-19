@@ -10,6 +10,7 @@ export const NotesPage = () => {
 
   const { request, loading } = useHttp();
   const [userData, setUserData] = useState(null);
+  const [notes, setNotes] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
   const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
 
@@ -37,6 +38,7 @@ export const NotesPage = () => {
       "GET"
     );
     setUserData(userData);
+    setNotes(userData.notes.reverse());
   };
 
   useEffect(() => {
@@ -49,9 +51,8 @@ export const NotesPage = () => {
         <div className="notes-content">
           <h1 className="notes-mainTitle">Уведомления</h1>
           <div className="notes-allNotes">
-            {userData &&
-              userData.notes.length !== 0 &&
-              userData.notes.reverse().map((note) => {
+            {notes && notes.length !== 0 ? (
+              notes.map((note) => {
                 return (
                   <div className="note">
                     <div className="note-container">
@@ -66,7 +67,12 @@ export const NotesPage = () => {
                     </div>
                   </div>
                 );
-              })}
+              })
+            ) : (
+              <p className="notes-noNotes-message">
+                У вас пока нет уведомлений...
+              </p>
+            )}
           </div>
         </div>
       </div>

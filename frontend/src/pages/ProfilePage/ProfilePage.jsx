@@ -384,7 +384,7 @@ export const ProfilePage = () => {
                       userInformation.friends.includes(userData.userId) ? (
                       <button
                         onClick={removeFriend}
-                        className="profile-addToFriends-button"
+                        className="profile-removeFriend-button"
                       >
                         Удалить из друзей
                       </button>
