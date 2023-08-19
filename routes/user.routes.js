@@ -100,6 +100,10 @@ router.post("/accept-request", async (req, res) => {
       { _id: requestedUserId },
       { $pull: { requests: requestingUser._id } }
     );
+    await User.updateOne(
+      { _id: requestingUserId },
+      { $pull: { requests: requestedUser._id } }
+    );
     requestedUser.friends.includes(requestingUser)
       ? null
       : requestedUser.friends.push(requestingUser);
@@ -119,6 +123,42 @@ router.post("/accept-request", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Error while accepting request" });
+  }
+});
+
+router.delete("/delete-friend", async (req, res) => {
+  const { deletingUserId, deletedUserId } = req.query;
+  try {
+    const deletingUser = await User.findById(deletingUserId);
+    const deletedUser = await User.findById(deletedUserId);
+
+    if (!deletedUser || !deletingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (deletedUser.friends.includes(deletingUser._id)) {
+      await User.updateOne(
+        { _id: deletedUser._id },
+        { $pull: { friends: deletingUser._id } }
+      );
+    }
+    if (deletingUser.friends.includes(deletedUser._id)) {
+      await User.updateOne(
+        { _id: deletingUser._id },
+        { $pull: { friends: deletedUser._id } }
+      );
+    }
+
+    await deletedUser.save();
+    await deletingUser.save();
+
+    return res.json({
+      message: `Пользователь ${deletedUser._id} был удалён из списка друзей`,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: `Error while deleting friend ${error.message}` });
   }
 });
 
