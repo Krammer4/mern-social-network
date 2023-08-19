@@ -49,6 +49,7 @@ export const ProfilePage = () => {
         }
       );
       showSuccessMessage(requestSendingData.message);
+      fetchUserPosts();
       setIsRequestSent(true);
     } catch (error) {
       console.log(`Error while sending request ${error.message}`);
@@ -362,10 +363,7 @@ export const ProfilePage = () => {
                     ) : userInformation.friends &&
                       userInformation.friends.length !== 0 &&
                       userInformation.friends.includes(userData.userId) ? (
-                      <button
-                        onClick={sendRequest}
-                        className="profile-addToFriends-button"
-                      >
+                      <button className="profile-addToFriends-button">
                         Удалить из друзей
                       </button>
                     ) : (
