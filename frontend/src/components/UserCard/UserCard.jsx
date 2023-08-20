@@ -17,6 +17,8 @@ export const UserCard = ({
   requests,
   friends,
 }) => {
+  const userStorageData = JSON.parse(localStorage.getItem("userData"));
+
   useEffect(() => {
     console.log(avatar);
   });
@@ -51,12 +53,20 @@ export const UserCard = ({
                 ) : null}
               </div>
             </div>
-            {friends.includes(userCardId) && (
+            {friends && friends.includes(userStorageData.userId) && (
               <p
                 onClick={() => console.log("PRESSED")}
-                className="user-addToFriendsButton"
+                className="user-friendMark"
               >
                 Ваш друг
+              </p>
+            )}
+            {userCardId === userStorageData.userId && (
+              <p
+                onClick={() => console.log("PRESSED")}
+                className="user-yourAccMark"
+              >
+                Вы
               </p>
             )}
           </div>
