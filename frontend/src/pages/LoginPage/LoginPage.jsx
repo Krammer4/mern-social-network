@@ -25,6 +25,7 @@ export const LoginPage = () => {
       });
 
       auth.login(data.token, data.userId);
+      window.location.reload();
     } catch (e) {}
   };
 

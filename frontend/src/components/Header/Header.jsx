@@ -1,16 +1,15 @@
-import React, { useCallback, useContext } from "react";
+import React, { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 
 import "./Header.css";
-import { useHttp } from "../../hooks/httpHook";
 import settings from "../../img/Profile/settings.png";
+import { useSelector } from "react-redux";
 
 export const Header = ({ isAuthentificated }) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
-  const { request, error, loading } = useHttp();
 
   const makeLogout = async () => {
     auth.logout();
@@ -21,6 +20,10 @@ export const Header = ({ isAuthentificated }) => {
     navigation(`/profile/${userData.userId}`);
     window.location.reload();
   };
+
+  const requestsQuantity = useSelector(
+    (state) => state.requests.requests.length
+  );
 
   return (
     <nav className="header">
@@ -39,9 +42,22 @@ export const Header = ({ isAuthentificated }) => {
                   <NavLink to="/music" className="header-link">
                     Музыка
                   </NavLink>
-                  <NavLink to="/friends" className="header-link">
-                    Друзья
-                  </NavLink>
+                  <div
+                    className={`${
+                      requestsQuantity !== 0
+                        ? "header-friends-group"
+                        : "header-friends"
+                    }`}
+                  >
+                    <NavLink to="/friends" className="header-link">
+                      Друзья
+                    </NavLink>
+                    {requestsQuantity !== 0 && (
+                      <p className="header-request-quantity">
+                        {requestsQuantity}
+                      </p>
+                    )}
+                  </div>
                   <NavLink to="/notes" className="header-link">
                     Уведомления
                   </NavLink>

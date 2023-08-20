@@ -124,3 +124,26 @@ html {
 .header-link.settingsLink:hover {
   transform: rotate(360deg);
 }
+.header-friends-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.header-request-quantity {
+  top: -2px;
+  right: 8px;
+  position: absolute;
+  font-family: "Mulish";
+  text-align: center;
+  border-radius: 100%;
+  vertical-align: center;
+  background: #5c529a;
+  height: 22px;
+  width: 22px;
+  color: #e7e5f0;
+  font-size: 14px;
+  font-weight: 800;
+}
+.header-friends {
+  margin-right: 30px;
+}
