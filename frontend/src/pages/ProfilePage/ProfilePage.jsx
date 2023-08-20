@@ -48,7 +48,7 @@ export const ProfilePage = () => {
           requestedUserId: userId,
         }
       );
-      showSuccessMessage(`${requestSendingData}`);
+      showSuccessMessage(`${requestSendingData.message}`);
       window.location.reload();
 
       setIsRequestSent(true);

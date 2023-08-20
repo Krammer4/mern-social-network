@@ -64,3 +64,21 @@
   border: none;
   border-radius: 10px;
 }
+.user-friendMark {
+  background-color: rgb(219, 150, 22);
+  color: #fff;
+  font-family: "Mulish";
+  font-weight: 700;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+}
+.user-yourAccMark {
+  background-color: rgb(86, 148, 24);
+  color: #fff;
+  font-family: "Mulish";
+  font-weight: 700;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+}
