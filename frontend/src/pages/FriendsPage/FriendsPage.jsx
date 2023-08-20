@@ -1,10 +1,12 @@
 import React, { useState, useEffect, createContext } from "react";
+import { useDispatch } from "react-redux";
 import "./FriendsPage.css";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";
 import { useHttp } from "../../hooks/httpHook";
 import { backend_url } from "../../consts";
 
 import anonymus from "../../../../frontend/src/img/Profile/none-avatar.png";
+import { addRequest } from "../../redux/slices/requestsSlice";
 
 export const FriendsPage = () => {
   const userStorageData = JSON.parse(localStorage.getItem("userData"));
@@ -14,6 +16,8 @@ export const FriendsPage = () => {
   const [isRequestsVisible, setIsRequestsVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
+
+  const dispatch = useDispatch();
 
   const showSuccessMessage = (message) => {
     setSuccessMessage(message);
@@ -29,7 +33,7 @@ export const FriendsPage = () => {
       `${backend_url}/api/user/${userStorageData.userId}`,
       "GET"
     );
-    console.log(userData);
+    dispatch(addRequest(userData.requests));
     setUserData(userData);
   };
 
