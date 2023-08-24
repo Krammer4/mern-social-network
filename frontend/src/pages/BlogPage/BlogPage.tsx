@@ -2,14 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useHttp } from "../../hooks/httpHook";
 import "./BlogPage.css";
 import { Link } from "react-router-dom";
-import { PostCard } from "../../components/PostCard/PostCard";
+import { PostCard } from "../../components/PostCard/PostCard.tsx";
 import { PostSkeleton } from "../../components/PostSkeleton";
 import { backend_url } from "../../consts";
+import { IPost } from "./Interfaces";
 
-export const BlogPage = () => {
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  const userId = userData.userId;
-  const [allPosts, setAllPosts] = useState([]);
+export const BlogPage: React.FC = () => {
+  const userData = JSON.parse(localStorage.getItem("userData")!);
+  const userId: string = userData.userId;
+  const [allPosts, setAllPosts] = useState<IPost[]>([]);
   const { request, loading, error } = useHttp();
 
   const fetchPosts = useCallback(async () => {
@@ -50,7 +51,7 @@ export const BlogPage = () => {
                 </div>
               </>
             ) : allPosts.length > 0 ? (
-              allPosts.map((post) => (
+              allPosts.map((post: IPost) => (
                 <PostCard
                   title={post.title}
                   authorName={post.author.name}

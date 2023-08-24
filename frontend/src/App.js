@@ -3,7 +3,6 @@ import "./App.css";
 import { Header } from "./components/Header/Header";
 import { AuthContext } from "./context/authContext";
 import { useAuth } from "./hooks/authHook";
-import { FriendsContext } from "./pages/FriendsPage/FriendsPage";
 import { useRoutes } from "./routes";
 import { useHttp } from "./hooks/httpHook";
 import { useEffect } from "react";
