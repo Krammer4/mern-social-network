@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate, useMatch } from "react-router-dom";
-import { BlogPage } from "./pages/BlogPage/BlogPage.jsx";
+import { BlogPage } from "./pages/BlogPage/BlogPage.tsx";
 import { ProfilePage } from "./pages/ProfilePage/ProfilePage.jsx";
 import { PostPage } from "./pages/PostPage/PostPage.jsx";
 import { LoginPage } from "./pages/LoginPage/LoginPage.jsx";
@@ -10,7 +10,7 @@ import { MusicPage } from "./pages/MusicPage/MusicPage.jsx";
 import { ArtistPage } from "./pages/ArtistPage/ArtistPage.jsx";
 import { SettingsPage } from "./pages/SettingsPage/SettingsPage.jsx";
 import { Chat } from "./pages/Chat/Chat.jsx";
-import { FriendsPage } from "./pages/FriendsPage/FriendsPage.jsx";
+import { FriendsPage } from "./pages/FriendsPage/FriendsPage.tsx";
 import { NotesPage } from "./pages/NotesPage/NotesPage.jsx";
 
 export const useRoutes = (isAuthentificated) => {

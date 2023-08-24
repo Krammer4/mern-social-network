@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useHttp } from "../../hooks/httpHook";
-import { PostCard } from "../../components/PostCard/PostCard";
+import { PostCard } from "../../components/PostCard/PostCard.tsx";
 import "./ProfilePage.css";
 import anonymus from "../../img/Profile/none-avatar.png";
 import { Link, useParams } from "react-router-dom";
@@ -267,165 +267,180 @@ export const ProfilePage = () => {
       {isSuccessMessageVisible && <SuccessMessage message={successMessage} />}
       <div className="profile _container">
         <div className="profile-content">
-          <div className="profile-infoBlock">
-            <div className="profile-info-row">
-              {userInformation.avatar ? (
-                <div
-                  className={`${
-                    isOwnProfile ? "avatar-myProfile" : "avatar-block"
-                  }`}
-                  onClick={() => {
-                    if (isOwnProfile) {
-                      avatarClick();
-                    }
-                  }}
-                >
-                  <img
+          {loading ? (
+            <p>load</p>
+          ) : (
+            <div className="profile-infoBlock">
+              <div className="profile-info-row">
+                {userInformation.avatar ? (
+                  <div
+                    className={`${
+                      isOwnProfile ? "avatar-myProfile" : "avatar-block"
+                    }`}
                     onClick={() => {
                       if (isOwnProfile) {
-                        console.log("USER ID", userId);
-                        console.log("USER DATA . ID: ", userData.userId);
                         avatarClick();
                       }
                     }}
-                    src={`${backend_url}/${userInformation.avatar}`}
-                    className={`profile-info-avatar ${
-                      isOwnProfile && "myProfile"
-                    }`}
-                  />
-
-                  <img
-                    className="profile-change-avatar-icon"
-                    src={changeAvatar}
-                  />
-                </div>
-              ) : (
-                <div
-                  className={`${
-                    isOwnProfile ? "avatar-myProfile" : "avatar-block"
-                  }`}
-                  onClick={() => {
-                    if (isOwnProfile) {
-                      avatarClick();
-                    }
-                  }}
-                >
-                  <img
-                    onClick={() => {
-                      if (isOwnProfile) {
-                        console.log("USER ID", userId);
-                        console.log("USER DATA . ID: ", userData.userId);
-                        avatarClick();
-                      }
-                    }}
-                    src={anonymus}
-                    className={`profile-info-avatar ${
-                      isOwnProfile && "myProfile"
-                    }`}
-                  />
-
-                  <img
-                    className="profile-change-avatar-icon"
-                    src={changeAvatar}
-                  />
-                </div>
-              )}
-
-              <div className="profile-info-block">
-                <input
-                  ref={avatarChangeRef}
-                  type="file"
-                  name="avatar"
-                  onChange={changeAvatarHandler}
-                  className="avatarInitialPicker"
-                  accept="image/*"
-                />
-                <div className="profile-info-name-row">
-                  <h2 className="profile-info-name">
-                    {userInformation.name} {userInformation.lastName} •{" "}
-                    {userInformation.username}{" "}
-                  </h2>
-                  {isOwnProfile && (
+                  >
                     <img
-                      className="profile-info-editSign"
-                      src={edit}
-                      onClick={() => setIsEditing((prev) => !prev)}
+                      onClick={() => {
+                        if (isOwnProfile) {
+                          console.log("USER ID", userId);
+                          console.log("USER DATA . ID: ", userData.userId);
+                          avatarClick();
+                        }
+                      }}
+                      src={`${backend_url}/${userInformation.avatar}`}
+                      className={`profile-info-avatar ${
+                        isOwnProfile && "myProfile"
+                      }`}
                     />
+
+                    <img
+                      className="profile-change-avatar-icon"
+                      src={changeAvatar}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className={`${
+                      isOwnProfile ? "avatar-myProfile" : "avatar-block"
+                    }`}
+                    onClick={() => {
+                      if (isOwnProfile) {
+                        avatarClick();
+                      }
+                    }}
+                  >
+                    <img
+                      onClick={() => {
+                        if (isOwnProfile) {
+                          console.log("USER ID", userId);
+                          console.log("USER DATA . ID: ", userData.userId);
+                          avatarClick();
+                        }
+                      }}
+                      src={anonymus}
+                      className={`profile-info-avatar ${
+                        isOwnProfile && "myProfile"
+                      }`}
+                    />
+
+                    <img
+                      className="profile-change-avatar-icon"
+                      src={changeAvatar}
+                    />
+                  </div>
+                )}
+
+                <div className="profile-info-block">
+                  <input
+                    ref={avatarChangeRef}
+                    type="file"
+                    name="avatar"
+                    onChange={changeAvatarHandler}
+                    className="avatarInitialPicker"
+                    accept="image/*"
+                  />
+                  <div className="profile-info-name-row">
+                    <h2 className="profile-info-name">
+                      {userInformation.name} {userInformation.lastName}
+                    </h2>
+
+                    {isOwnProfile && (
+                      <img
+                        className="profile-info-editSign"
+                        src={edit}
+                        onClick={() => setIsEditing((prev) => !prev)}
+                      />
+                    )}
+                  </div>
+                  <p className="profile-username">
+                    {" "}
+                    @{userInformation.username}
+                  </p>
+                  {userInformation.friends?.length !== 0 && (
+                    <p className="profile-friends-amount">
+                      Друзей:{" "}
+                      <span className="profile-friends-number">
+                        {userInformation.friends?.length}
+                      </span>
+                    </p>
+                  )}
+                  <p className="profile-info-email">{userInformation.email}</p>
+
+                  {userInformation.status && (
+                    <p className="profile-info-status">
+                      {userInformation.status}
+                    </p>
+                  )}
+
+                  {userInformation.town && (
+                    <Link
+                      to={`/users?filterType=town&town=${userInformation.town}`}
+                      className="profile-info-town"
+                    >
+                      {userInformation.town}
+                    </Link>
+                  )}
+
+                  {!isOwnProfile && (
+                    <div className="profile-actions-row">
+                      {userInformation.requests &&
+                      userInformation.requests.length !== 0 &&
+                      userInformation.requests.includes(userData.userId) ? (
+                        <button className="profile-requestSent-button">
+                          Запрос отправлен
+                        </button>
+                      ) : userInformation.friends &&
+                        userInformation.friends.length !== 0 &&
+                        userInformation.friends.includes(userData.userId) ? (
+                        <button
+                          onClick={removeFriend}
+                          className="profile-removeFriend-button"
+                        >
+                          Удалить из друзей
+                        </button>
+                      ) : (
+                        <button
+                          onClick={sendRequest}
+                          className="profile-addToFriends-button"
+                        >
+                          Добавить в друзья
+                        </button>
+                      )}
+
+                      <Link
+                        to={`/chat?userId=${userData.userId}&user2Id=${userId}`}
+                        className="profile-send-message"
+                      >
+                        <button className="profile-send-message-button">
+                          Отправить сообщение
+                        </button>
+                      </Link>
+                    </div>
+                  )}
+
+                  {isProfileClosed ? null : (
+                    <div
+                      className="profile-more-button"
+                      onClick={() => setIsMoreShowed((prev) => !prev)}
+                    >
+                      Подробнее{" "}
+                      <p
+                        className={`profile-more-rectangle ${
+                          isMoreShowed && "active"
+                        }`}
+                      >
+                        ▼
+                      </p>
+                    </div>
                   )}
                 </div>
-
-                <p className="profile-info-email">{userInformation.email}</p>
-
-                {userInformation.status && (
-                  <p className="profile-info-status">
-                    {userInformation.status}
-                  </p>
-                )}
-
-                {userInformation.town && (
-                  <Link
-                    to={`/users?filterType=town&town=${userInformation.town}`}
-                    className="profile-info-town"
-                  >
-                    {userInformation.town}
-                  </Link>
-                )}
-
-                {!isOwnProfile && (
-                  <div className="profile-actions-row">
-                    {userInformation.requests &&
-                    userInformation.requests.length !== 0 &&
-                    userInformation.requests.includes(userData.userId) ? (
-                      <button className="profile-requestSent-button">
-                        Запрос отправлен
-                      </button>
-                    ) : userInformation.friends &&
-                      userInformation.friends.length !== 0 &&
-                      userInformation.friends.includes(userData.userId) ? (
-                      <button
-                        onClick={removeFriend}
-                        className="profile-removeFriend-button"
-                      >
-                        Удалить из друзей
-                      </button>
-                    ) : (
-                      <button
-                        onClick={sendRequest}
-                        className="profile-addToFriends-button"
-                      >
-                        Добавить в друзья
-                      </button>
-                    )}
-
-                    <Link
-                      to={`/chat?userId=${userData.userId}&user2Id=${userId}`}
-                      className="profile-send-message"
-                    >
-                      <button className="profile-send-message-button">
-                        Отправить сообщение
-                      </button>
-                    </Link>
-                  </div>
-                )}
-
-                {isProfileClosed ? null : (
-                  <div
-                    className="profile-more-button"
-                    onClick={() => setIsMoreShowed((prev) => !prev)}
-                  >
-                    Подробнее{" "}
-                    <p
-                      className={`profile-more-rectangle ${
-                        isMoreShowed && "active"
-                      }`}
-                    >
-                      ▼
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
-          </div>
+          )}
 
           {isEditing && (
             <div className="profile-editing-block">

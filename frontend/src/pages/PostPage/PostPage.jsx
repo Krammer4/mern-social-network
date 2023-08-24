@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useHttp } from "../../hooks/httpHook";
 import { useParams } from "react-router-dom";
 import "./PostPage.css";
-import { PostCard } from "../../components/PostCard/PostCard";
+import { PostCard } from "../../components/PostCard/PostCard.tsx";
 import { CommentCard } from "../../components/CommentCard/CommentCard";
 import { PostSkeleton } from "../../components/PostSkeleton";
 import { SuccessMessage } from "../../Messages/SuccessMessage/SuccessMessage";

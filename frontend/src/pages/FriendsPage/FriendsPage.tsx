@@ -7,12 +7,13 @@ import { backend_url } from "../../consts";
 
 import anonymus from "../../../../frontend/src/img/Profile/none-avatar.png";
 import { addRequest } from "../../redux/slices/requestsSlice";
+import { IUserData } from "./Interfaces";
 
 export const FriendsPage = () => {
-  const userStorageData = JSON.parse(localStorage.getItem("userData"));
+  const userStorageData = JSON.parse(localStorage.getItem("userData")!);
 
   const { request, loading } = useHttp();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<IUserData | null>(null);
   const [isRequestsVisible, setIsRequestsVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
@@ -69,7 +70,7 @@ export const FriendsPage = () => {
           >
             {isRequestsVisible ? "Скрыть" : "Показать"} запросы в друзья
           </p>
-          {isRequestsVisible && userData.requests.length !== 0 && (
+          {userData && isRequestsVisible && userData.requests.length !== 0 && (
             <div className="friends-allRequests">
               {userData &&
                 userData.requests &&

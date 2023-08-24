@@ -9,8 +9,9 @@ import axios from "axios";
 import filledHeart from "../../img/Post/filledHeart.png";
 import unFilledHeart from "../../img/Post/unFilledHeart.png";
 import { backend_url } from "../../consts";
+import { IPostCard } from "./IPostCard";
 
-export const PostCard = ({
+export const PostCard: React.FC<IPostCard> = ({
   title,
   authorName,
   authorLastName,
@@ -29,10 +30,11 @@ export const PostCard = ({
   showWarningMessage,
   isLiked,
   setIsLiked,
+  fetchPosts,
 }) => {
   const navigate = useNavigate();
   const { request, error, loading } = useHttp();
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userData = JSON.parse(localStorage.getItem("userData")!);
 
   const deletePost = async () => {
     const deletePostData = await request(

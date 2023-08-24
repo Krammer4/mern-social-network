@@ -38,7 +38,7 @@ export const NotesPage = () => {
       "GET"
     );
     setUserData(userData);
-    setNotes(userData.notes.reverse());
+    setNotes(userData.notes);
   };
 
   useEffect(() => {
