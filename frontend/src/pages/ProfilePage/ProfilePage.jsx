@@ -261,6 +261,8 @@ export const ProfilePage = () => {
     !isOwnProfile && userInformation.settings?.isClosedMusic;
   const isLikedClosed =
     !isOwnProfile && userInformation.settings?.isClosedLikes;
+  const isFriendsClosed =
+    !isOwnProfile && userInformation.settings?.isClosedFriends;
 
   return (
     <div className="profile">
@@ -360,14 +362,16 @@ export const ProfilePage = () => {
                     {" "}
                     @{userInformation.username}
                   </p>
-                  {userInformation.friends?.length !== 0 && (
-                    <p className="profile-friends-amount">
-                      Друзей:{" "}
-                      <span className="profile-friends-number">
-                        {userInformation.friends?.length}
-                      </span>
-                    </p>
-                  )}
+                  {isFriendsClosed
+                    ? null
+                    : userInformation.friends?.length !== 0 && (
+                        <p className="profile-friends-amount">
+                          Друзей:{" "}
+                          <span className="profile-friends-number">
+                            {userInformation.friends?.length}
+                          </span>
+                        </p>
+                      )}
                   <p className="profile-info-email">{userInformation.email}</p>
 
                   {userInformation.status && (

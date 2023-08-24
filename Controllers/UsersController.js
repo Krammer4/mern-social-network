@@ -78,6 +78,7 @@ class UsersController {
       userFavGenre,
       isClosedMusic,
       isClosedLikes,
+      isClosedFriends,
     } = req.body;
     try {
       const user = await User.findById(userId);
@@ -90,6 +91,7 @@ class UsersController {
       user.settings.userFavGenre = userFavGenre;
       user.settings.isClosedMusic = isClosedMusic;
       user.settings.isClosedLikes = isClosedLikes;
+      user.settings.isClosedFriends = isClosedFriends;
 
       await user.save();
       res.json({ message: "Настройки успешно сохранены" });
