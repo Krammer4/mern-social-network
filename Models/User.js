@@ -29,6 +29,7 @@ const schema = new Schema({
     userFavGenre: { type: String, default: "" },
     isClosedMusic: { type: Boolean, default: false },
     isClosedLikes: { type: Boolean, default: false },
+    isClosedFriends: { type: Boolean, default: false },
   },
 });
 

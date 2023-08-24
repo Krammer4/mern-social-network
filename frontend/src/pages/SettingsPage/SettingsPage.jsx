@@ -13,6 +13,7 @@ export const SettingsPage = () => {
   const [isClosedProfile, setIsClosedProfile] = useState(false);
   const [isClosedMusic, setIsClosedMusic] = useState(false);
   const [isClosedLikes, setIsClosedLikes] = useState(false);
+  const [isClosedFriends, setIsClosedFriends] = useState(false);
   const [userFavGenre, setUserFavGenre] = useState("");
   const [userData, setUserData] = useState({});
   const genres = [
@@ -97,11 +98,15 @@ export const SettingsPage = () => {
     if (userData.settings && userData.settings.isClosedLikes) {
       setIsClosedLikes(userData.settings.isClosedLikes);
     }
+    if (userData.settings && userData.settings.isClosedFriends) {
+      setIsClosedFriends(userData.settings.isClosedFriends);
+    }
   }, [
     userData.settings?.userFavGenre,
     userData.settings?.isClosedProfile,
     userData.settings?.isClosedMusic,
     userData.settings?.isClosedLikes,
+    userData.settings?.isClosedFriends,
   ]);
 
   const saveUserSettings = async () => {
@@ -115,6 +120,7 @@ export const SettingsPage = () => {
           userFavGenre: userFavGenre,
           isClosedMusic: isClosedMusic,
           isClosedLikes,
+          isClosedFriends: isClosedFriends,
         }
       );
 
@@ -163,6 +169,21 @@ export const SettingsPage = () => {
                     type="checkbox"
                     checked={isClosedLikes}
                     onChange={() => setIsClosedLikes((prev) => !prev)}
+                  />
+                  <span class="slider round"></span>
+                </label>
+              )}
+            </div>
+
+            <div className="settings-setting-row">
+              <p className="settings-setting-type">Скрыть моих друзей:</p>
+
+              {userData.settings && (
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    checked={isClosedFriends}
+                    onChange={() => setIsClosedFriends((prev) => !prev)}
                   />
                   <span class="slider round"></span>
                 </label>
